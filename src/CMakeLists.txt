@@ -1,0 +1,118 @@
+# RAVE CMake build file for src folder
+cmake_minimum_required (VERSION 2.6)
+project (ravecore)
+
+set(RAVECORE_CPP 
+    ROOT/mathcore/TMath.cc 
+    ROOT/src/GenVector_Throw.cc 
+    CommonTools/Statistics/interface/hsm_1d.icc 
+    CommonTools/Statistics/interface/lms_1d.icc 
+    CommonTools/Statistics/src/GammaSeries.h 
+    CommonTools/Statistics/src/GammaLn.h 
+    CommonTools/Statistics/src/GammaContinuedFraction.h 
+    CommonTools/Statistics/src/IncompleteGammaComplement.h 
+    TrackingTools/GeomPropagators/src/RealQuadEquation.h 
+    CommonTools/Clustering1D/src/Cluster1D.cc 
+    CommonTools/Clustering1D/src/Clustering1DException.cc 
+    CommonTools/Clustering1D/src/Clusterizer1D.cc 
+    CommonTools/Clustering1D/src/Clusterizer1DCommons.cc 
+    CommonTools/Clustering1D/src/FsmwClusterizer1D.cc 
+    CommonTools/Clustering1D/src/OutermostClusterizer1D.cc 
+    CommonTools/Clustering1D/src/TrackDistanceWeightEstimator.cc 
+    CommonTools/Clustering1D/src/TrivialWeightEstimator.cc 
+    CommonTools/Clustering1D/src/WeightEstimator.cc 
+    CommonTools/Statistics/src/ChiSquaredProbability.cc 
+    CommonTools/Statistics/src/GammaContinuedFraction.cc 
+    CommonTools/Statistics/src/GammaLn.cc 
+    CommonTools/Statistics/src/GammaSeries.cc 
+    CommonTools/Statistics/src/IncompleteGammaComplement.cc 
+    CommonTools/Statistics/src/StatisticsException.cc 
+    DataFormats/BeamSpot/src/BeamSpot.cc 
+    DataFormats/Candidate/src/Particle.cc 
+    DataFormats/TrackReco/src/TrackBase.cc 
+    DataFormats/TrackReco/src/Track.cc 
+    DataFormats/TrackReco/src/fillCovariance.cc 
+    DataFormats/GeometryCommonDetAlgo/src/PerpendicularBoundPlaneBuilder.cc 
+    DataFormats/GeometrySurface/src/BlockWipedAllocator.cc 
+    DataFormats/GeometrySurface/src/BoundCone.cc 
+    DataFormats/GeometrySurface/src/BoundCylinder.cc 
+    DataFormats/GeometrySurface/src/BoundDisk.cc 
+    DataFormats/GeometrySurface/src/BoundingBox.cc 
+    DataFormats/GeometrySurface/src/BoundPlane.cc 
+    DataFormats/GeometrySurface/src/Cone.cc 
+    DataFormats/GeometrySurface/src/Cylinder.cc 
+    DataFormats/GeometrySurface/src/GeneralNSurfaceDelimitedBounds.cc 
+    DataFormats/GeometrySurface/src/GeneralTrapezoidalPlaneBounds.cc 
+    DataFormats/GeometrySurface/src/LocalError.cc 
+    DataFormats/GeometrySurface/src/Plane.cc 
+    DataFormats/GeometrySurface/src/SimpleDiskBounds.cc 
+    DataFormats/GeometrySurface/src/TrapezoidalPlaneBounds.cc 
+    DataFormats/VertexReco/src/Vertex.cc 
+    Environment/Configuration/src/MultiType.cc 
+    MagneticField/Engine/src/MagneticField.cc 
+    TrackingTools/AnalyticalJacobians/src/AnalyticalCurvilinearJacobian.cc 
+    TrackingTools/AnalyticalJacobians/src/JacobianCartesianToCurvilinear.cc 
+    TrackingTools/AnalyticalJacobians/src/JacobianCartesianToLocal.cc 
+    TrackingTools/AnalyticalJacobians/src/JacobianCurvilinearToCartesian.cc 
+    TrackingTools/AnalyticalJacobians/src/JacobianCurvilinearToLocal.cc 
+    TrackingTools/AnalyticalJacobians/src/JacobianLocalToCartesian.cc 
+    TrackingTools/AnalyticalJacobians/src/JacobianLocalToCurvilinear.cc 
+    TrackingTools/GeomPropagators/src/AnalyticalPropagator.cc 
+    TrackingTools/GeomPropagators/src/AnalyticalTrajectoryExtrapolatorToLine.cc 
+    TrackingTools/GeomPropagators/src/HelixArbitraryPlaneCrossing2Order.cc 
+    TrackingTools/GeomPropagators/src/HelixArbitraryPlaneCrossing.cc 
+    TrackingTools/GeomPropagators/src/HelixBarrelCylinderCrossing.cc 
+    TrackingTools/GeomPropagators/src/HelixBarrelPlaneCrossing2OrderLocal.cc 
+    TrackingTools/GeomPropagators/src/HelixBarrelPlaneCrossingByCircle.cc 
+    TrackingTools/GeomPropagators/src/HelixExtrapolatorToLine2Order.cc 
+    TrackingTools/GeomPropagators/src/HelixForwardPlaneCrossing.cc 
+    TrackingTools/GeomPropagators/src/IterativeHelixExtrapolatorToLine.cc 
+    TrackingTools/GeomPropagators/src/PropagationDirectionChooser.cc 
+    TrackingTools/GeomPropagators/src/Propagator.cc 
+    TrackingTools/GeomPropagators/src/StraightLineBarrelCylinderCrossing.cc 
+    TrackingTools/GeomPropagators/src/StraightLineCylinderCrossing.cc 
+    TrackingTools/GeomPropagators/src/StraightLinePlaneCrossing.cc 
+    TrackingTools/PatternTools/src/TransverseImpactPointExtrapolator.cc 
+    TrackingTools/PatternTools/src/TSCPBuilderNoMaterial.cc 
+    TrackingTools/PatternTools/src/TrajectoryStateClosestToBeamLineBuilder.cc 
+    TrackingTools/PatternTools/src/TSCBLBuilderNoMaterial.cc 
+    TrackingTools/PatternTools/src/ClosestApproachInRPhi.cc 
+    TrackingTools/PatternTools/src/TwoTrackMinimumDistance.cc 
+    TrackingTools/PatternTools/src/TwoTrackMinimumDistanceHelixHelix.cc 
+    TrackingTools/PatternTools/src/TwoTrackMinimumDistanceHelixLine.cc 
+    TrackingTools/PatternTools/src/TwoTrackMinimumDistanceLineLine.cc 
+    TrackingTools/TrajectoryParametrization/src/CartesianTrajectoryError.cc 
+    TrackingTools/TrajectoryParametrization/src/GlobalTrajectoryParameters.cc 
+    TrackingTools/TrajectoryParametrization/src/LocalTrajectoryError.cc 
+    TrackingTools/TrajectoryParametrization/src/PerigeeTrajectoryError.cc 
+    TrackingTools/TrajectoryState/src/BasicSingleTrajectoryState.cc 
+    TrackingTools/TrajectoryState/src/BasicTrajectoryState.cc 
+    TrackingTools/TrajectoryState/src/FreeTrajectoryState.cc 
+    TrackingTools/TrajectoryState/src/PerigeeConversions.cc 
+    TrackingTools/TrajectoryState/src/TrajectoryStateClosestToPoint.cc 
+    TrackingTools/TrajectoryState/src/TrajectoryStateClosestToBeamLine.cc 
+    TrackingTools/TrajectoryState/src/TrajectoryStateOnSurface.cc 
+    TrackingTools/TrajectoryState/src/FreeTrajectoryStatePrint.cc 
+    TrackingTools/TrajectoryState/src/TrajectoryStateOnSurfacePrint.cc 
+    TrackingTools/TrajectoryState/src/TrajectoryStateTransform.cc 
+    TrackingTools/TransientTrack/src/TransientTrackBuilder.cc 
+    TrackingTools/TransientTrack/src/TransientTrackFromFTSFactory.cc 
+    TrackingTools/TransientTrack/src/TransientTrackFromFTS.cc 
+    TrackingTools/TransientTrack/src/TransientTrack.cc 
+    TrackingTools/TransientTrack/src/TrackTransientTrack.cc 
+    RaveTools/Converters/src/MagneticFieldSingleton.cc 
+    RaveTools/Converters/src/PropagatorSingleton.cc 
+    FWCore/MessageLogger/src/Colors.cc 
+    FWCore/MessageLogger/src/MessageLogger.cc 
+    FWCore/ParameterSet/src/ParameterSet.cc 
+    FWCore/Utilities/src/EDMException.cc 
+    FWCore/Utilities/src/Exception.cc
+)
+
+add_library(RaveCore SHARED
+    ${RAVECORE_CPP} )
+    
+target_link_libraries(RaveCore
+	CLHEP
+)
+

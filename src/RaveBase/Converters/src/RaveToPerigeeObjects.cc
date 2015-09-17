@@ -48,7 +48,7 @@ PerigeeCovariance5D RaveToPerigeeObjects::convert(
   RaveToCmsObjects frameworkInputConverter;
   FreeTrajectoryState fts(frameworkInputConverter.convert(state, charge),
                           frameworkInputConverter.convert(error));
-  GlobalPoint ref = frameworkInputConverter.convert(referencePoint);
+  //GlobalPoint ref = frameworkInputConverter.convert(referencePoint);
 
   PerigeeConversions parameterConverter;
   double transverseMomentum;

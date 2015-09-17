@@ -5,7 +5,7 @@
 
 namespace rave {
 
-class RaveDllExport CheckedFloatException : 
+class RaveDllExport CheckedFloatException :
   public std::exception
 {
   public:

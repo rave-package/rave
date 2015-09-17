@@ -1,10 +1,10 @@
 #ifndef _CLEHP_2_SMATRIX_MIGRATION_H_
 #define _CLEHP_2_SMATRIX_MIGRATION_H_
 
-#include "ROOT/smatrix/Math/SMatrix.h"
-#include "ROOT/smatrix/Math/SVector.h"
-#include "ROOT/smatrix/Math/SMatrix.icc"
-#include "ROOT/smatrix/Math/SVector.icc"
+#include "Math/SMatrix.h"
+#include "Math/SVector.h"
+#include "Math/SMatrix.icc"
+#include "Math/SVector.icc"
 #include <cstring>
 
 // Use ".!" in VIM

@@ -50,6 +50,8 @@ namespace {
     BasicTrack ret = backconversion.toBasicTrack ( collapsed );
     ret.setComponents ( orig );
     return ret;
+	#else
+    return BasicTrack();
     #endif
   }
 }
