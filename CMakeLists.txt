@@ -47,5 +47,6 @@ add_subdirectory(src/RecoVertex)
 add_subdirectory(src/RecoVertex/KinematicFit)
 add_subdirectory(src/RecoBTag)
 add_subdirectory(UnitTests)
+add_subdirectory(tests)
 
 
