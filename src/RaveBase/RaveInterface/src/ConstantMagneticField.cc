@@ -6,10 +6,10 @@ rave::MagneticField * rave::ConstantMagneticField::copy() const
   return new rave::ConstantMagneticField ( *this );
 }
 
-rave::Vector3D rave::ConstantMagneticField::inTesla ( const rave::Point3D & ) const
+GlobalVector rave::ConstantMagneticField::inTesla ( const GlobalPoint & ) const
 {
   // std::cout << "[rave::ConstantMagneticField] ::inTesla called." << std::endl;
-  return rave::Vector3D ( x_, y_, z_ );
+  return GlobalVector ( x_, y_, z_ );
 }
 
 rave::ConstantMagneticField::ConstantMagneticField() : x_(0.), y_(0.), z_(0.) {}

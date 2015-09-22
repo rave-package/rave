@@ -14,6 +14,7 @@ class MagneticFieldSingleton : public MagneticField
     void release ();
     bool hasField() const;
     const MagneticField * field() const;
+    virtual MagneticField * copy() const;
   private:
     MagneticFieldSingleton();
     MagneticFieldSingleton ( const MagneticFieldSingleton & );

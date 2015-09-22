@@ -14,7 +14,8 @@ class RaveDllExport ConstantMagneticField :
       public MagneticField
 {
   public:
-    virtual Vector3D inTesla ( const Point3D & ) const;
+    //virtual Vector3D inTesla ( const Point3D & ) const;
+	virtual GlobalVector inTesla ( const GlobalPoint & ) const;
     virtual MagneticField * copy() const;
     ConstantMagneticField();
     ConstantMagneticField( float x, float y, float z );

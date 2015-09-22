@@ -10,8 +10,12 @@ GlobalVector MagneticFieldWrapper::inTesla ( const GlobalPoint & gp ) const
     cout << "[MagneticFieldWrapper] Arrg! No field registered!" << endl;
 
   }
-  rave::Vector3D rv = theField->inTesla( rave::Point3D( gp.x(), gp.y(), gp.z() ) );
-  return GlobalVector( rv.x(), rv.y(), rv.z() );
+  //rave::Vector3D rv = theField->inTesla( rave::Point3D( gp.x(), gp.y(), gp.z() ) );
+  //return GlobalVector( rv.x(), rv.y(), rv.z() );
+  //check once more!
+  GlobalVector gv = theField->inTesla(gp);
+  return gv;
+
   // return theField->inTesla ( o );
 }
 

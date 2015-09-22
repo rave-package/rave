@@ -65,3 +65,9 @@ void MagneticFieldSingleton::registry ( MagneticField * field )
 	release();
 	theField = field;
 }
+
+// dummy function
+MagneticField * MagneticFieldSingleton::copy() const
+{
+	return nullptr;
+}
