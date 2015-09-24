@@ -12,7 +12,7 @@
 #include <cmath>
 
 
-AnalyticalTrajectoryExtrapolatorToLine::AnalyticalTrajectoryExtrapolatorToLine (const MagneticField* field) :
+AnalyticalTrajectoryExtrapolatorToLine::AnalyticalTrajectoryExtrapolatorToLine (const rave::MagneticField* field) :
   thePropagator(new AnalyticalPropagator(field, anyDirection)) {}
 
 AnalyticalTrajectoryExtrapolatorToLine::AnalyticalTrajectoryExtrapolatorToLine 

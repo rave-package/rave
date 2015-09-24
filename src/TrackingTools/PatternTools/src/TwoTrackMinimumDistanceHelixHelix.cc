@@ -1,6 +1,6 @@
 #include "TrackingTools/PatternTools/interface/TwoTrackMinimumDistanceHelixHelix.h"
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 #include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 

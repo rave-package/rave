@@ -24,6 +24,9 @@ class RaveDllExport MagneticField
     virtual GlobalVector inTesla ( const GlobalPoint & ) const = 0;
     virtual MagneticField * copy() const = 0;
     virtual ~MagneticField() {};
+    GlobalVector inInverseGeV(const GlobalPoint& gp) const {
+        return inTesla(gp) * 2.99792458e-3;
+      }
 };
 
 }

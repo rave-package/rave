@@ -41,7 +41,7 @@ public:
   FreeTrajectoryState(const GlobalPoint& aX,
                       const GlobalVector& aP,
                       TrackCharge aCharge, 
-                      const MagneticField* fieldProvider) :
+                      const rave::MagneticField* fieldProvider) :
     theGlobalParameters(aX, aP, aCharge, fieldProvider),
     theCartesianErrorValid(false),
     theCurvilinearErrorValid(false), theTrackId(-1)

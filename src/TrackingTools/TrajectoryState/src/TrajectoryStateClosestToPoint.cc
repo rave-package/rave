@@ -33,7 +33,7 @@ TrajectoryStateClosestToPoint(const FTS& originalFTS, const GlobalPoint& referen
 
 TrajectoryStateClosestToPoint::
 TrajectoryStateClosestToPoint(const PerigeeTrajectoryParameters& perigeeParameters, double pt,
-  const GlobalPoint& referencePoint, const MagneticField* field) :
+  const GlobalPoint& referencePoint, const rave::MagneticField* field) :
     valid(true), theField(field), theFTSavailable(false), theRefPoint(referencePoint), 
     theParameters(perigeeParameters), thePt( pt ), errorIsAvailable(false)
 {}
@@ -47,7 +47,7 @@ TrajectoryStateClosestToPoint(const PerigeeTrajectoryParameters& perigeeParamete
 TrajectoryStateClosestToPoint::
 TrajectoryStateClosestToPoint(const PerigeeTrajectoryParameters& perigeeParameters, double pt,
   const PerigeeTrajectoryError& perigeeError, const GlobalPoint& referencePoint,
-  const MagneticField* field):
+  const rave::MagneticField* field):
     valid(true), theField(field), theFTSavailable(false), theRefPoint(referencePoint),
     theParameters(perigeeParameters), thePt( pt ), thePerigeeError(perigeeError),
     errorIsAvailable(true)

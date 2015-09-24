@@ -49,7 +49,7 @@ set(RAVECORE_CPP
     DataFormats/GeometrySurface/src/TrapezoidalPlaneBounds.cc 
     DataFormats/VertexReco/src/Vertex.cc 
     Environment/Configuration/src/MultiType.cc 
-    MagneticField/Engine/src/MagneticField.cc 
+    #    MagneticField/Engine/src/MagneticField.cc 
     TrackingTools/AnalyticalJacobians/src/AnalyticalCurvilinearJacobian.cc 
     TrackingTools/AnalyticalJacobians/src/JacobianCartesianToCurvilinear.cc 
     TrackingTools/AnalyticalJacobians/src/JacobianCartesianToLocal.cc 

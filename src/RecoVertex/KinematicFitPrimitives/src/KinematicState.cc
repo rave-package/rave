@@ -3,7 +3,7 @@
 
 KinematicState::KinematicState(const KinematicParameters& parameters,
 	const KinematicParametersError& error, const TrackCharge& charge,
-	const MagneticField* field) :
+	const rave::MagneticField* field) :
 	theField(field), param(parameters),err(error), ch(charge), vl(true)
 {}
 

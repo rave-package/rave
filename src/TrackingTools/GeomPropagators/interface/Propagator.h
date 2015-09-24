@@ -4,7 +4,7 @@
 #include "DataFormats/TrajectorySeed/interface/PropagationDirection.h"
 #include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h"
 #include <utility>
-
+#include <rave/MagneticField.h>
 class FreeTrajectoryState;
 class TrajectoryStateOnSurface;
 class Plane;
@@ -158,7 +158,7 @@ public:
 
   virtual Propagator * clone() const = 0;
 
-  virtual const MagneticField* magneticField() const = 0;
+  virtual const rave::MagneticField* magneticField() const = 0;
 
 private:
 

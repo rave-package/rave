@@ -18,7 +18,7 @@ KinematicConstrainedVertexUpdator::update(const AlgebraicVector& inPar,
 	const AlgebraicMatrix& inCov, vector<KinematicState> lStates,
 	const GlobalPoint& lPoint, MultiTrackKinematicConstraint * cs)const
 {
- const MagneticField* field=lStates.front().magneticField();
+ const rave::MagneticField* field=lStates.front().magneticField();
  AlgebraicMatrix d_matrix = vConstraint->parametersDerivative(lStates, lPoint);
  AlgebraicMatrix e_matrix = vConstraint->positionDerivative(lStates, lPoint);
  AlgebraicVector val_s = vConstraint->value(lStates, lPoint);

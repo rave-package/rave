@@ -12,7 +12,7 @@
 #include "RaveTools/Converters/interface/PropagatorSingleton.h"
 #include "RaveBase/Converters/interface/PropagatorWrapper.h"
 
-#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
+//#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
 #include "RaveBase/RaveEngine/interface/RaveBeamSpotSingleton.h"
 #include "RaveBase/RaveEngine/interface/RaveParameterSetBuilder.h"
 #include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
@@ -50,7 +50,7 @@ rave::KinematicTreeFactory::KinematicTreeFactory (
 
 KinematicTreeFactory::~KinematicTreeFactory()
 {
-	if ( theField ) delete theField;
+	//if ( theField ) delete theField;
  	if ( thePropagator) delete thePropagator;
 }
 
@@ -61,7 +61,8 @@ void KinematicTreeFactory::setup()
   if (rave_verbosity > 4) rave_verbosity = 4;
   edm::setLogLevel(edm::Level(rave_verbosity));
   
-  MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( *theField ) );
+  //MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( *theField ) );
+  rave::MagneticFieldSingleton::Instance()->registry ( theField );
   edm::LogInfo ( "rave::KinematicTreeFactory" )
   << " magnetic field at (0,0,0) is "
   << MagneticFieldSingleton::Instance()->inTesla ( GlobalPoint ( 0., 0., 0. ) )

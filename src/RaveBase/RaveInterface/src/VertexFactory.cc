@@ -11,7 +11,7 @@
 #include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RaveTools/Converters/interface/PropagatorSingleton.h"
 #include "RaveBase/Converters/interface/PropagatorWrapper.h"
-#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
+//#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include <iostream>
 #include <iomanip>
@@ -60,7 +60,8 @@ VertexFactory::VertexFactory ( const rave::MagneticField & field,
 
 void VertexFactory::setup()
 {
-  MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( *theField ) );
+  //MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( *theField ) );
+  rave::MagneticFieldSingleton::Instance()->registry (  theField  );
   PropagatorSingleton::Instance()->initialise(); // init the analytical propagator
   if ( dynamic_cast < rave::VacuumPropagator * > ( theProp ) == 0 )
   {
@@ -77,7 +78,9 @@ VertexFactory::~VertexFactory()
 {
     // Should we let the OS do the cleaning? Itd be more efficient.
     // cout << "[VertexFactory] destor!" << endl;
-    if ( theField ) delete theField;
+
+	// comment out....
+	//if ( theField ) delete theField;
     MagneticFieldSingleton::Instance()->release();
     if ( theProp) delete theProp;
     PropagatorSingleton::Instance()->release();

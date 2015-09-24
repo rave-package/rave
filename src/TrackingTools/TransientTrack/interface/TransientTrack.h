@@ -26,8 +26,8 @@ namespace reco {
 
     // constructor from persistent track
     TransientTrack(); 
-    TransientTrack( const Track & tk , const MagneticField* field); 
-    TransientTrack( const TrackRef & tk , const MagneticField* field); 
+    TransientTrack( const Track & tk , const rave::MagneticField* field);
+    TransientTrack( const TrackRef & tk , const rave::MagneticField* field);
 
 
     TransientTrack( BasicTransientTrack * btt ) : Base(btt) {}
@@ -71,7 +71,7 @@ namespace reco {
 	{return &(data()) < &(other.data());}
     // {return (initialFTS.momentum().z()<a.initialFreeState().momentum().z());}
 
-    const MagneticField* field() const {return data().field();}
+    const rave::MagneticField* field() const {return data().field();}
 
     const BasicTransientTrack* basicTransientTrack() const {return &(data());}
 

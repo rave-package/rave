@@ -1,6 +1,6 @@
 #include "TrackingTools/PatternTools/interface/ClosestApproachInRPhi.h"
 #include "TrackingTools/TrajectoryState/interface/TrajectoryStateOnSurface.h" 
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 #include "FWCore/Utilities/interface/Exception.h"
 
 using namespace std;
@@ -69,7 +69,7 @@ bool ClosestApproachInRPhi::calculate(const TrackCharge & chargeA,
 			      const TrackCharge & chargeB, 
 			      const GlobalVector & momentumB, 
 			      const GlobalPoint & positionB,
-			      const MagneticField& magField) 
+			      const rave::MagneticField& magField)
 {
 
   // centres and radii of track circles
@@ -162,7 +162,7 @@ ClosestApproachInRPhi::circleParameters(const TrackCharge& charge,
 					const GlobalVector& momentum, 
 					const GlobalPoint& position, 
 					double& xc, double& yc, double& r,
-					const MagneticField& magField) 
+					const rave::MagneticField& magField)
 const
 {
 

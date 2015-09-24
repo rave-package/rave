@@ -6,12 +6,13 @@
 
 #include <cmath>
 #include <cfloat>
+#include <rave/MagneticField.h>
 
 class Surface;
 class Cylinder;
 class Plane;
 class HelixPlaneCrossing;
-class MagneticField; 
+class MagneticField;
 
 
 /** (Mostly) analytical helix propagation to cylindrical or planar surfaces.
@@ -23,7 +24,7 @@ class AnalyticalPropagator : public Propagator {
 
 public:
 
-  AnalyticalPropagator( const MagneticField* field,
+  AnalyticalPropagator( const rave::MagneticField* field,
 		        PropagationDirection dir = alongMomentum,
 			float maxDPhi = 1.6) :
     Propagator(dir),
@@ -119,13 +120,13 @@ private:
   bool propagateWithHelixCrossing(HelixPlaneCrossing&, const Plane&, const float,
 				  GlobalPoint&, GlobalVector&, double& s) const;
 
-  virtual const MagneticField* magneticField() const {return theField;}
+  virtual const rave::MagneticField* magneticField() const {return theField;}
 
 private:
   typedef std::pair<TrajectoryStateOnSurface,double> TsosWP;
   float theMaxDPhi2;
   float theMaxDBzRatio;
-  const MagneticField* theField;
+  const rave::MagneticField* theField;
 };
 
 #endif

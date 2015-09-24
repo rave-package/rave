@@ -62,7 +62,7 @@ namespace reco {
 //     virtual bool operator== (const TransientTrack & a) const = 0;
 //     virtual bool operator< (const TransientTrack & a) const = 0;
 
-    virtual const MagneticField* field() const = 0;
+    virtual const rave::MagneticField* field() const = 0;
 
     virtual const Track & track() const = 0;
 

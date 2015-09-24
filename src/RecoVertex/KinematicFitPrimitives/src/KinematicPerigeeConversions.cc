@@ -15,7 +15,7 @@ KinematicPerigeeConversions::extendedPerigeeFromKinematicParameters(
 ExtendedPerigeeTrajectoryParameters 
 KinematicPerigeeConversions::extendedPerigeeFromKinematicParameters(
   const KinematicParameters & parameters, const TrackCharge & charge, 
-  const GlobalPoint & referencePoint, const MagneticField* field) const
+  const GlobalPoint & referencePoint, const rave::MagneticField* field) const
 {
   GlobalVector impactDistance = parameters.position() - referencePoint;
   double theta = parameters.momentum().theta();
@@ -59,7 +59,7 @@ KinematicPerigeeConversions::extendedPerigeeErrorFromKinematicParametersError(
     const KinematicParameters& parameters,
     const TrackCharge& charge,
     const GlobalPoint& referencePoint,
-    const MagneticField* field) const
+    const rave::MagneticField* field) const
 {
   AlgebraicSymMatrix77 input = error.matrix();
   AlgebraicMatrix67 jacobian =
@@ -70,7 +70,7 @@ KinematicPerigeeConversions::extendedPerigeeErrorFromKinematicParametersError(
 
 KinematicParameters KinematicPerigeeConversions::kinematicParametersFromExPerigee(
 	const ExtendedPerigeeTrajectoryParameters& pr, const GlobalPoint& point,
-	const MagneticField* field) const
+	const rave::MagneticField* field) const
 {
  AlgebraicVector7 par;
  AlgebraicVector6 theVector = pr.vector();
@@ -96,7 +96,7 @@ KinematicParameters KinematicPerigeeConversions::kinematicParametersFromExPerige
      const ExtendedPerigeeTrajectoryError& error,
      const ExtendedPerigeeTrajectoryParameters& parameters,
      const GlobalPoint& referencePoint,
-     const MagneticField* field) const
+     const rave::MagneticField* field) const
 {
   AlgebraicSymMatrix66 input = error.covarianceMatrix();
   AlgebraicMatrix76 jacobian = 
@@ -108,7 +108,7 @@ KinematicParameters KinematicPerigeeConversions::kinematicParametersFromExPerige
 KinematicState
 KinematicPerigeeConversions::kinematicState(const AlgebraicVector4& momentum,
 	const GlobalPoint& referencePoint, const TrackCharge& charge,
-	const AlgebraicSymMatrix77& theCovarianceMatrix, const MagneticField* field) const
+	const AlgebraicSymMatrix77& theCovarianceMatrix, const rave::MagneticField* field) const
 {
  AlgebraicMatrix77 param2cart = jacobianParameters2Kinematic(momentum,
 				referencePoint, charge, field);
@@ -131,7 +131,7 @@ KinematicPerigeeConversions::kinematicState(const AlgebraicVector4& momentum,
 
 AlgebraicMatrix77 KinematicPerigeeConversions::jacobianParameters2Kinematic(
 	const AlgebraicVector4& momentum, const GlobalPoint& referencePoint,
-	const TrackCharge& charge, const MagneticField* field)const
+	const TrackCharge& charge, const rave::MagneticField* field)const
 {
   PerigeeConversions pc;
   AlgebraicMatrix66 param2cart = pc.jacobianParameters2Cartesian
@@ -169,7 +169,7 @@ AlgebraicMatrix77 KinematicPerigeeConversions::jacobianParameters2Kinematic(
 AlgebraicVector4
 KinematicPerigeeConversions::momentumFromPerigee(const AlgebraicVector4& momentum,
 	const GlobalPoint& referencePoint, const TrackCharge& ch,
-	const MagneticField* field)const
+	const rave::MagneticField* field)const
 {
  AlgebraicVector4 mm;
  double pt;
@@ -187,7 +187,7 @@ KinematicPerigeeConversions::momentumFromPerigee(const AlgebraicVector4& momentu
 AlgebraicMatrix76 KinematicPerigeeConversions::jacobianPerigeeToCartesian( 
     const ExtendedPerigeeTrajectoryParameters& parameters,
     const GlobalPoint& referencePoint,
-    const MagneticField* field) const
+    const rave::MagneticField* field) const
 {
   // The parameter position encoded in enums for readability
   AlgebraicVector6  params = parameters.vector();
@@ -236,7 +236,7 @@ AlgebraicMatrix67 KinematicPerigeeConversions::jacobianCartesianToPerigee(
     const KinematicParameters& parameters,
     const TrackCharge& charge,
     const GlobalPoint& referencePoint,
-    const MagneticField* field) const
+    const rave::MagneticField* field) const
 {
   // The parameter position encoded in enums for readability
   AlgebraicVector7  params = parameters.vector();

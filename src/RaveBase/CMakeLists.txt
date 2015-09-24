@@ -4,7 +4,7 @@ project (ravebase)
 
 set(RAVEBASE_CPP 
 	Converters/src/CmsToRaveObjects.cc 
-	Converters/src/MagneticFieldWrapper.cc 
+	#	Converters/src/MagneticFieldWrapper.cc 
 	Converters/src/PerigeeToRaveObjects.cc 
 	Converters/src/PropagatorWrapper.cc 
 	Converters/src/RaveStreamers.cc 

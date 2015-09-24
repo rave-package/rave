@@ -8,6 +8,7 @@
 #include "TrackingTools/TrajectoryState/interface/PerigeeConversions.h"
 #include "TrackingTools/TrajectoryParametrization/interface/TrajectoryStateExceptions.h"
 #include <vector>
+#include <rave/MagneticField.h>
 
 /**
  * Trajectory state defined at a given point on the helix, which is 
@@ -35,7 +36,7 @@ public:
    */
 
   TrajectoryStateClosestToPoint(const PerigeeTrajectoryParameters& perigeeParameters, double pt,
-				const GlobalPoint& referencePoint, const MagneticField* field);
+				const GlobalPoint& referencePoint, const rave::MagneticField* field);
 
   /**
    * Public constructor, which is used to convert perigee 
@@ -45,7 +46,7 @@ public:
 
   TrajectoryStateClosestToPoint(const PerigeeTrajectoryParameters& perigeeParameters, double pt,
     const PerigeeTrajectoryError& perigeeError, const GlobalPoint& referencePoint,
-    const MagneticField* field);
+    const rave::MagneticField* field);
 
 
   /**
@@ -163,7 +164,7 @@ private:
   void calculateFTS() const;
 
   bool valid;
-  const MagneticField* theField;
+  const rave::MagneticField* theField;
 
   mutable FTS theFTS;
   mutable bool theFTSavailable;

@@ -6,7 +6,8 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/PerigeeKinematicState.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrack.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/ParticleMass.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
+#include <rave/MagneticField.h>
 
 /**
  * Kinematic State builder for TransientTrack  based kinematic states.
@@ -35,7 +36,7 @@ public:
  */ 
   KinematicState operator()(const KinematicParameters& par,
 	const KinematicParametersError& er, const TrackCharge& ch,
-	const MagneticField* field) const;
+	const rave::MagneticField* field) const;
  
 /**
  * Operator creating a KinematicState out of a RecObj

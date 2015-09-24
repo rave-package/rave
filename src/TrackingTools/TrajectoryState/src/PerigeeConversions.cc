@@ -1,6 +1,6 @@
 #include "TrackingTools/TrajectoryState/interface/PerigeeConversions.h"
 #include "TrackingTools/TrajectoryState/interface/TrajectoryStateClosestToPoint.h"
-#include "MagneticField/Engine/interface/MagneticField.h" 
+//#include "MagneticField/Engine/interface/MagneticField.h"
 #include <cmath>
 
 PerigeeTrajectoryParameters PerigeeConversions::ftsToPerigeeParameters
@@ -125,13 +125,13 @@ GlobalVector PerigeeConversions::momentumFromPerigee
 
 GlobalVector PerigeeConversions::momentumFromPerigee
   (const AlgebraicVector& momentum, const TrackCharge& charge, 
-   const GlobalPoint& referencePoint, const MagneticField* field) const {
+   const GlobalPoint& referencePoint, const rave::MagneticField* field) const {
       return momentumFromPerigee(asSVector<3>(momentum), charge, referencePoint, field);
   }
 
 GlobalVector PerigeeConversions::momentumFromPerigee
   (const AlgebraicVector3& momentum, const TrackCharge& charge, 
-   const GlobalPoint& referencePoint, const MagneticField* field) const
+   const GlobalPoint& referencePoint, const rave::MagneticField* field) const
 {
   double pt;
   if (momentum[0]==0.) throw cms::Exception("PerigeeConversions", "Track with rho=0");
@@ -158,7 +158,7 @@ TrackCharge PerigeeConversions::chargeFromPerigee
 TrajectoryStateClosestToPoint PerigeeConversions::trajectoryStateClosestToPoint
 	(const AlgebraicVector& momentum, const GlobalPoint& referencePoint,
 	 const TrackCharge& charge, const AlgebraicMatrix& theCovarianceMatrix, ///FIXME !!! why not Sym !!??
-	 const MagneticField* field) const {
+	 const rave::MagneticField* field) const {
             AlgebraicSymMatrix sym; sym.assign(theCovarianceMatrix); // below, this was used for Matrix => SymMatrix
             return trajectoryStateClosestToPoint(asSVector<3>(momentum), referencePoint, 
                     charge, asSMatrix<6>(sym), field);
@@ -169,7 +169,7 @@ TrajectoryStateClosestToPoint PerigeeConversions::trajectoryStateClosestToPoint
 TrajectoryStateClosestToPoint PerigeeConversions::trajectoryStateClosestToPoint
 	(const AlgebraicVector3& momentum, const GlobalPoint& referencePoint,
 	 const TrackCharge& charge, const AlgebraicSymMatrix66& theCovarianceMatrix,
-	 const MagneticField* field) const
+	 const rave::MagneticField* field) const
 {
   AlgebraicMatrix66 param2cart = jacobianParameters2Cartesian
   	(momentum, referencePoint, charge, field);
@@ -185,14 +185,14 @@ TrajectoryStateClosestToPoint PerigeeConversions::trajectoryStateClosestToPoint
 AlgebraicMatrix
 PerigeeConversions::jacobianParameters2Cartesian_old(
 	const AlgebraicVector& momentum, const GlobalPoint& position,
-	const TrackCharge& charge, const MagneticField* field) const {
+	const TrackCharge& charge, const rave::MagneticField* field) const {
     return asHepMatrix(jacobianParameters2Cartesian(asSVector<3>(momentum), position, charge, field));
 }
 
 AlgebraicMatrix66
 PerigeeConversions::jacobianParameters2Cartesian(
 	const AlgebraicVector3& momentum, const GlobalPoint& position,
-	const TrackCharge& charge, const MagneticField* field) const
+	const TrackCharge& charge, const rave::MagneticField* field) const
 {
   if (momentum[0]==0.) throw cms::Exception("PerigeeConversions", "Track with rho=0");
   double factor = 1.;

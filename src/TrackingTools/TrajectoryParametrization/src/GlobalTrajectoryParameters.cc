@@ -1,10 +1,10 @@
 #include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 
 GlobalTrajectoryParameters::GlobalTrajectoryParameters(const GlobalPoint& aX,
 						       const GlobalVector& direction,
 						       double transverseCurvature, int, 
-						       const MagneticField* fieldProvider) :
+						       const rave::MagneticField* fieldProvider) :
   theX(aX), theField(fieldProvider), hasCurvature_(true), cachedCurvature_(transverseCurvature)
 {
   double bza = -2.99792458e-3 * theField->inTesla(theX).z();

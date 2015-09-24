@@ -5,7 +5,7 @@
 #include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h"
 #include "TrackingTools/TrajectoryParametrization/interface/PerigeeTrajectoryParameters.h"
 #include "TrackingTools/TrajectoryParametrization/interface/PerigeeTrajectoryError.h"
-
+#include <rave/MagneticField.h>
 class TrajectoryStateClosestToPoint;
 
 /**
@@ -53,11 +53,11 @@ public:
 
   GlobalVector momentumFromPerigee(const AlgebraicVector& momentum, 
     const TrackCharge& charge, const GlobalPoint& referencePoint,
-    const MagneticField* field)  const;
+    const rave::MagneticField* field)  const;
 
   GlobalVector momentumFromPerigee(const AlgebraicVector3& momentum, 
     const TrackCharge& charge, const GlobalPoint& referencePoint,
-    const MagneticField* field)  const;
+    const rave::MagneticField* field)  const;
 
   /**
    * This method returns the (Cartesian) momentum from the PerigeeTrajectoryParameters
@@ -88,12 +88,12 @@ public:
   TrajectoryStateClosestToPoint trajectoryStateClosestToPoint
 	(const AlgebraicVector& momentum, const GlobalPoint& referencePoint,
 	 const TrackCharge& charge, const AlgebraicMatrix& theCovarianceMatrix,
-	 const MagneticField* field) const;
+	 const rave::MagneticField* field) const;
 
   TrajectoryStateClosestToPoint trajectoryStateClosestToPoint
 	(const AlgebraicVector3& momentum, const GlobalPoint& referencePoint,
 	 const TrackCharge& charge, const AlgebraicSymMatrix66& theCovarianceMatrix,
-	 const MagneticField* field) const;
+	 const rave::MagneticField* field) const;
 
 
   /**
@@ -103,7 +103,7 @@ public:
 
   AlgebraicMatrix  jacobianParameters2Cartesian_old
 	(const AlgebraicVector& momentum, const GlobalPoint& position,
-	 const TrackCharge& charge, const MagneticField* field) const;
+	 const TrackCharge& charge, const rave::MagneticField* field) const;
  
   /**
    * Jacobians of tranformations between the parametrixation
@@ -112,7 +112,7 @@ public:
 
   AlgebraicMatrix66  jacobianParameters2Cartesian
 	(const AlgebraicVector3& momentum, const GlobalPoint& position,
-	 const TrackCharge& charge, const MagneticField* field) const;
+	 const TrackCharge& charge, const rave::MagneticField* field) const;
 
 
 

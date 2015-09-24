@@ -89,7 +89,7 @@ boost::shared_ptr< ::KinematicStatePropagator > propagator ( new ::TrackKinemati
   ::KinematicParametersError internalError = RaveToCmsObjects().convert ( error );
   ::KinematicState initState = builder ( internalState, internalError,
                                          boost::numeric_cast< int > ( charge ),
-                                         MagneticFieldSingleton::Instance() );
+                                         rave::MagneticFieldSingleton::Instance() );
 
   float chi2 = boost::numeric_cast< float > ( chiSquared );
   float ndof = boost::numeric_cast< float > ( degreesOfFr );

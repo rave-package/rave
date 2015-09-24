@@ -5,8 +5,8 @@
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
 #include "DataFormats/CLHEP/interface/AlgebraicObjects.h"
 #include "DataFormats/TrajectoryState/interface/TrackCharge.h"
-
-class MagneticField;
+#include <rave/MagneticField.h>
+//class MagneticField;
 
 /** Class providing access to a set of relevant parameters of a trajectory
  *  in the global, Cartesian frame. The basic data members used to calculate
@@ -24,7 +24,7 @@ public:
   GlobalTrajectoryParameters(const GlobalPoint& aX,
                              const GlobalVector& aP,
                              TrackCharge aCharge, 
-			     const MagneticField* fieldProvider) :
+			     const rave::MagneticField* fieldProvider) :
     theX(aX), theP(aP), theCharge(aCharge), theField(fieldProvider),
     hasCurvature_(false), cachedCurvature_(1.0) {} // we must initialize cache to non-NAN to avoid FPE
 
@@ -37,7 +37,7 @@ public:
   GlobalTrajectoryParameters(const GlobalPoint& aX,
                              const GlobalVector& direction,
                              double transverseCurvature, int, 
-			     const MagneticField* fieldProvider);
+			     const rave::MagneticField* fieldProvider);
 
   /** Global position.
    */
@@ -103,13 +103,13 @@ public:
   AlgebraicVector vector_old() const { return asHepVector(vector());  }
 
   GlobalVector magneticFieldInInverseGeV( const GlobalPoint& x) const; 
-  const MagneticField& magneticField() const {return *theField;}
+  const rave::MagneticField& magneticField() const {return *theField;}
 
 private:
   GlobalPoint theX;
   GlobalVector theP;
   TrackCharge theCharge;
-  const MagneticField* theField;
+  const rave::MagneticField* theField;
   mutable bool hasCurvature_; mutable double cachedCurvature_;
   //mutable bool hasMagneticField_; mutable GlobalVector cachedMagneticField_; // 
 

@@ -56,7 +56,7 @@ TrajectoryStateTransform::transientState( const PTrajectoryStateOnDet& ts,
 */
 
 FreeTrajectoryState TrajectoryStateTransform::initialFreeState( const reco::Track& tk,
-							      const MagneticField* field) const
+							      const rave::MagneticField* field) const
 {
   Basic3DVector<float> pos( tk.vertex());
   GlobalPoint gpos( pos);

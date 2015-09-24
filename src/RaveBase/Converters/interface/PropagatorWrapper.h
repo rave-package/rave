@@ -23,7 +23,7 @@ class PropagatorWrapper : public Propagator
     TrajectoryStateOnSurface propagate (
         const FreeTrajectoryState&, const Cylinder & ) const;
 
-    const MagneticField* magneticField() const;
+    const rave::MagneticField* magneticField() const;
     PropagatorWrapper * clone() const;
 
 

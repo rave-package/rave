@@ -8,7 +8,7 @@
 #include "RaveBase/RaveInterface/rave/PerigeeParameters3D.h"
 #include "RaveBase/RaveInterface/rave/PerigeeParameters5D.h"
 #include "RaveBase/RaveInterface/rave/PerigeeCovariance5D.h"
-
+#include <rave/MagneticField.h>
 #ifdef WITH_KINEMATICS
 #include "RaveBase/RaveInterface/rave/Vector7D.h"
 #include "RaveBase/RaveInterface/rave/Covariance7D.h"

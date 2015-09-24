@@ -5,7 +5,8 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicParametersError.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/ParticleMass.h"
 #include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
+#include <rave/MagneticField.h>
 
 /**
  * Class  providing  a state of particle needed
@@ -34,7 +35,7 @@ public:
  */
  KinematicState(const KinematicParameters& parameters,
  	const KinematicParametersError& error, const TrackCharge& charge,
-	const MagneticField* field);
+	const rave::MagneticField* field);
 						       
  bool operator==(const KinematicState& other) const;
 
@@ -63,12 +64,12 @@ public:
  bool isValid() const
  {return vl;}
 
-  const MagneticField* magneticField() const {return theField;}
+  const rave::MagneticField* magneticField() const {return theField;}
 
  
 private:
 
-  const MagneticField* theField;
+  const rave::MagneticField* theField;
   KinematicParameters param;
   KinematicParametersError err;
   TrackCharge ch;

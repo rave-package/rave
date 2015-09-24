@@ -16,7 +16,7 @@
 #include <iostream>
 
 //class MagneticField;
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 
 /** Concrete implementation for the state of one trajectory on a surface.
  */
@@ -65,7 +65,7 @@ public:
    */
   BasicSingleTrajectoryState( const LocalTrajectoryParameters& par,
 			      const Surface& aSurface,
-			      const MagneticField* field,
+			      const rave::MagneticField* field,
 			      const SurfaceSide side = SurfaceSideDefinition::atCenterOfSurface);
   /** Constructor from local parameters, errors and surface. For surfaces 
    *  with material the side of the surface should be specified explicitely. 
@@ -74,7 +74,7 @@ public:
   BasicSingleTrajectoryState( const LocalTrajectoryParameters& par,
 			      const LocalTrajectoryError& err,
 			      const Surface& aSurface,
-			      const MagneticField* field,
+			      const rave::MagneticField* field,
 			      const SurfaceSide side = SurfaceSideDefinition::atCenterOfSurface,
 			      double weight = 1.);
   /** Constructor from local parameters, errors and surface. For multi-states the
@@ -84,7 +84,7 @@ public:
   BasicSingleTrajectoryState( const LocalTrajectoryParameters& par,
 			      const LocalTrajectoryError& err,
 			      const Surface& aSurface,
-			      const MagneticField* field,
+			      const rave::MagneticField* field,
 			      double weight);
 
 /// construct invalid trajectory state (without parameters)
@@ -149,7 +149,7 @@ public:
     return &(*theFreeState);
   }
   
-  const MagneticField *magneticField() const { return theField; }
+  const rave::MagneticField * magneticField() const { return theField; }
 
 // access local parameters/errors
   const LocalTrajectoryParameters& localParameters() const {
@@ -215,12 +215,12 @@ public:
   virtual bool canUpdateLocalParameters() const { return true; }
   virtual void update( const LocalTrajectoryParameters& p,
                        const Surface& aSurface,
-                       const MagneticField* field,
+                       const rave::MagneticField* field,
                        const SurfaceSide side ) ;
   virtual void update( const LocalTrajectoryParameters& p,
                        const LocalTrajectoryError& err,
                        const Surface& aSurface,
-                       const MagneticField* field,
+                       const rave::MagneticField* field,
                        const SurfaceSide side,
                        double weight ) ;
 private:
@@ -253,7 +253,7 @@ private:
   ConstReferenceCountingPointer<Surface> theSurfaceP;
   SurfaceSide theSurfaceSide;
   double theWeight;
-  const MagneticField* theField;
+  const rave::MagneticField* theField;
 
 };
 

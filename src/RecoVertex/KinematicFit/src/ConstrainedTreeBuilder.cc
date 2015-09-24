@@ -25,7 +25,7 @@ RefCountedKinematicTree ConstrainedTreeBuilder::buildTree(vector<RefCountedKinem
  par(3) = vtx->position().z();
  double ent = 0.;
  int charge = 0;
- const MagneticField* field=prt.front()->magneticField();
+ const rave::MagneticField* field=prt.front()->magneticField();
  for(vector<RefCountedKinematicParticle>::iterator i = prt.begin(); i != prt.end(); i++)
  {
   charge += (*i)->currentState().particleCharge();

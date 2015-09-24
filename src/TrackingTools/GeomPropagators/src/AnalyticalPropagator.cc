@@ -4,7 +4,7 @@
 #include "DataFormats/GeometrySurface/interface/TangentPlane.h"
 #include "DataFormats/GeometrySurface/interface/Plane.h"
 
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 
 #include "TrackingTools/GeomPropagators/interface/PropagationExceptions.h"
 #include "TrackingTools/GeomPropagators/interface/StraightLinePlaneCrossing.h"

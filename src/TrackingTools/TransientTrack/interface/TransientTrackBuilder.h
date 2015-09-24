@@ -3,9 +3,10 @@
 
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrack.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 #include "Geometry/CommonDetUnit/interface/GlobalTrackingGeometry.h"
 #include "DataFormats/Common/interface/Handle.h"
+#include <rave/MagneticField.h>
 
   /**
    * Helper class to build TransientTrack from the persistent Track.
@@ -14,15 +15,15 @@
 
 class TransientTrackBuilder {
  public:
-    TransientTrackBuilder(const MagneticField * field, const edm::ESHandle<GlobalTrackingGeometry> & );
+    TransientTrackBuilder(const rave::MagneticField * field, const edm::ESHandle<GlobalTrackingGeometry> & );
     reco::TransientTrack build ( const reco::TransientTrack * p ) const;
 
     // reco::TransientTrack build ( const reco::Track * p ) const;
 
-    const MagneticField* field() const;
+    const rave::MagneticField* field() const;
 
   private:
-    const MagneticField* theField;
+    const rave::MagneticField* theField;
 };
 
 #endif

@@ -16,7 +16,7 @@ TransverseImpactPointExtrapolator::TransverseImpactPointExtrapolator () :
   thePropagator(0) {}
 
 
-TransverseImpactPointExtrapolator::TransverseImpactPointExtrapolator (const MagneticField* field) :
+TransverseImpactPointExtrapolator::TransverseImpactPointExtrapolator (const rave::MagneticField* field) :
   // thePropagator(new AnalyticalPropagator(field, anyDirection))
   thePropagator( PropagatorSingleton::Instance()->propagator()->clone() )
   // thePropagator( const_cast < Propagator *> ( PropagatorSingleton::Instance()->propagator() ) )

@@ -18,8 +18,8 @@ namespace reco {
 
     // constructor from persistent track
     TrackTransientTrack(); 
-    TrackTransientTrack( const Track & tk , const MagneticField* field); 
-    TrackTransientTrack( const TrackRef & tk , const MagneticField* field); 
+    TrackTransientTrack( const Track & tk , const rave::MagneticField* field);
+    TrackTransientTrack( const TrackRef & tk , const rave::MagneticField* field);
 
     // TrackTransientTrack( const TrackRef & tk , const MagneticField* field, const edm::ESHandle<GlobalTrackingGeometry>& trackingGeometry);
 
@@ -65,7 +65,7 @@ namespace reco {
 
     TrackCharge charge() const {return Track::charge();}
 
-    const MagneticField* field() const {return theField;}
+    const rave::MagneticField* field() const {return theField;}
 
     const Track & track() const {return *this;}
 
@@ -76,7 +76,7 @@ namespace reco {
     void calculateTSOSAtVertex() const;
 
     TrackRef tkr_;
-    const MagneticField* theField;
+    const rave::MagneticField* theField;
 
     FreeTrajectoryState initialFTS;
     mutable bool initialTSOSAvailable, initialTSCPAvailable, blStateAvailable;

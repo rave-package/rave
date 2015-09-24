@@ -35,7 +35,7 @@ GlobalTrajectoryParameters RaveToCmsObjects::convert(const rave::Vector6D & stat
 {
   GlobalPoint  position ( state.x(),  state.y(),  state.z() );
   GlobalVector momentum ( state.px(), state.py(), state.pz() );
-  return GlobalTrajectoryParameters ( position , momentum, charge, MagneticFieldSingleton::Instance() );
+  return GlobalTrajectoryParameters ( position , momentum, charge, rave::MagneticFieldSingleton::Instance() );
 }
 
 CartesianTrajectoryError RaveToCmsObjects::convert ( const rave::Covariance6D & c ) const

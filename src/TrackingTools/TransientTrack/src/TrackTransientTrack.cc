@@ -13,7 +13,7 @@ TrackTransientTrack::TrackTransientTrack() :
 {
 }
 
-TrackTransientTrack::TrackTransientTrack( const Track & tk , const MagneticField* field) : 
+TrackTransientTrack::TrackTransientTrack( const Track & tk , const rave::MagneticField* field) :
   Track(tk), tkr_(), theField(field), initialTSOSAvailable(false),
   initialTSCPAvailable(false), blStateAvailable(false)
 {
@@ -22,7 +22,7 @@ TrackTransientTrack::TrackTransientTrack( const Track & tk , const MagneticField
 }
 
 
-TrackTransientTrack::TrackTransientTrack( const TrackRef & tk , const MagneticField* field) : 
+TrackTransientTrack::TrackTransientTrack( const TrackRef & tk , const rave::MagneticField* field) :
   Track(*tk), tkr_(tk), theField(field), initialTSOSAvailable(false),
   initialTSCPAvailable(false), blStateAvailable(false)
 {

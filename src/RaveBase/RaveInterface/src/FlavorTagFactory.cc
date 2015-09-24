@@ -5,7 +5,7 @@
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 #include "RaveBase/RaveEngine/interface/RaveVertexReconstructor.h"
-#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
+//#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
 #include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RecoBTag/SecondaryVertex/interface/SimpleVertexBasedTagger.h"
 #include "RaveBase/RaveEngine/interface/RaveBeamSpotSingleton.h"
@@ -150,7 +150,8 @@ float FlavorTagFactory::tag ( const vector < Track > & trks,
 FlavorTagFactory::FlavorTagFactory ( const rave::MagneticField & field,
     const string & method, const string & vtxmethod ) : theAlgo(0)
 {
-  MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( field ) );
+  //MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( field ) );
+  MagneticFieldSingleton::Instance()->registry ( field );
   setup ( method, vtxmethod );
 }
 

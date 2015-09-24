@@ -86,7 +86,7 @@ RefCountedKinematicTree FinalTreeBuilder::buildTree(const CachingVertex<6>& vtx,
 //new born kinematic particle 
  KinematicParameters kPar(par);
  KinematicParametersError kEr(sCov);  
- const MagneticField* field=input.front()->magneticField();
+ const rave::MagneticField* field=input.front()->magneticField();
  KinematicState nState(kPar, kEr, ch, field);
  
 //invalid previous particle and empty constraint:

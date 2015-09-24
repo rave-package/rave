@@ -2,6 +2,7 @@
 #define JacobianCurvilinearToLocal_H
 
 #include "DataFormats/CLHEP/interface/AlgebraicObjects.h"
+#include <rave/MagneticField.h>
 
 class Surface;
 class LocalTrajectoryParameters;
@@ -23,7 +24,7 @@ class JacobianCurvilinearToLocal {
   
   JacobianCurvilinearToLocal(const Surface& surface, 
 			     const LocalTrajectoryParameters& localParameters,
-			     const MagneticField& magField);
+			     const rave::MagneticField& magField);
   
   /** Access to Jacobian.
    */

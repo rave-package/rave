@@ -94,7 +94,7 @@ BasicSingleTrajectoryState( const GlobalTrajectoryParameters& par,
 BasicSingleTrajectoryState::
 BasicSingleTrajectoryState( const LocalTrajectoryParameters& par,
 			    const Surface& aSurface,
-			    const MagneticField* field,
+			    const rave::MagneticField* field,
 			    const SurfaceSide side) :
   theFreeState(0),
   theGlobalParamsUp2Date(false),
@@ -113,7 +113,7 @@ BasicSingleTrajectoryState::
 BasicSingleTrajectoryState( const LocalTrajectoryParameters& par,
 			    const LocalTrajectoryError& err,
 			    const Surface& aSurface,
-			    const MagneticField* field,
+			    const rave::MagneticField* field,
 			    const SurfaceSide side,
 			    double weight) :
   theFreeState(0),
@@ -134,7 +134,7 @@ BasicSingleTrajectoryState::
 BasicSingleTrajectoryState( const LocalTrajectoryParameters& par,
 			    const LocalTrajectoryError& err,
 			    const Surface& aSurface,
-			    const MagneticField* field,
+			    const rave::MagneticField* field,
 			    double weight) :
   theFreeState(0),
   theGlobalParamsUp2Date(false),
@@ -265,7 +265,7 @@ BasicSingleTrajectoryState::createLocalErrorFromCartesianError() const {
 void
 BasicSingleTrajectoryState::update( const LocalTrajectoryParameters& p,
         const Surface& aSurface,
-        const MagneticField* field,
+        const rave::MagneticField* field,
         const SurfaceSide side) 
 {
     theLocalParameters = p;
@@ -284,7 +284,7 @@ void
 BasicSingleTrajectoryState::update( const LocalTrajectoryParameters& p,
         const LocalTrajectoryError& err,
         const Surface& aSurface,
-        const MagneticField* field,
+        const rave::MagneticField* field,
         const SurfaceSide side, 
         double weight) 
 {

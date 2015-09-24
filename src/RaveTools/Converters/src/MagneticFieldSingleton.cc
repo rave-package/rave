@@ -5,7 +5,7 @@
 
 using namespace std;
 
-GlobalVector MagneticFieldSingleton::inTesla ( const GlobalPoint & gp ) const
+GlobalVector rave::MagneticFieldSingleton::inTesla ( const GlobalPoint & gp ) const
 {
   /*
   if ( !theField )
@@ -24,38 +24,38 @@ GlobalVector MagneticFieldSingleton::inTesla ( const GlobalPoint & gp ) const
   return theField->inTesla ( gp );
 }
 
-void MagneticFieldSingleton::release() {
+void rave::MagneticFieldSingleton::release() {
 	if (theField){
 		delete theField;
 		theField = NULL;
 	}
 }
 
-bool MagneticFieldSingleton::hasField() const
+bool rave::MagneticFieldSingleton::hasField() const
 {
   return ( theField != 0 );
 }
 
-MagneticFieldSingleton::MagneticFieldSingleton() : theField(0)
+rave::MagneticFieldSingleton::MagneticFieldSingleton() : theField(0)
 {}
 
-MagneticFieldSingleton::MagneticFieldSingleton( const MagneticFieldSingleton & o )
+rave::MagneticFieldSingleton::MagneticFieldSingleton( const MagneticFieldSingleton & o )
 {
   cout << "[MagneticFieldSingleton] Arrgh! Fatal!" << endl;
 }
 
-MagneticFieldSingleton * MagneticFieldSingleton::Instance()
+rave::MagneticFieldSingleton * rave::MagneticFieldSingleton::Instance()
 {
   static MagneticFieldSingleton singleton;
   return &singleton;
 }
 
-const MagneticField * MagneticFieldSingleton::field() const
+const rave::MagneticField * rave::MagneticFieldSingleton::field() const
 {
   return theField;
 }
 
-void MagneticFieldSingleton::registry ( MagneticField * field )
+void rave::MagneticFieldSingleton::registry ( MagneticField * field )
 {
   /*
   cout << "[MagneticFieldSingleton] registering field Bz="  << flush;
@@ -67,7 +67,7 @@ void MagneticFieldSingleton::registry ( MagneticField * field )
 }
 
 // dummy function
-MagneticField * MagneticFieldSingleton::copy() const
+rave::MagneticField * rave::MagneticFieldSingleton::copy() const
 {
 	return nullptr;
 }

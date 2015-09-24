@@ -11,6 +11,7 @@
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "TrackingTools/PatternTools/interface/TSCPBuilderNoMaterial.h"
 #include <map>
+#include <rave/MagneticField.h>
 
 namespace reco {
 
@@ -58,7 +59,7 @@ namespace reco {
 
     TrackCharge charge() const {return initialFTS.charge();}
 
-    const MagneticField* field() const {return theField;}
+    const rave::MagneticField* field() const {return theField;}
 
     const Track & track() const;
 
@@ -71,7 +72,7 @@ namespace reco {
     void calculateTSOSAtVertex() const;
 
     FreeTrajectoryState initialFTS;
-    const MagneticField* theField;
+    const rave::MagneticField* theField;
     mutable bool initialTSOSAvailable, initialTSCPAvailable, trackAvailable, blStateAvailable;
     mutable TrajectoryStateOnSurface initialTSOS;
     mutable TrajectoryStateClosestToPoint initialTSCP;

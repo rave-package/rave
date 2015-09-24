@@ -5,7 +5,8 @@
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
 #include "DataFormats/GeometryCommonDetAlgo/interface/DeepCopyPointerByClone.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
+#include <rave/MagneticField.h>
 
 class FreeTrajectoryState;
 class TrajectoryStateOnSurface;
@@ -31,7 +32,7 @@ public:
   TransverseImpactPointExtrapolator();
   
   /// constructor with default geometrical propagator
-  TransverseImpactPointExtrapolator(const MagneticField* field);
+  TransverseImpactPointExtrapolator(const rave::MagneticField* field);
   /// constructor with user-supplied propagator
   TransverseImpactPointExtrapolator(const Propagator& u);
 

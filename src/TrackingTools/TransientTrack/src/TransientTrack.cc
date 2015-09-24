@@ -10,10 +10,10 @@ typedef TrackTransientTrack                              TTT;
 TransientTrack::TransientTrack() : 
   Base( new TTT()) {}
 
-TransientTrack::TransientTrack( const Track & tk , const MagneticField* field) : 
+TransientTrack::TransientTrack( const Track & tk , const rave::MagneticField* field) :
   Base( new TTT(tk, field)) {}
 
 
-TransientTrack::TransientTrack( const TrackRef & tk , const MagneticField* field) : 
+TransientTrack::TransientTrack( const TrackRef & tk , const rave::MagneticField* field) :
   Base( new TTT(tk, field)) {}
 

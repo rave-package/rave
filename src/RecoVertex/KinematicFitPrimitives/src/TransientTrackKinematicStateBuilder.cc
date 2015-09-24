@@ -13,7 +13,7 @@ KinematicState TransientTrackKinematicStateBuilder::operator()(const TransientTr
 KinematicState
 TransientTrackKinematicStateBuilder::operator()(const KinematicParameters& par,
 	const KinematicParametersError& er, const TrackCharge& ch,
-	const MagneticField* field) const
+	const rave::MagneticField* field) const
 {
   return KinematicState(par, er, ch, field);
 }

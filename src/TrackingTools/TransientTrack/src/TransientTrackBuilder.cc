@@ -1,11 +1,11 @@
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
 
-TransientTrackBuilder::TransientTrackBuilder ( const MagneticField * field,
+TransientTrackBuilder::TransientTrackBuilder ( const rave::MagneticField * field,
     const edm::ESHandle<GlobalTrackingGeometry> & ) :
   theField ( field )
 {}
 
-const MagneticField * TransientTrackBuilder::field() const
+const rave::MagneticField * TransientTrackBuilder::field() const
 {
   return theField;
 }

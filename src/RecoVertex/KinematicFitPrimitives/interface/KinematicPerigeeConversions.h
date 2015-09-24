@@ -5,8 +5,10 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicState.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/ExtendedPerigeeTrajectoryParameters.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/ExtendedPerigeeTrajectoryError.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
+#include <rave/MagneticField.h>
 #include "RecoVertex/KinematicFitPrimitives/interface/Matrices.h"
+
 
 /**
  * Helper class to simplify parameters 
@@ -40,7 +42,7 @@ public:
    */
  ExtendedPerigeeTrajectoryParameters extendedPerigeeFromKinematicParameters
      (const KinematicParameters & parameters, const TrackCharge & charge, 
-      const GlobalPoint & referencePoint, const MagneticField* field) const;
+      const GlobalPoint & referencePoint, const rave::MagneticField* field) const;
  
  /**
   * Converts the cartesian covariance matrix to the perigee one.
@@ -55,7 +57,7 @@ public:
       const KinematicParameters& parameters,
       const TrackCharge& charge,
       const GlobalPoint& referencePoint,
-      const MagneticField* field) const;
+      const rave::MagneticField* field) const;
  
  /**
   * Converts the perigee parameters to the cartesian ones.
@@ -66,7 +68,7 @@ public:
   */
  KinematicParameters kinematicParametersFromExPerigee
  	(const ExtendedPerigeeTrajectoryParameters& pr,	const GlobalPoint& point,
-	 const MagneticField* field) const;
+	 const rave::MagneticField* field) const;
 
  /**
   * Converts the perigee covariance matrix to the cartesian one
@@ -79,18 +81,18 @@ public:
      (const ExtendedPerigeeTrajectoryError& error,
       const ExtendedPerigeeTrajectoryParameters& parameters,
       const GlobalPoint& referencePoint,
-      const MagneticField* field) const;
+      const rave::MagneticField* field) const;
  
  KinematicState kinematicState(const AlgebraicVector4& momentum,
 	const GlobalPoint& referencePoint, const TrackCharge& charge,
-	const AlgebraicSymMatrix77& theCovarianceMatrix, const MagneticField* field) const;
+	const AlgebraicSymMatrix77& theCovarianceMatrix, const rave::MagneticField* field) const;
 				 
     /**
      * Cartesian (px,py,px,m) from extended perigee
      */ 
  AlgebraicVector4 momentumFromPerigee(const AlgebraicVector4& momentum,
 	const GlobalPoint& referencePoint, const TrackCharge& ch,
-	const MagneticField* field) const;
+	const rave::MagneticField* field) const;
 				     
 private:
   /**
@@ -100,7 +102,7 @@ private:
    */
   AlgebraicMatrix77 jacobianParameters2Kinematic(const AlgebraicVector4& momentum, 
 	const GlobalPoint& referencePoint, const TrackCharge& charge,
-	const MagneticField* field) const;
+	const rave::MagneticField* field) const;
 
 
   /**
@@ -113,7 +115,7 @@ private:
   AlgebraicMatrix76 jacobianPerigeeToCartesian( 
       const ExtendedPerigeeTrajectoryParameters& parameters,
       const GlobalPoint& referencePoint,
-      const MagneticField* field) const;
+      const rave::MagneticField* field) const;
 
   /**
    * Jacobian to allow error propagation from cartesian to perigee parameters
@@ -126,7 +128,7 @@ private:
     const KinematicParameters& parameters,
     const TrackCharge& charge,
     const GlobalPoint& referencePoint,
-    const MagneticField* field) const;
+    const rave::MagneticField* field) const;
 };
 
 #endif

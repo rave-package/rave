@@ -32,7 +32,7 @@ Vector6D PerigeeToRaveObjects::convert(
 
   // We need the charge knowledge to know from the transverseCurvature what pt is.
   float pt;
-  float field = MagneticFieldSingleton::Instance()->inInverseGeV(ref).z();
+  float field = rave::MagneticFieldSingleton::Instance()->inInverseGeV(ref).z();
   float signTC = boost::numeric_cast<float>(- charge);
   bool isCharged = (charge != 0);
   if (isCharged)
@@ -93,7 +93,7 @@ Vector7D PerigeeToRaveObjects::convert(
   KinematicPerigeeConversions parameterConverter;
   KinematicParameters internalResult =
       parameterConverter.kinematicParametersFromExPerigee(
-          eptp, ref, MagneticFieldSingleton::Instance());
+          eptp, ref, rave::MagneticFieldSingleton::Instance());
 
   CmsToRaveObjects frameworkOutputConverter;
   return frameworkOutputConverter.convert(internalResult);
@@ -116,7 +116,7 @@ Covariance7D PerigeeToRaveObjects::convert(
   KinematicPerigeeConversions parameterConverter;
   KinematicParametersError internalResult =
       parameterConverter.kinematicParametersErrorFromExPerigee(
-      epte, eptp, ref, MagneticFieldSingleton::Instance());
+      epte, eptp, ref, rave::MagneticFieldSingleton::Instance());
 
   CmsToRaveObjects frameworkOutputConverter;
   return frameworkOutputConverter.convert(internalResult);

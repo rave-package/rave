@@ -3,7 +3,7 @@
 
 #include "TrackingTools/PatternTools/interface/ClosestApproachOnHelices.h"
 #include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h" 
-
+#include <rave/MagneticField.h>
 /** Given two trajectory states, computes the two points of closest approach 
  *  in the transverse plane for the helices extrapolated from these states. 
  *  1) computes the intersections of the circles in transverse plane. 
@@ -60,7 +60,7 @@ private:
 					const TrackCharge & chargeB, 
 					const GlobalVector & momentumB, 
 					const GlobalPoint & positionB,
-					const MagneticField& magField);
+					const rave::MagneticField& magField);
 
   // given the old Parameters, and a new GlobalPoint,
   // we return the full new GlobalTrajectoryParameters at the
@@ -73,7 +73,7 @@ private:
 			const GlobalVector& momemtum, 
 			const GlobalPoint& position, 
 			double& xc, double& yc, double& r,
-			const MagneticField& magField) const;
+			const rave::MagneticField& magField) const;
 
   // Computes crossing points of 2 circles with centres (cx_i, cy_i) 
   // and unsigned radii r_i. 

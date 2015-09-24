@@ -12,7 +12,7 @@
 #include "TrackingTools/TrajectoryParametrization/interface/CartesianTrajectoryError.h"
 #include "TrackingTools/TrajectoryParametrization/interface/CurvilinearTrajectoryError.h"
 #include "TrackingTools/TrajectoryState/interface/SurfaceSideDefinition.h"
-
+#include <rave/MagneticField.h>
 #include <vector>
 
 class FreeTrajectoryState;
@@ -64,7 +64,7 @@ public:
 
   virtual FreeTrajectoryState* freeTrajectoryState(bool withErrors = true) const = 0;
 
-  virtual const MagneticField *magneticField() const = 0;
+  virtual const rave::MagneticField *magneticField() const = 0;
 
   virtual const LocalTrajectoryParameters& localParameters() const = 0;
 
@@ -97,12 +97,12 @@ public:
   virtual bool canUpdateLocalParameters() const = 0;
   virtual void update( const LocalTrajectoryParameters& p,
                        const Surface& aSurface,
-                       const MagneticField* field,
+                       const rave::MagneticField* field,
                        const SurfaceSide side ) = 0;
   virtual void update( const LocalTrajectoryParameters& p,
                        const LocalTrajectoryError& err,
                        const Surface& aSurface,
-                       const MagneticField* field,
+                       const rave::MagneticField* field,
                        const SurfaceSide side,
                        double weight ) = 0;
 };

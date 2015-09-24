@@ -63,7 +63,7 @@ public:
    */
   TrajectoryStateOnSurface( const LocalTrajectoryParameters& p,
 			    const Surface& aSurface,
-			    const MagneticField* field,
+			    const rave::MagneticField* field,
 			    const SurfaceSide side = SurfaceSideDefinition::atCenterOfSurface);
   /** Constructor from local parameters, errors and surface. For surfaces 
    *  with material the side of the surface should be specified explicitely. 
@@ -72,7 +72,7 @@ public:
   TrajectoryStateOnSurface( const LocalTrajectoryParameters& p,
 			    const LocalTrajectoryError& err,
 			    const Surface& aSurface,
-			    const MagneticField* field,
+			    const rave::MagneticField* field,
 			    const SurfaceSide side = SurfaceSideDefinition::atCenterOfSurface, 
 			    double weight = 1.);
   /** Constructor from local parameters, errors and surface. For multi-states the
@@ -82,7 +82,7 @@ public:
   TrajectoryStateOnSurface( const LocalTrajectoryParameters& p,
 			    const LocalTrajectoryError& err,
 			    const Surface& aSurface,
-			    const MagneticField* field,
+			    const rave::MagneticField* field,
 			    double weight);
 
   virtual ~TrajectoryStateOnSurface() {}
@@ -102,7 +102,7 @@ public:
     return freeState();
   }
 
-  const MagneticField *magneticField() const { return data().magneticField(); }
+  const rave::MagneticField *magneticField() const { return data().magneticField(); }
 
   const GlobalTrajectoryParameters& globalParameters() const {
     return data().globalParameters();
@@ -182,7 +182,7 @@ public:
    */
   void update( const LocalTrajectoryParameters& p,
 	       const Surface& aSurface,
-	       const MagneticField* field,
+	       const rave::MagneticField* field,
 	       const SurfaceSide side = SurfaceSideDefinition::atCenterOfSurface);
   /** Mutator from local parameters, errors and surface. For surfaces 
    *  with material the side of the surface should be specified explicitely. 
@@ -193,7 +193,7 @@ public:
   void update( const LocalTrajectoryParameters& p,
 	       const LocalTrajectoryError& err,
                const Surface& aSurface,
-               const MagneticField* field,
+               const rave::MagneticField* field,
                const SurfaceSide side = SurfaceSideDefinition::atCenterOfSurface, 
                double weight = 1.);
 

@@ -11,9 +11,9 @@ PropagatorWrapper::PropagatorWrapper ( const rave::Propagator & r ) :
   theRavePropagator ( r.copy() )
 {}
 
-const MagneticField * PropagatorWrapper::magneticField() const
+const rave::MagneticField * PropagatorWrapper::magneticField() const
 {
-  return MagneticFieldSingleton::Instance();
+  return rave::MagneticFieldSingleton::Instance();
 }
 
 pair < TrajectoryStateOnSurface, double > 

@@ -34,7 +34,7 @@ TrajectoryStateOnSurface( const GlobalTrajectoryParameters& gp,
 TrajectoryStateOnSurface::
 TrajectoryStateOnSurface( const LocalTrajectoryParameters& p,
 			  const Surface& aSurface, 
-			  const MagneticField* field, 
+			  const rave::MagneticField* field,
 			  const SurfaceSide side) :
   Base( new BTSOS( p, aSurface, field, side)) {}
 
@@ -42,7 +42,7 @@ TrajectoryStateOnSurface::
 TrajectoryStateOnSurface( const LocalTrajectoryParameters& p,
 			  const LocalTrajectoryError& err,
 			  const Surface& aSurface, 
-			  const MagneticField* field, 
+			  const rave::MagneticField* field,
 			  const SurfaceSide side, double weight) :
   Base( new BTSOS( p, err, aSurface, field, side, weight)) {}
 
@@ -50,7 +50,7 @@ TrajectoryStateOnSurface::
 TrajectoryStateOnSurface( const LocalTrajectoryParameters& p,
 			  const LocalTrajectoryError& err,
 			  const Surface& aSurface, 
-			  const MagneticField* field, 
+			  const rave::MagneticField* field,
 			  double weight) :
   Base( new BTSOS( p, err, aSurface, field, SurfaceSideDefinition::atCenterOfSurface, weight)) {}
 
@@ -59,7 +59,7 @@ void
 TrajectoryStateOnSurface::
 update( const LocalTrajectoryParameters& p,
         const Surface& aSurface,
-        const MagneticField* field,
+        const rave::MagneticField* field,
         const SurfaceSide side) 
 {
     if (data().canUpdateLocalParameters()) {
@@ -74,7 +74,7 @@ TrajectoryStateOnSurface::
 update( const LocalTrajectoryParameters& p,
         const LocalTrajectoryError& err,
         const Surface& aSurface,
-        const MagneticField* field,
+        const rave::MagneticField* field,
         const SurfaceSide side, 
         double weight) 
 {

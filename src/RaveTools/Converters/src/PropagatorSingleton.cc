@@ -20,7 +20,7 @@ void PropagatorSingleton::initialise()
   {
     NewProp=false;
     release();
-    thePropagator = new AnalyticalPropagator( MagneticFieldSingleton::Instance() );
+    thePropagator = new AnalyticalPropagator( rave::MagneticFieldSingleton::Instance() );
     if (debug)
     {
       cout << "[PropagatorSingleton] default vacuum propagator registered at " << (void *) thePropagator << endl;

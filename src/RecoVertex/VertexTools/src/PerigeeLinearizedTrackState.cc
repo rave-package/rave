@@ -2,7 +2,7 @@
 #include "RecoVertex/VertexTools/interface/PerigeeRefittedTrackState.h"
 #include "TrackingTools/TrajectoryState/interface/PerigeeConversions.h"
 #include "RecoVertex/VertexPrimitives/interface/VertexException.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 // #include "CommonReco/PatternTools/interface/TransverseImpactPointExtrapolator.h"

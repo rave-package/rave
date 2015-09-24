@@ -3,7 +3,7 @@
 #include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h" 
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "FWCore/Utilities/interface/Exception.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 
 using namespace std;
 

@@ -5,6 +5,7 @@
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
 #include "DataFormats/GeometryCommonDetAlgo/interface/DeepCopyPointerByClone.h"
 #include "TrackingTools/GeomPropagators/interface/Propagator.h"
+#include <rave/MagneticField.h>
 
 class FreeTrajectoryState;
 class TrajectoryStateOnSurface;
@@ -27,7 +28,7 @@ class AnalyticalTrajectoryExtrapolatorToLine {
 
 public:
   /// constructor with default geometrical propagator
-  AnalyticalTrajectoryExtrapolatorToLine (const MagneticField* field);
+  AnalyticalTrajectoryExtrapolatorToLine (const rave::MagneticField* field);
 
   /// constructor with alternative propagator
   AnalyticalTrajectoryExtrapolatorToLine (const Propagator&);

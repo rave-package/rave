@@ -119,7 +119,7 @@ public:
   
  virtual float degreesOfFreedom() const;
    
-  const MagneticField* magneticField() const {return theField;}
+  const rave::MagneticField* magneticField() const {return theField;}
 
 protected: 
 
@@ -130,7 +130,7 @@ protected:
  * derived classes
  */ 
 
-  const MagneticField* theField;
+  const rave::MagneticField* theField;
 
 //pointer to the tree current
 //particle  belongs to

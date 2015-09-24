@@ -1,12 +1,12 @@
 #include "TrackingTools/AnalyticalJacobians/interface/JacobianCurvilinearToLocal.h"
 #include "DataFormats/GeometrySurface/interface/Surface.h"
 #include "TrackingTools/TrajectoryParametrization/interface/LocalTrajectoryParameters.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 
 JacobianCurvilinearToLocal::
 JacobianCurvilinearToLocal(const Surface& surface, 
 			   const LocalTrajectoryParameters& localParameters,
-			   const MagneticField& magField) : theJacobian() {
+			   const rave::MagneticField& magField) : theJacobian() {
  
   // Origin: TRSCSD
   GlobalVector tn = surface.toGlobal(localParameters.momentum()).unit();

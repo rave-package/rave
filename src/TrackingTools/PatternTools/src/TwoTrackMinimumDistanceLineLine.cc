@@ -2,7 +2,7 @@
 #include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
 
 
 bool TwoTrackMinimumDistanceLineLine::calculate(

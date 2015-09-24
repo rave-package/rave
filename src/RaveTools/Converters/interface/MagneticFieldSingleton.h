@@ -1,8 +1,10 @@
 #ifndef _MagneticFieldSingleton_H_
 #define _MagneticFieldSingleton_H_
 
-#include "MagneticField/Engine/interface/MagneticField.h"
+//#include "MagneticField/Engine/interface/MagneticField.h"
+#include <rave/MagneticField.h>
 
+namespace rave{
 class MagneticFieldSingleton : public MagneticField
 {
   /** singleton that provides the magnetic field.
@@ -20,5 +22,5 @@ class MagneticFieldSingleton : public MagneticField
     MagneticFieldSingleton ( const MagneticFieldSingleton & );
     const MagneticField * theField;
 };
-
+} // namespace rave
 #endif
