@@ -14,7 +14,7 @@ addons:
     - gcc-4.8
     - g++-4.8
     - clang
-    - libboost-all-dev
+    - libboost1.55-all-dev
     - libclhep-dev
     - root-system-bin
     - root-system-common
