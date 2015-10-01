@@ -14,13 +14,13 @@ addons:
     - gcc-4.8
     - g++-4.8
     - clang
-    - libboost1.55-all-dev
-    - libclhep-dev
-    - root-system-bin
-    - root-system-common
+    - libboost1.54-all-dev
+#    - libclhep-dev
+#    - root-system-bin
+#    - root-system-common
     - build-essential
-    - automake1.11
-    - autoconf2.64
+#    - automake1.11
+#    - autoconf2.64
     - cmake
 before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
