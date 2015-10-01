@@ -19,6 +19,10 @@ addons:
 install: 
   - cmake .
   - make VERBOSE=1
-#script: 
-#  - ./artus_core_test
+script: 
+  - ./tests/kinematics01
+  - ./tests/kinematics02
+  - ./tests/kinematics03
+  - ./tests/propagatortests
+  - ./UnitTests/raveunittests
 
