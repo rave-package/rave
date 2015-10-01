@@ -21,13 +21,15 @@ addons:
     - build-essential
     - automake1.11
     - autoconf2.64
+    - cmake
 before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-  - wget http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/tarFiles/clhep-2.2.0.5.tgz
-  - tar xzfv clhep-2.2.0.5.tgz
-  - cd 2.2.0.5/CLHEP
-  - ./bootstrap
-  - ./configure
+  - wget http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/tarFiles/clhep-2.1.3.1.tgz
+  - tar xzf clhep-2.1.3.1.tgz
+  - cd 2.1.3.1/
+  - mkdir build/
+  - cd build/
+  - cmake ../CLHEP
   - make 
   - sudo make install
   - cd ../../
