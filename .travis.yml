@@ -14,7 +14,7 @@ addons:
     - gcc-4.8
     - g++-4.8
     - clang
-    - libboost1.54-all-dev
+#    - libboost1.54-all-dev
 #    - libclhep-dev
 #    - root-system-bin
 #    - root-system-common
@@ -24,6 +24,9 @@ addons:
     - cmake
 before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  - sudo add-apt-repository --yes ppa:boost-latest/ppa
+  - sudo apt-get -qq update
+  - sudo apt-get install libboost1.54-all-dev 
   - wget http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/tarFiles/clhep-2.1.3.1.tgz
   - tar xzf clhep-2.1.3.1.tgz
   - cd 2.1.3.1/
