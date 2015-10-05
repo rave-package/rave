@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.6)
 project (raveunittests)
 
 set(RAVEUNITTESTS_CPP 
-	LowMomentumScale.cxx
+#	LowMomentumScale.cxx
 	RaveTest.cxx
 	unittest.cxx
 	PropertyHandler.cxx
