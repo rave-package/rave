@@ -1,0 +1,53 @@
+sudo: required
+language: cpp
+notifications:
+  email:
+    on_success: change # default: change
+    on_failure: always # default: always
+compiler:
+  - gcc
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+    - clang
+#    - libboost1.54-all-dev
+#    - libclhep-dev
+#    - root-system-bin
+#    - root-system-common
+    - build-essential
+#    - automake1.11
+#    - autoconf2.64
+    - cmake
+before_install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  - sudo add-apt-repository --yes ppa:boost-latest/ppa
+  - sudo apt-get -qq update
+  - sudo apt-get install libboost1.54-all-dev 
+  - wget http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/tarFiles/clhep-2.1.3.1.tgz
+  - tar xzf clhep-2.1.3.1.tgz
+  - cd 2.1.3.1/
+  - mkdir build/
+  - cd build/
+  - cmake ../CLHEP
+  - make 
+  - sudo make install
+  - cd ../../
+  - wget http://www-ekp.physik.uni-karlsruhe.de/~sieber/root_5.34.07-1_amd64.deb || exit 1
+  - sudo dpkg -i root_5.34.07-1_amd64.deb || exit 1
+  - echo "/usr/local/lib" | sudo tee -a /etc/ld.so.conf
+  - echo "/usr/local/lib/root" | sudo tee -a /etc/ld.so.conf
+  - sudo ldconfig || exit 1
+install: 
+  - cmake .
+  - make VERBOSE=1
+script: 
+  - ./tests/kinematics01
+  - ./tests/kinematics02
+  - ./tests/kinematics03
+  - ./tests/propagatortests
+  - ./UnitTests/raveunittests
+
