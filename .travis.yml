@@ -42,7 +42,7 @@ before_install:
   - echo "/usr/local/lib/root" | sudo tee -a /etc/ld.so.conf
   - sudo ldconfig || exit 1
 install: 
-  - cmake .
+  - cmake  -DHAS_MVF=ON -DHAS_KINEMATICS=ON .
   - make VERBOSE=1
 script: 
   - ./tests/kinematics01
