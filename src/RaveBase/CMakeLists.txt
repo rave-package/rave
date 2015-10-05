@@ -36,35 +36,41 @@ set(RAVEBASE_CPP
 	RaveInterface/src/Vertex.cc 
 	RaveInterface/src/VertexFactory.cc 
 	Utilities/src/StringTools.cc
-
-# if has_kinematics
-  RaveEngine/src/TaggedTransientTrackKinematicParticle.cc
-  RaveInterface/src/Vector4D.cc
-  RaveInterface/src/Vector7D.cc
-  RaveInterface/src/Covariance4D.cc
-  RaveInterface/src/Covariance7D.cc
-  RaveInterface/src/PerigeeParameters6D.cc
-  RaveInterface/src/PerigeeCovariance6D.cc
-  RaveInterface/src/BasicKinematicConstraint.cc
-  RaveInterface/src/BasicKinematicParticle.cc
-  RaveInterface/src/BasicKinematicTree.cc
-  RaveInterface/src/BasicKinematicVertex.cc
-  RaveInterface/src/BasicMultipleKinematicConstraint.cc
-  RaveInterface/src/BasicTransientTrackKinematicParticle.cc
-  RaveInterface/src/BasicVirtualKinematicParticle.cc
-  RaveInterface/src/KinematicConstraint.cc
-  RaveInterface/src/KinematicParticle.cc
-  RaveInterface/src/KinematicTree.cc
-  RaveInterface/src/Logger.cc
-  RaveInterface/src/KinematicVertex.cc
-  RaveInterface/src/MultipleKinematicConstraint.cc
-  RaveInterface/src/TransientTrackKinematicParticle.cc
-  RaveInterface/src/VirtualKinematicParticle.cc
-  RaveInterface/src/Plane.cc
-  RaveInterface/src/Cylinder.cc
-  RaveInterface/src/KinematicConstraintBuilder.cc
-  RaveInterface/src/KinematicTreeFactory.cc
 )
+
+if(HAS_KINEMATICS)
+  	set(RAVEBASE_CPP
+		${RAVEBASE_CPP}
+		RaveEngine/src/TaggedTransientTrackKinematicParticle.cc
+  		RaveInterface/src/Vector4D.cc
+  		RaveInterface/src/Vector7D.cc
+  		RaveInterface/src/Covariance4D.cc
+  		RaveInterface/src/Covariance7D.cc
+  		RaveInterface/src/PerigeeParameters6D.cc
+  		RaveInterface/src/PerigeeCovariance6D.cc
+  		RaveInterface/src/BasicKinematicConstraint.cc
+  		RaveInterface/src/BasicKinematicParticle.cc
+  		RaveInterface/src/BasicKinematicTree.cc
+  		RaveInterface/src/BasicKinematicVertex.cc
+  		RaveInterface/src/BasicMultipleKinematicConstraint.cc
+  		RaveInterface/src/BasicTransientTrackKinematicParticle.cc
+  		RaveInterface/src/BasicVirtualKinematicParticle.cc
+  		RaveInterface/src/KinematicConstraint.cc
+  		RaveInterface/src/KinematicParticle.cc
+  		RaveInterface/src/KinematicTree.cc
+  		RaveInterface/src/Logger.cc
+  		RaveInterface/src/KinematicVertex.cc
+  		RaveInterface/src/MultipleKinematicConstraint.cc
+  		RaveInterface/src/TransientTrackKinematicParticle.cc
+  		RaveInterface/src/VirtualKinematicParticle.cc
+  		RaveInterface/src/Plane.cc
+  		RaveInterface/src/Cylinder.cc
+  		RaveInterface/src/KinematicConstraintBuilder.cc
+  		RaveInterface/src/KinematicTreeFactory.cc
+	)
+endif(HAS_KINEMATICS)
+
+
 
 add_library(RaveBase SHARED
     ${RAVEBASE_CPP} )

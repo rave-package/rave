@@ -9,6 +9,7 @@ option (HAS_TKVF "option for TrimmedKalmanVertexFinder" OFF)
 option (HAS_GSF "option for GaussianSumVertexFit [deprecated]" OFF)
 option (HAS_ZVRES "option for ZvresReco" OFF)
 option (HAS_DEVELOPERS "option for developement" OFF)
+option (HAS_KINEMATICS "option for kinematics" OFF)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -52,10 +53,12 @@ set(CMAKE_CXX_FLAGS "-O3 -g -ggdb ${GENERAL_COMPILE_FLAGS}" )
 add_subdirectory(src)
 add_subdirectory(src/RaveBase)
 add_subdirectory(src/RecoVertex)
-# only if has_kinematic fit
-add_subdirectory(src/RecoVertex/KinematicFit)
-add_subdirectory(src/RecoBTag)
-add_subdirectory(UnitTests)
-add_subdirectory(tests)
 
+# only if has_kinematic fit
+if(HAS_KINEMATICS)
+	add_subdirectory(src/RecoVertex/KinematicFit)
+	add_subdirectory(src/RecoBTag)
+	add_subdirectory(UnitTests)
+	add_subdirectory(tests)
+endif(HAS_KINEMATICS)
 
