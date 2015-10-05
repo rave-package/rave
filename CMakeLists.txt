@@ -2,15 +2,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (rave)
 
-# options // they do not work yet...get them working
-option (HAS_TTF "option for TertiaryTracksVertexFinder" OFF)
-option (HAS_MVF "option for MultiVertexFit" OFF)
-option (HAS_TKVF "option for TrimmedKalmanVertexFinder" OFF)
-option (HAS_GSF "option for GaussianSumVertexFit [deprecated]" OFF)
-option (HAS_ZVRES "option for ZvresReco" OFF)
-option (HAS_DEVELOPERS "option for developement" OFF)
-option (HAS_KINEMATICS "option for kinematics" OFF)
-
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
@@ -49,6 +40,44 @@ include_directories(${rave_SOURCE_DIR}/src
 set (GENERAL_COMPILE_FLAGS " ${GENERAL_COMPILE_FLAGS} ${COMMON_COMPILE_FLAGS}")
 
 set(CMAKE_CXX_FLAGS "-O3 -g -ggdb ${GENERAL_COMPILE_FLAGS}" )
+
+# options
+
+option (HAS_TTF "option for TertiaryTracksVertexFinder" OFF)
+if(HAS_TTF) 
+message("COMPILING WITH OPTION HAS_TTF")
+endif(HAS_TTF)
+
+option (HAS_MVF "option for MultiVertexFit" OFF)
+if(HAS_MVF) 
+message("COMPILING WITH OPTION HAS_MVF")
+endif(HAS_MVF)
+
+option (HAS_TKVF "option for TrimmedKalmanVertexFinder" OFF)
+if(HAS_TKVF) 
+message("COMPILING WITH OPTION HAS_TKVF")
+endif(HAS_TKVF)
+
+option (HAS_GSF "option for GaussianSumVertexFit [deprecated]" OFF)
+if(HAS_GSF) 
+message("COMPILING WITH OPTION HAS_GSF")
+endif(HAS_GSF)
+
+option (HAS_ZVRES "option for ZvresReco" OFF)
+if(HAS_ZVRES) 
+message("COMPILING WITH OPTION HAS_ZVRES")
+endif(HAS_ZVRES)
+
+option (HAS_DEVELOPERS "option for developement" OFF)
+if(HAS_DEVELOPERS) 
+message("COMPILING WITH OPTION HAS_DEVELOPERS")
+endif(HAS_DEVELOPERS)
+
+option (HAS_KINEMATICS "option for kinematics" OFF)
+if(HAS_KINEMATICS) 
+message("COMPILING WITH OPTION HAS_KINEMATICS")
+endif(HAS_KINEMATICS)
+
 
 add_subdirectory(src)
 add_subdirectory(src/RaveBase)
