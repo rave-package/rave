@@ -54,6 +54,132 @@ set(RAVEVERTEX_CPP
 	VertexTools/src/VertexDistance3D.cc 
 )
 
+if(HAS_TTF)
+	set(RAVEVERTEX_CPP
+		${RAVEVERTEX_CPP}
+  		ConfigurableVertexReco/src/ConfigurableTertiaryTracksFinder.cc
+  		TertiaryTracksVertexFinder/src/AddTvTrack.cc
+  		TertiaryTracksVertexFinder/src/ConfigurableTertiaryTracksVertexFinder.cc
+		TertiaryTracksVertexFinder/src/Flight2DSvFilter.cc
+  		TertiaryTracksVertexFinder/src/GetLineCovMatrix.cc
+  		TertiaryTracksVertexFinder/src/PvSvFilter.cc
+  		TertiaryTracksVertexFinder/src/TertiaryTracksVertexFinder.cc
+  		TertiaryTracksVertexFinder/src/DistanceOfVertices2D.cc
+  		TertiaryTracksVertexFinder/src/V0SvFilter.cc
+  		TertiaryTracksVertexFinder/src/VertexMass.cc
+	)
+endif(HAS_TTF)
+ 
+if(HAS_MVF)
+	set(RAVEVERTEX_CPP
+		${RAVEVERTEX_CPP}
+	  	MultiVertexFit/src/LinPtFinderFromAdaptiveFitter.cc
+	  	MultiVertexFit/src/LinTrackCache.cc
+	  	MultiVertexFit/src/MultiVertexBSeeder.cc
+	  	MultiVertexFit/src/MultiVertexFitter.cc
+  		MultiVertexFit/src/MultiVertexReconstructor.cc
+	  	ConfigurableVertexReco/src/ConfigurableMultiVertexBSeeder.cc
+		ConfigurableVertexReco/src/ConfigurableMultiVertexFitter.cc
+	) 
+endif(HAS_MVF) 
+
+if(HAS_TKVF)
+  set(RAVEVERTEX_CPP
+	  ${RAVEVERTEX_CPP}
+		ConfigurableVertexReco/src/ConfigurableTrimmedKalmanFinder.cc
+	  	TrimmedKalmanVertexFinder/src/ConfigurableTrimmedVertexFinder.cc
+  		TrimmedKalmanVertexFinder/src/KalmanTrimmedVertexFinder.cc
+  		TrimmedKalmanVertexFinder/src/TrimmedTrackFilter.cc
+  		TrimmedKalmanVertexFinder/src/TrimmedVertexFinder.cc
+	)
+endif(HAS_TKVF)
+
+# deprecated option 
+if(HAS_GSF)
+	set(RAVEVERTEX_CPP
+		${RAVEVERTEX_CPP}
+  		GaussianSumVertexFit/src/AdaptiveGsfVertexFitter.cc
+  		GaussianSumVertexFit/src/BasicMultiVertexState.cc
+		GaussianSumVertexFit/src/GsfVertexFitter.cc
+  		GaussianSumVertexFit/src/GsfVertexMerger.cc
+  		GaussianSumVertexFit/src/GsfVertexSmoother.cc
+  		GaussianSumVertexFit/src/GsfVertexTrackCompatibilityEstimator.cc
+  		GaussianSumVertexFit/src/GsfVertexUpdator.cc
+  		GaussianSumVertexFit/src/GsfVertexWeightCalculator.cc
+  		GaussianSumVertexFit/src/MultiPerigeeLTSFactory.cc
+  		GaussianSumVertexFit/src/MultiRefittedTS.cc
+  		GaussianSumVertexFit/src/MultiVertexStateCombiner.cc
+  		GaussianSumVertexFit/src/PerigeeMultiLTS.cc
+  		GaussianSumVertexFit/src/VertexGaussianStateConversions.cc
+  		ConfigurableVertexReco/src/ConfigurableAdaptiveGaussianSumFilter.cc
+  		ConfigurableVertexReco/src/ConfigurableGaussianSumFilter.cc
+	)
+endif(HAS_GSF)
+
+if(HAS_ZVRES)
+	set(RAVEVERTEX_CPP
+		${RAVEVERTEX_CPP}
+  		ZvresReco/src/ZvresVertexReconstructor.cc
+  		ZvresReco/src/vertex_lcfi/algo/src/pereventipfitter.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/vertexmomentum.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/vertexmass.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/zvkin.cpp
+		ZvresReco/src/vertex_lcfi/algo/src/paramsignificance.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/jointprob.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/vertexmultiplicity.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/vertexcharge.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/decaysignificance.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/trackattach.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/zvres.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/twotrackpid.cpp
+  		ZvresReco/src/vertex_lcfi/algo/src/secondvertexprob.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/VertexFitterKalman.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/ghostfinderstage1.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/gausstube.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/vertexfunctionclassic.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/vertexresolverequalsteps.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/gaussellipsoid.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/vertexfinderclassic.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/vertexfitterlsm.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/interactionpoint.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/candidatevertex.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/vertexfinderghost.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/vertexfuncmaxfinderclassicstepper.cpp
+  		ZvresReco/src/vertex_lcfi/zvtop/src/vertexfunctionsimple.cpp
+  		ZvresReco/src/vertex_lcfi/src/event.cpp
+  		ZvresReco/src/vertex_lcfi/src/jet.cpp
+  		ZvresReco/src/vertex_lcfi/src/track.cpp
+  		ZvresReco/src/vertex_lcfi/src/trackstate.cpp
+  		ZvresReco/src/vertex_lcfi/src/decaychain.cpp
+  		ZvresReco/src/vertex_lcfi/src/vertex.cpp
+  		ZvresReco/src/vertex_lcfi/src/TState.cpp
+  	)
+endif(HAS_ZVRES)
+
+if(HAS_DEVELOPERS)
+  	set(RAVEVERTEX_CPP
+		${RAVEVERTEX_CPP}
+	  	LinearizationPointFinders/src/LMSLinearizationPointFinder.cc
+  		LinearizationPointFinders/src/MonteCarloLinearizationPointFinder.cc
+  		LinearizationPointFinders/src/SMSLinearizationPointFinder.cc
+  		LinearizationPointFinders/src/SubsetHSMLinearizationPointFinder.cc
+  		LinearizationPointFinders/src/ZeroLinearizationPointFinder.cc
+  		LinearizationPointFinders/src/GenericLinearizationPointFinder.cc
+  		LinearizationPointFinders/src/HSMLinearizationPointFinder.cc
+  		ConfigurableVertexReco/src/ConfigurableLinPtFinder.cc
+  		ConfigurableVertexReco/src/FitterFromLinPtFinder.cc
+  		VertexTools/src/lms_3d.cc
+  		VertexTools/src/Lms3d.cc
+  		VertexTools/src/LmsModeFinder3d.cc
+  		VertexTools/src/SMS.cc
+  		VertexTools/src/SmsModeFinder3d.cc
+  		VertexTools/src/SubsetHsmModeFinder3d.cc 
+  	)
+endif(HAS_DEVELOPERS)
+  	
+
+
+
 add_library(RaveVertex SHARED
     ${RAVEVERTEX_CPP} )
 

@@ -2,6 +2,15 @@
 cmake_minimum_required (VERSION 2.6)
 project (rave)
 
+# options // they do not work yet...get them working
+option (HAS_TTF "option for TertiaryTracksVertexFinder" OFF)
+option (HAS_MVF "option for MultiVertexFit" OFF)
+option (HAS_TKVF "option for TrimmedKalmanVertexFinder" OFF)
+option (HAS_GSF "option for GaussianSumVertexFit [deprecated]" OFF)
+option (HAS_ZVRES "option for ZvresReco" OFF)
+option (HAS_DEVELOPERS "option for developement" OFF)
+
+
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 set (COMMON_COMPILE_FLAGS "")
