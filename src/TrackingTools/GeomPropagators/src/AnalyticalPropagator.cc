@@ -18,6 +18,11 @@
 #include "TrackingTools/TrajectoryState/interface/SurfaceSideDefinition.h"
 #include "TrackingTools/GeomPropagators/interface/PropagationExceptions.h"
 
+// Moritz
+#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
+#include "RaveBase/Converters/interface/CmsToRaveObjects.h"
+
+
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 #include <cmath>
@@ -75,6 +80,65 @@ AnalyticalPropagator::propagateWithPath(const FreeTrajectoryState& fts,
   return propagatedStateWithPath(fts,plane,gtp,s);
 }
 
+/// propagation to plane with path length  -- using rave::Track
+//std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& fts, const Plane& plane) const;
+// fts plane
+std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& ravePlane) const
+{
+  // convert rave to cms objects
+  RaveToCmsObjects forward;
+  FreeTrajectoryState fts = forward.convertTrackToFTS ( raveTrack );
+  GlobalPoint pt = forward.convert ( ravePlane.position() );
+  TkRotation<float> rot;
+  Plane plane ( pt, rot );
+
+  // check curvature
+  double rho = fts.transverseCurvature();
+
+  // propagate parameters
+  GlobalPoint x;
+  GlobalVector p;
+  double s;
+
+  // check if already on plane
+  const float maxDistToPlane(0.1e-4);
+  const float numericalPrecision(5.e-7);
+  float maxDz = numericalPrecision*plane.position().mag();
+  if ( fabs(plane.localZ(fts.position()))>(maxDistToPlane>maxDz?maxDistToPlane:maxDz) ) {
+    // propagate
+    bool parametersOK = this->propagateParametersOnPlane(fts, plane, x, p, s);
+    // check status and deltaPhi limit
+    float dphi2 = s*rho;
+    dphi2 = dphi2*dphi2*fts.momentum().perp2()/fts.momentum().mag2();
+    if ( !parametersOK || dphi2>theMaxDPhi2 )
+    {
+      return TsosWP(TrajectoryStateOnSurface(),0.);
+    }
+  }
+  else {
+    /*
+    LogDebug("AnalyticalPropagator")<<"not going anywhere. Already on surface.\n"
+				    <<"plane.localZ(fts.position()): "<<plane.localZ(fts.position())<<"\n"
+				    <<"maxDistToPlane: "<<maxDistToPlane<<"\n"
+				    <<"maxDz: "<<maxDz<<"\n"
+				    <<"plane.position().mag(): "<<plane.position().mag();
+                                    */
+    x = fts.position();
+    p = fts.momentum();
+    s = 0.;
+  }
+  //
+  // Compute propagated state and check change in curvature
+  //
+  GlobalTrajectoryParameters gtp(x,p,fts.charge(),theField);
+  if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
+    return TsosWP(TrajectoryStateOnSurface(),0.);
+  //
+  // construct TrajectoryStateOnSurface
+  //
+  return propagatedStateWithPath(fts,plane,gtp,s);
+}
+
 
 std::pair<TrajectoryStateOnSurface,double>
 AnalyticalPropagator::propagateWithPath(const FreeTrajectoryState& fts, 
@@ -105,6 +169,43 @@ AnalyticalPropagator::propagateWithPath(const FreeTrajectoryState& fts,
   ReferenceCountingPointer<TangentPlane> plane(cylinder.tangentPlane(x));
   return propagatedStateWithPath(fts,*plane,gtp,s);
 }
+
+
+std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder & raveCylinder) const
+{
+  // convert rave to cms objects
+  RaveToCmsObjects forward;
+  FreeTrajectoryState fts = forward.convertTrackToFTS ( raveTrack );
+  GlobalPoint pt = forward.convert ( raveCylinder.position() );
+  TkRotation<float> rot;
+  Cylinder cylinder ( pt, rot, raveCylinder.radius() );
+
+  // check curvature
+  double rho = fts.transverseCurvature();
+
+  // propagate parameters
+  GlobalPoint x;
+  GlobalVector p;
+  double s = 0;
+
+  bool parametersOK = this->propagateParametersOnCylinder(fts, cylinder, x, p, s);
+  // check status and deltaPhi limit
+  float dphi2 = s*rho;
+  dphi2 = dphi2*dphi2*fts.momentum().perp2()/fts.momentum().mag2();
+  if ( !parametersOK || dphi2>theMaxDPhi2 )  return TsosWP(TrajectoryStateOnSurface(),0.);
+  //
+  // Compute propagated state and check change in curvature
+  //
+  GlobalTrajectoryParameters gtp(x,p,fts.charge(),theField);
+  if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
+    return TsosWP(TrajectoryStateOnSurface(),0.);
+  //
+  // create result on TangentPlane (local parameters & errors are better defined)
+  //
+  ReferenceCountingPointer<TangentPlane> plane(cylinder.tangentPlane(x));
+  return propagatedStateWithPath(fts,*plane,gtp,s);
+}
+
 
 std::pair<TrajectoryStateOnSurface,double>
 AnalyticalPropagator::propagatedStateWithPath (const FreeTrajectoryState& fts, 

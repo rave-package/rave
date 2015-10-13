@@ -7,6 +7,10 @@
 #include <cmath>
 #include <cfloat>
 #include <rave/MagneticField.h>
+#include <rave/Track.h>
+#include <rave/Plane.h>
+#include <rave/Cylinder.h>
+
 
 class Surface;
 class Cylinder;
@@ -48,20 +52,42 @@ public:
                                      const Plane& plane) const {
     return propagateWithPath(fts,plane).first;
   }
+
+  /**
+  /// propagation to plane -- using rave::Track
+  TrajectoryStateOnSurface propagate(const rave::Track& fts, const Plane& plane) const {
+    return propagateWithPath(fts,plane).first;
+  }
+  **/
+
   /// propagation to plane with path length  
-  std::pair<TrajectoryStateOnSurface,double> 
-  propagateWithPath(const FreeTrajectoryState& fts, 
-		    const Plane& plane) const; 
+  std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const FreeTrajectoryState& fts, const Plane& plane) const;
+
+  /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
+  std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& ravePlane) const;
   
   /// propagation to cylinder
-  TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, 
-                                     const Cylinder& cylinder) const {
+  TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, const Cylinder& cylinder) const {
     return propagateWithPath(fts,cylinder).first;
   }
+
+  /**
+  /// propagation to cylinder -- using rave::Track
+    TrajectoryStateOnSurface propagate(const rave::Track& fts, const Cylinder& cylinder) const {
+      return propagateWithPath(fts,cylinder).first;
+    }
+  **/
+
   /// propagation to cylinder with path length
   std::pair<TrajectoryStateOnSurface,double> 
-  propagateWithPath(const FreeTrajectoryState& fts, 
-		    const Cylinder& cylinder) const;
+  propagateWithPath(const FreeTrajectoryState& fts, const Cylinder& cylinder) const;
+
+
+  /// propagation to cylinder with path length -- using rave::Track
+    std::pair<TrajectoryStateOnSurface,double>
+    propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;
+
+
   /** limitation of change in transverse direction
    *  (to avoid loops).
    */
@@ -95,6 +121,14 @@ private:
 			   const Surface& surface, 
 			   const GlobalTrajectoryParameters& gtp, 
 			   const double& s) const;
+/**
+  /// propagation of errors (if needed) and generation of a new TSOS -- using rave::Track
+  std::pair<TrajectoryStateOnSurface,double>
+    propagatedStateWithPath (const rave::Track& fts,
+  			   const Surface& surface,
+  			   const GlobalTrajectoryParameters& gtp,
+  			   const double& s) const;
+**/
 
   /// parameter propagation to cylinder (returns position, momentum and path length)
   bool propagateParametersOnCylinder(const FreeTrajectoryState& fts, 
@@ -102,6 +136,14 @@ private:
 				     GlobalPoint& x, 
 				     GlobalVector& p, 
 				     double& s) const;
+/**
+  /// parameter propagation to cylinder (returns position, momentum and path length) -- using rave::Track
+    bool propagateParametersOnCylinder(const rave::Track& fts,
+  				     const Cylinder& cylinder,
+  				     GlobalPoint& x,
+  				     GlobalVector& p,
+  				     double& s) const;
+**/
 
   /// parameter propagation to plane (returns position, momentum and path length)
   bool propagateParametersOnPlane(const FreeTrajectoryState& fts, 
@@ -110,15 +152,20 @@ private:
 				  GlobalVector& p, 
 				  double& s) const;
   
+  /**
+  /// parameter propagation to plane (returns position, momentum and path length) -- using rave::Track
+  bool propagateParametersOnPlane(const rave::Track& fts,
+				  const Plane& plane,
+				  GlobalPoint& x,
+				  GlobalVector& p,
+				  double& s) const;
+**/
   /// straight line parameter propagation to a plane
-  bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, 
-				 const Plane&, GlobalPoint&, double&) const;
+  bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, const Plane&, GlobalPoint&, double&) const;
   /// straight line parameter propagation to a cylinder
-  bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, 
-				 const Cylinder&, GlobalPoint&, double&) const;
+  bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, const Cylinder&, GlobalPoint&, double&) const;
   /// helix parameter propagation to a plane using HelixPlaneCrossing
-  bool propagateWithHelixCrossing(HelixPlaneCrossing&, const Plane&, const float,
-				  GlobalPoint&, GlobalVector&, double& s) const;
+  bool propagateWithHelixCrossing(HelixPlaneCrossing&, const Plane&, const float, GlobalPoint&, GlobalVector&, double& s) const;
 
   virtual const rave::MagneticField* magneticField() const {return theField;}
 
