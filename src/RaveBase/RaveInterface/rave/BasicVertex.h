@@ -15,6 +15,9 @@
 namespace rave 
 {
 
+class Track;
+class BasicTrack;
+
 class RaveDllExport BasicVertex : 
 	public RaveReferenceCounted, 
 	public AbstractVertex

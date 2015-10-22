@@ -20,7 +20,7 @@ namespace rave
 /**
  @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport KinematicVertex :
+class KinematicVertex :
       public BasicKinematicVertex::Proxy
 {
     typedef BasicKinematicVertex::Proxy Base;

@@ -8,6 +8,7 @@
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/CmsToRaveObjects.h"
 #include "RaveBase/Converters/interface/RaveStreamers.h"
+#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 // #include "TrackingTools/GsfTools/interface/MultiTrajectoryStateCombiner.h"
 #ifdef HAS_GSF
 #include "TrackingTools/GsfTools/interface/MultiTrajectoryStateAssembler.h"
@@ -65,6 +66,15 @@ BasicTrack::BasicTrack( const Vector6D & s, const Covariance6D & e, Charge q,
 {
   // theComponents.push_back ( *this );
   createMomPos();
+
+  // cms format
+  RaveToCmsObjects forward;
+  AlgebraicSymMatrix66 cov6D = RaveToAlgebraicObjects().convert ( e );
+  theGlobalParameters = forward.convert( s, q );
+  theCartesianError = CartesianTrajectoryError( cov6D );
+  theCartesianErrorValid = true;
+  theCurvilinearErrorValid = false;
+  theTrackId = RaveId::uniqueId();
 }
 
 void BasicTrack::createMomPos()
@@ -82,6 +92,16 @@ BasicTrack::BasicTrack( int id, const Vector6D & s, const Covariance6D & e, Char
 {
   // theComponents.push_back ( *this );
   createMomPos();
+
+  // cms format
+  RaveToCmsObjects forward;
+  AlgebraicSymMatrix66 cov6D = RaveToAlgebraicObjects().convert ( e );
+  theGlobalParameters = forward.convert( s, q );
+  theCartesianError = CartesianTrajectoryError( cov6D );
+  theCartesianErrorValid = true;
+  theCurvilinearErrorValid = false;
+  theTrackId = RaveId::uniqueId();
+
 }
 
 float BasicTrack::chi2() const
@@ -199,4 +219,44 @@ vector < pair < float, BasicTrack > > BasicTrack::components() const
 bool BasicTrack::operator< ( const BasicTrack & o ) const
 {
     return ( id() < o.id() );
+}
+
+// cms format
+
+// Warning: these methods violate constness
+// convert curvilinear errors to cartesian
+void BasicTrack::createCartesianError() const{
+
+  JacobianCurvilinearToCartesian curv2Cart(theGlobalParameters);
+  const AlgebraicMatrix65& jac = curv2Cart.jacobian();
+
+  ((BasicTrack*)this)->theCartesianError =
+    ROOT::Math::Similarity(jac, theCurvilinearError.matrix());
+
+  ((BasicTrack*)this)->theCartesianErrorValid = true;
+}
+
+// convert cartesian errors to curvilinear
+void BasicTrack::createCurvilinearError() const{
+
+  JacobianCartesianToCurvilinear cart2Curv(theGlobalParameters);
+  const AlgebraicMatrix56& jac = cart2Curv.jacobian();
+
+  ((BasicTrack*)this)->theCurvilinearError =
+    ROOT::Math::Similarity(jac, theCartesianError.matrix());
+  ((BasicTrack*)this)->theCurvilinearErrorValid = true;
+}
+
+// check if trajectory can reach given radius
+bool BasicTrack::canReach(double radius) const {
+  GlobalPoint x = position2();
+  GlobalVector p = momentum2().unit();
+  double rho = transverseCurvature()*p.perp();
+  double rx = rho*x.x();
+  double ry = rho*x.y();
+  double rr = rho*radius;
+  double ax = p.x()*rx + p.y()*ry;
+  double ay = p.x()*ry - p.y()*rx + p.perp2();
+  double cospsi = (.5*(rx*rx + ry*ry - rr*rr) + ay)/sqrt(ax*ax + ay*ay);
+  return fabs(cospsi) <= 1.;
 }

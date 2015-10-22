@@ -7,6 +7,11 @@
 #include "RaveBase/Converters/interface/RaveToAlgebraicObjects.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrackFromFTSFactory.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
+#include <rave/Track.h>
+#include <rave/Vertex.h>
+#include <rave/Covariance6D.h>
+#include <rave/Plane.h>
+#include <rave/Cylinder.h>
 
 
 // for gsf

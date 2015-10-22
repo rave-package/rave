@@ -134,3 +134,64 @@ const PerigeeCovariance5D & Track::perigeeCovariance() const
 {
   return data().perigeeCovariance();
 }
+
+// cms format
+int Track::trackId() const
+{
+	return data().trackId();
+}
+
+GlobalPoint Track::position2() const
+{
+	return data().position2();
+}
+
+GlobalVector Track::momentum2() const
+{
+	return data().momentum2();
+}
+
+TrackCharge Track::charge2() const
+{
+	return data().charge2();
+}
+
+double Track::signedInverseMomentum() const
+{
+	return data().signedInverseMomentum();
+}
+
+double Track::transverseCurvature() const
+{
+    return data().transverseCurvature();
+}
+
+bool Track::hasCartesianError() const
+{
+	return data().hasCartesianError();
+}
+
+bool Track::hasCurvilinearError() const
+{
+	return data().hasCurvilinearError();
+}
+
+bool Track::hasError() const
+{
+	return data().hasError();
+}
+
+const GlobalTrajectoryParameters& Track::parameters() const
+{
+	return data().parameters();
+}
+
+const CartesianTrajectoryError& Track::cartesianError() const
+{
+	return data().cartesianError();
+}
+
+const CurvilinearTrajectoryError& Track::curvilinearError() const
+{
+    return data().curvilinearError();
+}

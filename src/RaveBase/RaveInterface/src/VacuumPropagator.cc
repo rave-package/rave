@@ -8,6 +8,8 @@
 #include "DataFormats/GeometrySurface/interface/Plane.h"
 #include "DataFormats/GeometrySurface/interface/Cylinder.h"
 #include "DataFormats/GeometrySurface/interface/GloballyPositioned.h"
+#include "rave/Plane.h"
+#include "rave/Cylinder.h"
 
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 #include <iostream>
@@ -46,13 +48,11 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   CmsToRaveObjects backward;
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(),
      anyDirection );
-  FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
   GlobalPoint pt = forward.convert ( rcyl.position() );
   TkRotation<float> rot;
-  Cylinder cyl ( pt, rot, rcyl.radius() );
+  ::Cylinder cyl ( pt, rot, rcyl.radius() );
   // FIXME merde! another one of those pesky reference counting probs!
-  pair < TrajectoryStateOnSurface, double > ot = prop.propagateWithPath
-     ( fts, cyl );
+  pair < TrajectoryStateOnSurface, double > ot = prop.propagateWithPath ( orig, cyl );
   TrajectoryStateOnSurface * tsos = new TrajectoryStateOnSurface ( ot.first );
   tsoses.push_back ( tsos );
   rave::Track ret = backward.convert ( *tsos, orig.chi2(), orig.ndof(),
@@ -79,7 +79,7 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   GlobalPoint pt = forward.convert ( rplane.position() );
   FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
   TkRotation<float> rot;
-  Plane plane ( pt, rot );
+  ::Plane plane ( pt, rot );
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(),
      anyDirection );
   // FIXME merde! another one of those pesky reference counting probs!

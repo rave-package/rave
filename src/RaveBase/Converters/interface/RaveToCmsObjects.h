@@ -1,12 +1,6 @@
 #ifndef _RaveToCmsObjects_H_
 #define _RaveToCmsObjects_H_
 
-#include <rave/Track.h>
-#include <rave/Vertex.h>
-#include <rave/Covariance6D.h>
-#include <rave/Plane.h>
-#include <rave/Cylinder.h>
-
 #include "TrackingTools/TrajectoryParametrization/interface/CartesianTrajectoryError.h"
 #include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
 #include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h"
@@ -33,6 +27,22 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/ExtendedPerigeeTrajectoryError.h"
 
 #endif
+
+namespace rave
+{
+class Track;
+class Vertex;
+class Coviarance6D;
+class Plane;
+class Cylinder;
+typedef signed Charge;
+}
+
+namespace ravesurf
+{
+class Plane;
+class Cylinder;
+}
 
 class RaveToCmsObjects
 {

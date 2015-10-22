@@ -5,8 +5,9 @@
 #include <rave/Covariance6D.h>
 #include <rave/Charge.h>
 #include <rave/BasicTrack.h>
-
+#include <rave/ProxyBase.h>
 #include <string>
+
 
 namespace rave
 {
@@ -27,6 +28,7 @@ class RaveDllExport Track : private rave::BasicTrack::Proxy
      *
      *       Lengths are given in cm, momenta in GeV/c.
      */
+
     Track( const rave::Vector6D &, const rave::Covariance6D &, Charge,
            float chi2, float ndof,
            void * originaltrack = 0, std::string tag="" );
@@ -70,11 +72,27 @@ class RaveDllExport Track : private rave::BasicTrack::Proxy
     bool operator< ( const rave::Track & ) const;
     bool operator== ( const rave::Track & ) const;
 
+
+    // cms format set functions etc missing
+
+    int trackId() const;
+    GlobalPoint position2() const;
+    GlobalVector momentum2() const;
+    TrackCharge charge2() const;
+    double signedInverseMomentum() const;
+    double transverseCurvature() const;
+    bool hasCartesianError() const;
+    bool hasCurvilinearError() const;
+    bool hasError() const;
+    const GlobalTrajectoryParameters& parameters() const;
+    const CartesianTrajectoryError& cartesianError() const;
+    const CurvilinearTrajectoryError& curvilinearError() const;
+
 private:
     const rave::BasicTrack & basicTrack() const;
-    std::vector < std::pair < float, BasicTrack > > convert ( 
-        const std::vector < std::pair < float, Track > > & ) const;
-    std::vector < std::pair < float, rave::Track > > theComponents; // we keep the components here.
+    std::vector < std::pair < float, BasicTrack > > convert ( const std::vector < std::pair < float, Track > > & ) const;
+    std::vector < std::pair < float, rave::Track > > theComponents;
+
 };
 
 }

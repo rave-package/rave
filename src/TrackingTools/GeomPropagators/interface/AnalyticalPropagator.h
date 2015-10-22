@@ -53,39 +53,39 @@ public:
     return propagateWithPath(fts,plane).first;
   }
 
-  /**
+
   /// propagation to plane -- using rave::Track
-  TrajectoryStateOnSurface propagate(const rave::Track& fts, const Plane& plane) const {
-    return propagateWithPath(fts,plane).first;
+  TrajectoryStateOnSurface propagate(const rave::Track& raveTrack, const Plane& plane) const {
+    return propagateWithPath(raveTrack,plane).first;
   }
-  **/
+
 
   /// propagation to plane with path length  
   std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const FreeTrajectoryState& fts, const Plane& plane) const;
 
-  /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
-  std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& ravePlane) const;
+  /// propagation to plane with path length  -- using rave::Track and CMS Plane
+  std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const Plane& Plane) const;
   
+
   /// propagation to cylinder
   TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, const Cylinder& cylinder) const {
     return propagateWithPath(fts,cylinder).first;
   }
 
-  /**
+
   /// propagation to cylinder -- using rave::Track
-    TrajectoryStateOnSurface propagate(const rave::Track& fts, const Cylinder& cylinder) const {
-      return propagateWithPath(fts,cylinder).first;
+    TrajectoryStateOnSurface propagate(const rave::Track& raveTrack, const Cylinder& cylinder) const {
+      return propagateWithPath(raveTrack,cylinder).first;
     }
-  **/
 
   /// propagation to cylinder with path length
   std::pair<TrajectoryStateOnSurface,double> 
   propagateWithPath(const FreeTrajectoryState& fts, const Cylinder& cylinder) const;
 
 
-  /// propagation to cylinder with path length -- using rave::Track
-    std::pair<TrajectoryStateOnSurface,double>
-    propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;
+  /// propagation to cylinder with path length -- using rave::Track and CMS Cylinder
+  std::pair<TrajectoryStateOnSurface,double>
+  propagateWithPath(const rave::Track& raveTrack, const Cylinder& Cylinder) const;
 
 
   /** limitation of change in transverse direction
@@ -121,14 +121,13 @@ private:
 			   const Surface& surface, 
 			   const GlobalTrajectoryParameters& gtp, 
 			   const double& s) const;
-/**
+
   /// propagation of errors (if needed) and generation of a new TSOS -- using rave::Track
   std::pair<TrajectoryStateOnSurface,double>
-    propagatedStateWithPath (const rave::Track& fts,
+    propagatedStateWithPath (const rave::Track& raveTrack,
   			   const Surface& surface,
   			   const GlobalTrajectoryParameters& gtp,
   			   const double& s) const;
-**/
 
   /// parameter propagation to cylinder (returns position, momentum and path length)
   bool propagateParametersOnCylinder(const FreeTrajectoryState& fts, 
@@ -136,14 +135,14 @@ private:
 				     GlobalPoint& x, 
 				     GlobalVector& p, 
 				     double& s) const;
-/**
+
   /// parameter propagation to cylinder (returns position, momentum and path length) -- using rave::Track
-    bool propagateParametersOnCylinder(const rave::Track& fts,
+    bool propagateParametersOnCylinder(const rave::Track& raveTrack,
   				     const Cylinder& cylinder,
   				     GlobalPoint& x,
   				     GlobalVector& p,
   				     double& s) const;
-**/
+
 
   /// parameter propagation to plane (returns position, momentum and path length)
   bool propagateParametersOnPlane(const FreeTrajectoryState& fts, 
@@ -152,14 +151,15 @@ private:
 				  GlobalVector& p, 
 				  double& s) const;
   
-  /**
+
   /// parameter propagation to plane (returns position, momentum and path length) -- using rave::Track
-  bool propagateParametersOnPlane(const rave::Track& fts,
+  bool propagateParametersOnPlane(const rave::Track& raveTrack,
 				  const Plane& plane,
 				  GlobalPoint& x,
 				  GlobalVector& p,
 				  double& s) const;
-**/
+
+
   /// straight line parameter propagation to a plane
   bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, const Plane&, GlobalPoint&, double&) const;
   /// straight line parameter propagation to a cylinder
