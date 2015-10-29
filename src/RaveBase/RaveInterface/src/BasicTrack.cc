@@ -74,7 +74,7 @@ BasicTrack::BasicTrack( const Vector6D & s, const Covariance6D & e, Charge q,
   theCartesianError = CartesianTrajectoryError( cov6D );
   theCartesianErrorValid = true;
   theCurvilinearErrorValid = false;
-  theTrackId = RaveId::uniqueId();
+  theTrackId = theId; // ok?
 }
 
 void BasicTrack::createMomPos()
@@ -100,7 +100,7 @@ BasicTrack::BasicTrack( int id, const Vector6D & s, const Covariance6D & e, Char
   theCartesianError = CartesianTrajectoryError( cov6D );
   theCartesianErrorValid = true;
   theCurvilinearErrorValid = false;
-  theTrackId = RaveId::uniqueId();
+  theTrackId = theId; // ok?
 
 }
 
@@ -129,7 +129,7 @@ bool BasicTrack::isValid() const
   return theIsValid;
 }
 
-Charge BasicTrack::charge() const
+Charge BasicTrack::chargeRave() const
 {
   return theCharge;
 }
@@ -144,12 +144,12 @@ const Vector6D & BasicTrack::state() const
   return theState;
 }
 
-const Vector3D & BasicTrack::momentum() const
+const Vector3D & BasicTrack::momentumRave() const
 {
   return theMomentum;
 }
 
-const Point3D & BasicTrack::position() const
+const Point3D & BasicTrack::positionRave() const
 {
   return thePosition;
 }
@@ -180,8 +180,8 @@ void BasicTrack::calculateCachedPerigeeRepresentation() const
 {
   RaveToPerigeeObjects converter;
 
-  cachedPerigeeParameters = converter.convert(state(), charge());
-  cachedPerigeeCovariance = converter.convert(error(), state(), charge());
+  cachedPerigeeParameters = converter.convert(state(), chargeRave());
+  cachedPerigeeCovariance = converter.convert(error(), state(), chargeRave());
 
   hasCachedPerigeeRepresentation = true;
 }
@@ -249,8 +249,8 @@ void BasicTrack::createCurvilinearError() const{
 
 // check if trajectory can reach given radius
 bool BasicTrack::canReach(double radius) const {
-  GlobalPoint x = position2();
-  GlobalVector p = momentum2().unit();
+  GlobalPoint x = position();
+  GlobalVector p = momentum().unit();
   double rho = transverseCurvature()*p.perp();
   double rx = rho*x.x();
   double ry = rho*x.y();

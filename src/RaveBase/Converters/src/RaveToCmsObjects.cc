@@ -33,7 +33,7 @@ namespace {
 
 GlobalTrajectoryParameters RaveToCmsObjects::convert ( const rave::Track & s ) const
 {
-  return convert( s.state(), s.charge() );
+  return convert( s.state(), s.chargeRave() );
 }
 
 GlobalTrajectoryParameters RaveToCmsObjects::convert(const rave::Vector6D & state, const rave::Charge & charge) const
@@ -312,11 +312,11 @@ ExtendedPerigeeTrajectoryParameters RaveToCmsObjects::convert(
 
 Plane RaveToCmsObjects::convert ( const ravesurf::Plane & r ) const
 {
-  GlobalPoint pos = convert ( r.position()  );
+  GlobalPoint pos = convert ( r.positionRave()  );
   // now convert r.normalVector() to a TkRotation thingy.
   // TkRotation<float> rot;
   PerpendicularBoundPlaneBuilder builder;
-  return *(builder( pos, toVector ( r.normalVector() ) ) );
+  return *(builder( pos, toVector ( r.normalVectorRave() ) ) );
   // return Plane ( pos, rot );
 }
 

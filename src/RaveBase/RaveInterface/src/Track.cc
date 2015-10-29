@@ -55,9 +55,9 @@ string Track::tag() const
   return data().tag();
 }
 
-Charge Track::charge() const
+Charge Track::chargeRave() const
 {
-  return data().charge();
+  return data().chargeRave();
 }
 
 int Track::id() const
@@ -70,19 +70,19 @@ const Vector6D & Track::state() const
   return data().state();
 }
 
-const Vector3D & Track::momentum() const
+const Vector3D & Track::momentumRave() const
 {
-  return data().momentum();
+  return data().momentumRave();
 }
 
-const Point3D & Track::position() const
+const Point3D & Track::positionRave() const
 {
-  return data().position();
+  return data().positionRave();
 }
 
 float Track::pt() const
 {
-  return this->momentum().perp();
+  return this->momentumRave().perp();
 }
 
 const Covariance6D & Track::error() const
@@ -141,19 +141,19 @@ int Track::trackId() const
 	return data().trackId();
 }
 
-GlobalPoint Track::position2() const
+GlobalPoint Track::position() const
 {
-	return data().position2();
+	return data().position();
 }
 
-GlobalVector Track::momentum2() const
+GlobalVector Track::momentum() const
 {
-	return data().momentum2();
+	return data().momentum();
 }
 
-TrackCharge Track::charge2() const
+TrackCharge Track::charge() const
 {
-	return data().charge2();
+	return data().charge();
 }
 
 double Track::signedInverseMomentum() const

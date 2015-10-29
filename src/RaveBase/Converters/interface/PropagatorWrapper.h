@@ -3,6 +3,7 @@
 
 #include "TrackingTools/GeomPropagators/interface/Propagator.h"
 #include "rave/Propagator.h"
+#include "rave/Track.h"
 
 class PropagatorWrapper : public Propagator
 {
@@ -14,14 +15,26 @@ class PropagatorWrapper : public Propagator
     virtual std::pair< TrajectoryStateOnSurface, double> 
     propagateWithPath (const FreeTrajectoryState&, const Plane&) const;
 
+    virtual std::pair < TrajectoryStateOnSurface, double >
+    propagateWithPath ( const rave::Track&, const Plane& ) const;
+
     TrajectoryStateOnSurface propagate (
         const FreeTrajectoryState&, const Plane & ) const;
+
+    TrajectoryStateOnSurface propagate (
+            const rave::Track&, const Plane & ) const;
 
     std::pair< TrajectoryStateOnSurface, double> 
     propagateWithPath (const FreeTrajectoryState&, const Cylinder&) const;
     
+    std::pair < TrajectoryStateOnSurface, double >
+    propagateWithPath ( const rave::Track&, const Cylinder& ) const;
+
     TrajectoryStateOnSurface propagate (
         const FreeTrajectoryState&, const Cylinder & ) const;
+
+    TrajectoryStateOnSurface propagate (
+        const rave::Track&, const Cylinder & ) const;
 
     const rave::MagneticField* magneticField() const;
     PropagatorWrapper * clone() const;

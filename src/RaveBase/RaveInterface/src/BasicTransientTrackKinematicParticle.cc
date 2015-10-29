@@ -203,7 +203,7 @@ BasicTransientTrackKinematicParticle::closestToTransversePoint(
 
   GlobalPoint ref(x, y, 0.);
 
-  ::FreeTrajectoryState fts(frameworkInputConverter.convert(state(), charge()),
+  ::FreeTrajectoryState fts(frameworkInputConverter.convert(state(), chargeRave()),
                             frameworkInputConverter.convert(error()));
   ParticleMass mass = boost::numeric_cast< ParticleMass > ( fullstate().m() );
   float m_sigma = boost::numeric_cast< float > ( sqrt(fullerror().dmm()) );

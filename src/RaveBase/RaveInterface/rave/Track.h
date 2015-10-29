@@ -46,10 +46,10 @@ class RaveDllExport Track : private rave::BasicTrack::Proxy
     Track ( const rave::BasicTrack & );
     Track();
 
-    rave::Charge charge() const;
+    rave::Charge chargeRave() const;
     const rave::Vector6D & state() const;
-    const rave::Vector3D & momentum() const;
-    const rave::Point3D & position() const;
+    const rave::Vector3D & momentumRave() const;
+    const rave::Point3D & positionRave() const;
     float pt() const;
     const rave::Covariance6D & error() const;
     void * originalObject() const;
@@ -76,9 +76,9 @@ class RaveDllExport Track : private rave::BasicTrack::Proxy
     // cms format set functions etc missing
 
     int trackId() const;
-    GlobalPoint position2() const;
-    GlobalVector momentum2() const;
-    TrackCharge charge2() const;
+    GlobalPoint position() const;
+    GlobalVector momentum() const;
+    TrackCharge charge() const;
     double signedInverseMomentum() const;
     double transverseCurvature() const;
     bool hasCartesianError() const;

@@ -94,7 +94,7 @@ class RaveDllExport KinematicParticle :
     /**
      * @return The charge associated with this particle
      */
-    Charge charge() const;
+    Charge chargeRave() const;
 
     const PerigeeParameters5D & perigeeParameters() const;
     const PerigeeCovariance5D & perigeeCovariance() const;

@@ -36,9 +36,9 @@ const rave::Covariance6D & KinematicParticle::error() const
   return data().error();
 }
 
-Charge KinematicParticle::charge() const
+Charge KinematicParticle::chargeRave() const
 {
-  return data().charge();
+  return data().chargeRave();
 }
 
 const PerigeeParameters5D & rave::KinematicParticle::perigeeParameters() const

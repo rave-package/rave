@@ -82,7 +82,7 @@ AnalyticalPropagator::propagateWithPath(const FreeTrajectoryState& fts,
 
 
 /// propagation to plane with path length  -- using rave::Track and CMS Plane
-// using ravetrack instead of cms fts --> TEMPORARY charge2, position2, momentum2
+// using ravetrack instead of cms fts --> TEMPORARY charge, position, momentum
 
 std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPath(const rave::Track& raveTrack, const Plane& plane) const
 {
@@ -98,32 +98,77 @@ std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPa
   const float maxDistToPlane(0.1e-4);
   const float numericalPrecision(5.e-7);
   float maxDz = numericalPrecision*plane.position().mag();
-  if ( fabs(plane.localZ(raveTrack.position2()))>(maxDistToPlane>maxDz?maxDistToPlane:maxDz) ) {
+  if ( fabs(plane.localZ(raveTrack.position()))>(maxDistToPlane>maxDz?maxDistToPlane:maxDz) ) {
     // propagate
     bool parametersOK = this->propagateParametersOnPlane(raveTrack, plane, x, p, s);
     // check status and deltaPhi limit
     float dphi2 = s*rho;
-    dphi2 = dphi2*dphi2*raveTrack.momentum2().perp2()/raveTrack.momentum2().mag2();
+    dphi2 = dphi2*dphi2*raveTrack.momentum().perp2()/raveTrack.momentum().mag2();
     if ( !parametersOK || dphi2>theMaxDPhi2 )
     {
       return TsosWP(TrajectoryStateOnSurface(),0.);
     }
   }
   else {
-    x = raveTrack.position2();
-    p = raveTrack.momentum2();
+    x = raveTrack.position();
+    p = raveTrack.momentum();
     s = 0.;
   }
   //
   // Compute propagated state and check change in curvature
   //
-  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge2(),theField);
+  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge(),theField);
   if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
     return TsosWP(TrajectoryStateOnSurface(),0.);
   //
   // construct TrajectoryStateOnSurface
   //
   return propagatedStateWithPath(raveTrack,plane,gtp,s);
+}
+
+/// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
+// using ravetrack instead of cms fts --> TEMPORARY charge, position, momentum
+
+std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& raveplane) const
+{
+  // check curvature
+  double rho = raveTrack.transverseCurvature();
+
+  // propagate parameters
+  GlobalPoint x;
+  GlobalVector p;
+  double s;
+
+  // check if already on plane
+  const float maxDistToPlane(0.1e-4);
+  const float numericalPrecision(5.e-7);
+  float maxDz = numericalPrecision*raveplane.position().mag();
+  if ( fabs(raveplane.localZ(raveTrack.position()))>(maxDistToPlane>maxDz?maxDistToPlane:maxDz) ) {
+    // propagate
+    bool parametersOK = this->propagateParametersOnPlane(raveTrack, raveplane, x, p, s);
+    // check status and deltaPhi limit
+    float dphi2 = s*rho;
+    dphi2 = dphi2*dphi2*raveTrack.momentum().perp2()/raveTrack.momentum().mag2();
+    if ( !parametersOK || dphi2>theMaxDPhi2 )
+    {
+      return TsosWP(TrajectoryStateOnSurface(),0.);
+    }
+  }
+  else {
+    x = raveTrack.position();
+    p = raveTrack.momentum();
+    s = 0.;
+  }
+  //
+  // Compute propagated state and check change in curvature
+  //
+  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge(),theField);
+  if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
+    return TsosWP(TrajectoryStateOnSurface(),0.);
+  //
+  // construct TrajectoryStateOnSurface
+  //
+  return propagatedStateWithPath(raveTrack,raveplane,gtp,s);
 }
 
 
@@ -172,12 +217,15 @@ std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPa
   bool parametersOK = this->propagateParametersOnCylinder(raveTrack, cylinder, x, p, s);
   // check status and deltaPhi limit
   float dphi2 = s*rho;
-  dphi2 = dphi2*dphi2*raveTrack.momentum2().perp2()/raveTrack.momentum2().mag2();
-  if ( !parametersOK || dphi2>theMaxDPhi2 )  return TsosWP(TrajectoryStateOnSurface(),0.);
+  dphi2 = dphi2*dphi2*raveTrack.momentum().perp2()/raveTrack.momentum().mag2();
+  if ( !parametersOK || dphi2>theMaxDPhi2 )
+  {
+	  return TsosWP(TrajectoryStateOnSurface(),0.);
+  }
   //
   // Compute propagated state and check change in curvature
   //
-  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge2(),theField);
+  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge(),theField);
   if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
     return TsosWP(TrajectoryStateOnSurface(),0.);
   //
@@ -312,14 +360,13 @@ bool AnalyticalPropagator::propagateParametersOnCylinder(
   const rave::Track& raveTrack, const Cylinder& cylinder,
   GlobalPoint& x, GlobalVector& p, double& s) const
 {
-
   GlobalPoint sp = cylinder.toGlobal(LocalPoint(0.,0.));
   if (sp.x()!=0. || sp.y()!=0.) {
-    throw PropagationException("Cannot propagate to an arbitrary cylinder");
+	  throw PropagationException("Cannot propagate to an arbitrary cylinder");
   }
   // preset output
-  x = raveTrack.position2();
-  p = raveTrack.momentum2();
+  x = raveTrack.position();
+  p = raveTrack.momentum();
   s = 0;
   // (transverse) curvature
   double rho = raveTrack.transverseCurvature();
@@ -327,27 +374,33 @@ bool AnalyticalPropagator::propagateParametersOnCylinder(
   // Straight line approximation? |rho|<1.e-10 equivalent to ~ 1um
   // difference in transversal position at 10m.
   //
+  std::cout << "	rho " << rho << std::endl;
   if( fabs(rho)<1.e-10 )
-    return propagateWithLineCrossing(raveTrack.position2(),p,cylinder,x,s);
+    return propagateWithLineCrossing(raveTrack.position(),p,cylinder,x,s);
   //
   // Helix case
   //
   // check for possible intersection
+  std::cout << "	rho " << rho << std::endl;
   const double tolerance = 1.e-4; // 1 micron distance
   double rdiff = x.perp() - cylinder.radius();
+  std::cout << "	rdiff " << rdiff << std::endl;
+  std::cout << "	tolerance " << tolerance << std::endl;
   if ( fabs(rdiff) < tolerance )  return true;
   //
   // Instantiate HelixBarrelCylinderCrossing and get solutions
   //
-  HelixBarrelCylinderCrossing cylinderCrossing(raveTrack.position2(),raveTrack.momentum2(),rho,
+  HelixBarrelCylinderCrossing cylinderCrossing(raveTrack.position(),raveTrack.momentum(),rho,
 					       propagationDirection(),cylinder);
+  std::cout << "	!cylinderCrossing.hasSolution() " << !cylinderCrossing.hasSolution() << std::endl;
   if ( !cylinderCrossing.hasSolution() )  return false;
   // path length
   s = cylinderCrossing.pathLength();
   // point
   x = cylinderCrossing.position();
   // direction (renormalised)
-  p = cylinderCrossing.direction().unit()*raveTrack.momentum2().mag();
+  p = cylinderCrossing.direction().unit()*raveTrack.momentum().mag();
+  std::cout << "	dd" <<  std::endl;
   return true;
 }
 
@@ -410,8 +463,8 @@ AnalyticalPropagator::propagateParametersOnPlane(const rave::Track& raveTrack,
 						 double& s) const
 {
   // initialisation of position, momentum and path length
-  x = raveTrack.position2();
-  p = raveTrack.momentum2();
+  x = raveTrack.position();
+  p = raveTrack.momentum();
   s = 0;
   // (transverse) curvature
   double rho = raveTrack.transverseCurvature();
@@ -420,7 +473,7 @@ AnalyticalPropagator::propagateParametersOnPlane(const rave::Track& raveTrack,
   // difference in transversal position at 10m.
   //
   if( fabs(rho)<1.e-10 )
-    return propagateWithLineCrossing(raveTrack.position2(),p,plane,x,s);
+    return propagateWithLineCrossing(raveTrack.position(),p,plane,x,s);
   //
   // Helix case
   //
@@ -437,19 +490,70 @@ AnalyticalPropagator::propagateParametersOnPlane(const rave::Track& raveTrack,
     // barrel plane:
     // instantiate HelixBarrelPlaneCrossing, get vector of solutions and check for existance
     HelixBarrelPlaneCrossingByCircle planeCrossing(helixPos,helixDir,rho,propagationDirection());
-    return propagateWithHelixCrossing(planeCrossing,plane,raveTrack.momentum2().mag(),x,p,s);
+    return propagateWithHelixCrossing(planeCrossing,plane,raveTrack.momentum().mag(),x,p,s);
   }
   if (fabs(u.x()) < small && fabs(u.y()) < small) {
     // forward plane:
     // instantiate HelixForwardPlaneCrossing, get vector of solutions and check for existance
     HelixForwardPlaneCrossing planeCrossing(helixPos,helixDir,rho,propagationDirection());
-    return propagateWithHelixCrossing(planeCrossing,plane,raveTrack.momentum2().mag(),x,p,s);
+    return propagateWithHelixCrossing(planeCrossing,plane,raveTrack.momentum().mag(),x,p,s);
   }
   else {
     // arbitrary plane:
     // instantiate HelixArbitraryPlaneCrossing, get vector of solutions and check for existance
     HelixArbitraryPlaneCrossing planeCrossing(helixPos,helixDir,rho,propagationDirection());
-    return propagateWithHelixCrossing(planeCrossing,plane,raveTrack.momentum2().mag(),x,p,s);
+    return propagateWithHelixCrossing(planeCrossing,plane,raveTrack.momentum().mag(),x,p,s);
+  }
+}
+
+bool
+AnalyticalPropagator::propagateParametersOnPlane(const rave::Track& raveTrack,
+						 const ravesurf::Plane& ravePlane,
+						 GlobalPoint& x,
+						 GlobalVector& p,
+						 double& s) const
+{
+  // initialisation of position, momentum and path length
+  x = raveTrack.position();
+  p = raveTrack.momentum();
+  s = 0;
+  // (transverse) curvature
+  double rho = raveTrack.transverseCurvature();
+  //
+  // Straight line approximation? |rho|<1.e-10 equivalent to ~ 1um
+  // difference in transversal position at 10m.
+  //
+  if( fabs(rho)<1.e-10 )
+    return propagateWithLineCrossing(raveTrack.position(),p,ravePlane,x,s);
+  //
+  // Helix case
+  //
+  GlobalVector u = ravePlane.normalVector();
+  const double small = 1.e-6; // for orientation of planes
+  //
+  // Frame-independant point and vector are created explicitely to
+  // avoid confusing gcc (refuses to compile with temporary objects
+  // in the constructor).
+  //
+  HelixPlaneCrossing::PositionType helixPos(x);
+  HelixPlaneCrossing::DirectionType helixDir(p);
+  if (fabs(u.z()) < small) {
+    // barrel plane:
+    // instantiate HelixBarrelPlaneCrossing, get vector of solutions and check for existance
+    HelixBarrelPlaneCrossingByCircle planeCrossing(helixPos,helixDir,rho,propagationDirection());
+    return propagateWithHelixCrossing(planeCrossing,ravePlane,raveTrack.momentum().mag(),x,p,s);
+  }
+  if (fabs(u.x()) < small && fabs(u.y()) < small) {
+    // forward plane:
+    // instantiate HelixForwardPlaneCrossing, get vector of solutions and check for existance
+    HelixForwardPlaneCrossing planeCrossing(helixPos,helixDir,rho,propagationDirection());
+    return propagateWithHelixCrossing(planeCrossing,ravePlane,raveTrack.momentum().mag(),x,p,s);
+  }
+  else {
+    // arbitrary plane:
+    // instantiate HelixArbitraryPlaneCrossing, get vector of solutions and check for existance
+    HelixArbitraryPlaneCrossing planeCrossing(helixPos,helixDir,rho,propagationDirection());
+    return propagateWithHelixCrossing(planeCrossing,ravePlane,raveTrack.momentum().mag(),x,p,s);
   }
 }
 
@@ -480,7 +584,33 @@ AnalyticalPropagator::propagateWithLineCrossing (const GlobalPoint& x0,
 }
 
 bool
-AnalyticalPropagator::propagateWithLineCrossing (const GlobalPoint& x0, 
+AnalyticalPropagator::propagateWithLineCrossing (const GlobalPoint& x0,
+						 const GlobalVector& p0,
+						 const ravesurf::Plane& ravePlane,
+						 GlobalPoint& x, double& s) const {
+  //
+  // Instantiate auxiliary object for finding intersection.
+  // Frame-independant point and vector are created explicitely to
+  // avoid confusing gcc (refuses to compile with temporary objects
+  // in the constructor).
+  //
+  StraightLinePlaneCrossing::PositionType pos(x0);
+  StraightLinePlaneCrossing::DirectionType dir(p0);
+  StraightLinePlaneCrossing planeCrossing(pos,dir,propagationDirection());
+  //
+  // get solution
+  //
+  std::pair<bool,double> propResult = planeCrossing.pathLength(ravePlane);
+  if ( !propResult.first )  return false;
+  s = propResult.second;
+  // point (reconverted to GlobalPoint)
+  x = GlobalPoint(planeCrossing.position(s));
+  //
+  return true;
+}
+
+bool
+AnalyticalPropagator::propagateWithLineCrossing (const GlobalPoint& x0,
 						 const GlobalVector& p0,
 						 const Cylinder& cylinder,
 						 GlobalPoint& x, double& s) const {
@@ -512,6 +642,29 @@ AnalyticalPropagator::propagateWithHelixCrossing (HelixPlaneCrossing& planeCross
 						  double& s) const {
   // get solution
   std::pair<bool,double> propResult = planeCrossing.pathLength(plane);
+  if ( !propResult.first )  return false;
+  s = propResult.second;
+  // point (reconverted to GlobalPoint)
+  HelixPlaneCrossing::PositionType xGen = planeCrossing.position(s);
+  x = GlobalPoint(xGen);
+  // direction (reconverted to GlobalVector, renormalised)
+  HelixPlaneCrossing::DirectionType pGen = planeCrossing.direction(s);
+  pGen *= pmag/pGen.mag();
+  p = GlobalVector(pGen);
+  //
+  return true;
+}
+
+
+bool
+AnalyticalPropagator::propagateWithHelixCrossing (HelixPlaneCrossing& planeCrossing,
+						  const ravesurf::Plane& ravePlane,
+						  const float pmag,
+						  GlobalPoint& x,
+						  GlobalVector& p,
+						  double& s) const {
+  // get solution
+  std::pair<bool,double> propResult = planeCrossing.pathLength(ravePlane);
   if ( !propResult.first )  return false;
   s = propResult.second;
   // point (reconverted to GlobalPoint)

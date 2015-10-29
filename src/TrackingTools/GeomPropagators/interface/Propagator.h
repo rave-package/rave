@@ -5,6 +5,8 @@
 #include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h"
 #include <utility>
 #include <rave/MagneticField.h>
+#include <rave/Track.h>
+
 class FreeTrajectoryState;
 class TrajectoryStateOnSurface;
 class Plane;
@@ -52,11 +54,23 @@ public:
   virtual TrajectoryStateOnSurface 
   propagate (const FreeTrajectoryState&, const Surface&) const;
 
-  virtual TrajectoryStateOnSurface 
+    virtual TrajectoryStateOnSurface
   propagate (const FreeTrajectoryState&, const Plane&) const = 0;
 
   virtual TrajectoryStateOnSurface 
   propagate (const FreeTrajectoryState&, const Cylinder&) const = 0;
+
+  // cms format
+  virtual TrajectoryStateOnSurface
+  propagate (const rave::Track&, const Surface&) const;
+
+  virtual TrajectoryStateOnSurface
+  propagate (const rave::Track&, const Plane&) const = 0;
+
+  virtual TrajectoryStateOnSurface 
+  propagate (const rave::Track&, const Cylinder&) const = 0;
+
+
 
   /** The following three methods are equivalent to the corresponding
    *  methods above,

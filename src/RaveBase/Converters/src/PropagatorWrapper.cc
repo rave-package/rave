@@ -34,6 +34,23 @@ pair < TrajectoryStateOnSurface, double >
 }
 
 pair < TrajectoryStateOnSurface, double > 
+   PropagatorWrapper::propagateWithPath ( const rave::Track & raveTrack,
+    const Plane & surf ) const
+{
+  RaveToCmsObjects rcconv;
+  CmsToRaveObjects crconv;
+  ravesurf::Plane rsurf = crconv.convert ( surf );
+  // cout << "[PropagatorWrapper] ok now we propagate to plane here" << endl;
+  rave::Track oldt = raveTrack;
+  // cout << "[PropagatorWrapper] track is " << oldt.id() << endl;
+  pair < rave::Track, double > t = theRavePropagator->to ( oldt, rsurf );
+  FreeTrajectoryState nfts = rcconv.convertTrackToFTS ( t.first );
+  TrajectoryStateOnSurface st ( nfts, surf );
+  st.freeState()->setTrackId ( raveTrack.trackId() );
+  return pair < TrajectoryStateOnSurface, double > ( st, t.second );
+}
+
+pair < TrajectoryStateOnSurface, double >
     PropagatorWrapper::propagateWithPath ( const FreeTrajectoryState & fts,
     const Cylinder & surf ) const
 {
@@ -45,6 +62,21 @@ pair < TrajectoryStateOnSurface, double >
   FreeTrajectoryState nfts = rcconv.convertTrackToFTS ( t.first );
   TrajectoryStateOnSurface st ( nfts, surf );
   st.freeState()->setTrackId ( fts.trackId() );
+  return pair < TrajectoryStateOnSurface, double > ( st, t.second );
+}
+
+pair < TrajectoryStateOnSurface, double >
+    PropagatorWrapper::propagateWithPath ( const rave::Track & raveTrack,
+    const Cylinder & surf ) const
+{
+  RaveToCmsObjects rcconv;
+  CmsToRaveObjects crconv;
+  ravesurf::Cylinder rsurf = crconv.convert ( surf );
+  rave::Track oldt = raveTrack;
+  pair < rave::Track, double > t = theRavePropagator->to ( oldt, rsurf );
+  FreeTrajectoryState nfts = rcconv.convertTrackToFTS ( t.first );
+  TrajectoryStateOnSurface st ( nfts, surf );
+  st.freeState()->setTrackId ( raveTrack.trackId() );
   return pair < TrajectoryStateOnSurface, double > ( st, t.second );
 }
 
@@ -72,4 +104,17 @@ TrajectoryStateOnSurface PropagatorWrapper::propagate (
     const FreeTrajectoryState & fts, const Plane & c ) const
 {
   return propagateWithPath ( fts, c ).first;
+}
+
+// remove later
+TrajectoryStateOnSurface PropagatorWrapper::propagate (
+    const rave::Track & raveTrack, const Cylinder & c ) const
+{
+  return propagateWithPath ( raveTrack, c ).first;
+}
+
+TrajectoryStateOnSurface PropagatorWrapper::propagate (
+    const rave::Track & raveTrack, const Plane & c ) const
+{
+  return propagateWithPath ( raveTrack, c ).first;
 }

@@ -55,8 +55,7 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   pair < TrajectoryStateOnSurface, double > ot = prop.propagateWithPath ( orig, cyl );
   TrajectoryStateOnSurface * tsos = new TrajectoryStateOnSurface ( ot.first );
   tsoses.push_back ( tsos );
-  rave::Track ret = backward.convert ( *tsos, orig.chi2(), orig.ndof(),
-     0, orig.tag() );
+  rave::Track ret = backward.convert ( *tsos, orig.chi2(), orig.ndof(),  0, orig.tag() );
   return pair < rave::Track, double > ( ret, ot.second );
 }
 
@@ -76,14 +75,13 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   // typedef GloballyPositioned<float>::RotationType RotationType;
   CmsToRaveObjects backward;
   RaveToCmsObjects forward;
-  GlobalPoint pt = forward.convert ( rplane.position() );
-  FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
+  GlobalPoint pt = forward.convert ( rplane.positionRave() );
   TkRotation<float> rot;
   ::Plane plane ( pt, rot );
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(),
      anyDirection );
   // FIXME merde! another one of those pesky reference counting probs!
-  pair < TrajectoryStateOnSurface, double > to = prop.propagateWithPath ( fts, plane );
+  pair < TrajectoryStateOnSurface, double > to = prop.propagateWithPath ( orig, plane );
   TrajectoryStateOnSurface * tsos = new TrajectoryStateOnSurface ( to.first );
   tsoses.push_back ( tsos );
   ret = backward.convert ( orig.id(), *tsos, orig.chi2(), orig.ndof(),
@@ -100,9 +98,9 @@ rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
 
   if ( transverse )
   {
-    FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
+    //FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
     TransverseImpactPointExtrapolator tipe( MagneticFieldSingleton::Instance() );
-    TrajectoryStateOnSurface tsos = tipe.extrapolate( fts, pos );
+    TrajectoryStateOnSurface tsos = tipe.extrapolate( orig, pos );
     rave::Track ret = backward.convert ( orig.id(), tsos, orig.chi2(), orig.ndof(),
        orig.originalObject(), orig.tag() );
     return ret;
@@ -112,7 +110,7 @@ rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
   AlgebraicVector3 momentum = forward.toAlgebraicVector3 ( orig.state().momentum() );
   AlgebraicSymMatrix66 error = forward.convert ( orig.error() ).matrix();
   TrajectoryStateClosestToPoint tscp = conv.trajectoryStateClosestToPoint
-    ( momentum, pos, orig.charge(), error , MagneticFieldSingleton::Instance()  );
+    ( momentum, pos, orig.chargeRave(), error , MagneticFieldSingleton::Instance()  );
   rave::Track ret = backward.convert ( orig.id(), tscp.theState(), orig.chi2(), 
       orig.ndof(), orig.originalObject(), orig.tag() );
   return ret;

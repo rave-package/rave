@@ -51,10 +51,10 @@ class BasicTrack :
 
     BasicTrack();
 
-    Charge charge() const;
+    Charge chargeRave() const;
     const Vector6D & state() const;
-    const Vector3D & momentum() const;
-    const Point3D & position() const;
+    const Vector3D & momentumRave() const;
+    const Point3D & positionRave() const;
     const Covariance6D & error() const;
     void * originalObject() const;
     std::string tag() const;
@@ -80,9 +80,9 @@ class BasicTrack :
     void setTrackId( int id ) { theTrackId=id; }
     // access
     // propagate access to parameters
-    GlobalPoint position2() const { return theGlobalParameters.position(); }
-    GlobalVector momentum2() const { return theGlobalParameters.momentum(); }
-    TrackCharge charge2() const { return theGlobalParameters.charge(); }
+    GlobalPoint position() const { return theGlobalParameters.position(); }
+    GlobalVector momentum() const { return theGlobalParameters.momentum(); }
+    TrackCharge charge() const { return theGlobalParameters.charge(); }
     double signedInverseMomentum() const {return theGlobalParameters.signedInverseMomentum(); }
     double transverseCurvature() const { return theGlobalParameters.transverseCurvature(); }
 

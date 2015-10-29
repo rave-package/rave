@@ -47,7 +47,7 @@ const Covariance6D & BasicKinematicParticle::error() const
   return fullerror();
 }
 
-Charge BasicKinematicParticle::charge() const
+Charge BasicKinematicParticle::chargeRave() const
 {
   BOOST_ASSERT (
     boost::numeric_cast<Charge> (
@@ -70,7 +70,7 @@ const PerigeeCovariance5D & BasicKinematicParticle::perigeeCovariance() const
 const PerigeeParameters6D & BasicKinematicParticle::fullPerigeeParameters() const
 {
   if (!hasCachedPerigeeParameters) {
-    cachedPerigeeParameters = RaveToPerigeeObjects().convert(fullstate(), charge() );
+    cachedPerigeeParameters = RaveToPerigeeObjects().convert(fullstate(), chargeRave() );
     hasCachedPerigeeParameters = true;
   }
   return cachedPerigeeParameters;
@@ -79,7 +79,7 @@ const PerigeeParameters6D & BasicKinematicParticle::fullPerigeeParameters() cons
 const PerigeeCovariance6D & BasicKinematicParticle::fullPerigeeCovariance() const
 {
   if (!hasCachedPerigeeCovariance) {
-    cachedPerigeeCovariance = RaveToPerigeeObjects().convert(fullerror(), fullstate(), charge());
+    cachedPerigeeCovariance = RaveToPerigeeObjects().convert(fullerror(), fullstate(), chargeRave());
     hasCachedPerigeeCovariance = true;
   }
   return cachedPerigeeCovariance;

@@ -107,7 +107,7 @@ class RaveDllExport BasicKinematicParticle :
      */
     const rave::Covariance6D & error() const;
 
-    Charge charge() const;
+    Charge chargeRave() const;
 
     const PerigeeParameters5D & perigeeParameters() const;
     const PerigeeCovariance5D & perigeeCovariance() const;
