@@ -6,6 +6,10 @@
 
 /** Calculates intersections of a helix with planes of any orientation. */
 
+namespace ravesurf{
+	class Plane;
+}
+
 class HelixArbitraryPlaneCrossing : public HelixPlaneCrossing {
 public:
   /** Constructor using point, direction and (transverse!) curvature.
@@ -22,6 +26,8 @@ public:
    *  starting point is given in the constructor.
    */
   virtual std::pair<bool,double> pathLength(const Plane& plane);
+
+  virtual std::pair<bool,double> pathLength(const ravesurf::Plane& ravePlane);
 
   /** Position at pathlength s from the starting point.
    */
@@ -48,6 +54,10 @@ private:
   /** Iteration control: check for significant distance to plane.
    */
   inline bool notAtSurface (const Plane&,
+  			    const PositionTypeDouble&,
+			    const float) const;
+
+  inline bool notAtSurface (const ravesurf::Plane&,
   			    const PositionTypeDouble&,
 			    const float) const;
 

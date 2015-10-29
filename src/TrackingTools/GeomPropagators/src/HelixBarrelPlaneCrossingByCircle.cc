@@ -3,6 +3,8 @@
 #include "TrackingTools/GeomPropagators/interface/StraightLinePlaneCrossing.h"
 #include "DataFormats/GeometrySurface/interface/Plane.h"
 
+#include "rave/Plane.h"
+
 #include <algorithm>
 #include <cfloat>
 
@@ -58,6 +60,79 @@ HelixBarrelPlaneCrossingByCircle::pathLength( const Plane& plane)
   // plane parameters
   GlobalVector n = plane.normalVector();
   double distToPlane = -plane.localZ( GlobalPoint( theStartingPos));
+  //    double distToPlane = (plane.position().x()-theStartingPos.x()) * n.x() +
+  //                         (plane.position().y()-theStartingPos.y()) * n.y();
+  double nx = n.x();  // convert to double
+  double ny = n.y();  // convert to double
+  double distCx = theStartingPos.x() - theXCenter;
+  double distCy = theStartingPos.y() - theYCenter;
+
+  double nfac, dfac;
+  double A, B, C;
+  bool solveForX;
+  if (fabs(nx) > fabs(ny)) {
+    solveForX = false;
+    nfac = ny/nx;
+    dfac = distToPlane/nx;
+    B = distCy - nfac*distCx;  // only part of B, may have large cancelation
+    C = 2.*dfac*distCx + dfac*dfac;
+  }
+  else {
+    solveForX = true;
+    nfac = nx/ny;
+    dfac = distToPlane/ny;
+    B = distCx - nfac*distCy; // only part of B, may have large cancelation
+    C = 2.*dfac*distCy + dfac*dfac;
+  }
+  B -= nfac*dfac; B *= 2;  // the rest of B (normally small)
+  A = 1.+ nfac*nfac;
+
+  double dx1, dx2, dy1, dy2;
+  RealQuadEquation equation(A,B,C);
+  if (!equation.hasSolution) return ResultType( false, 0.);
+  else {
+    if (solveForX) {
+      dx1 = equation.first;
+      dx2 = equation.second;
+      dy1 = dfac - nfac*dx1;
+      dy2 = dfac - nfac*dx2;
+    }
+    else {
+      dy1 = equation.first;
+      dy2 = equation.second;
+      dx1 = dfac - nfac*dy1;
+      dx2 = dfac - nfac*dy2;
+    }
+  }
+  bool solved = chooseSolution( Vector2D(dx1, dy1), Vector2D(dx2, dy2));
+  if (solved) {
+    theDmag = theD.mag();
+    // protect asin (taking some safety margin)
+    double sinAlpha = theDmag*theRho/2.;
+    if ( sinAlpha>(1.-10*DBL_EPSILON) )  sinAlpha = 1.-10*DBL_EPSILON;
+    else if ( sinAlpha<-(1.-10*DBL_EPSILON) )  sinAlpha = -(1.-10*DBL_EPSILON);
+    theS = theActualDir*2./(theRho*theSinTheta) * asin( sinAlpha);
+    return ResultType( true, theS);
+  }
+  else return ResultType( false, 0.);
+}
+
+std::pair<bool,double>
+HelixBarrelPlaneCrossingByCircle::pathLength( const ravesurf::Plane& ravePlane)
+{
+  typedef std::pair<bool,double>     ResultType;
+
+  if(useStraightLine){
+    // switch to straight line case
+    StraightLinePlaneCrossing slc( theStartingPos,
+				   theStartingDir, thePropDir);
+    return slc.pathLength( ravePlane);
+  }
+
+
+  // plane parameters
+  GlobalVector n = ravePlane.normalVector();
+  double distToPlane = -ravePlane.localZ( GlobalPoint( theStartingPos));
   //    double distToPlane = (plane.position().x()-theStartingPos.x()) * n.x() +
   //                         (plane.position().y()-theStartingPos.y()) * n.y();
   double nx = n.x();  // convert to double

@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <cfloat>
+#include <rave/Plane.h>
 
 HelixForwardPlaneCrossing::HelixForwardPlaneCrossing(const PositionType& point,
 						     const DirectionType& direction,
@@ -42,6 +43,21 @@ HelixForwardPlaneCrossing::pathLength(const Plane& plane) {
   //
   if ( fabs(theCosTheta/theSinTheta)<FLT_MIN )  return std::pair<bool,double>(false,0);
   double dS = (plane.position().z()-theZ0) / theCosTheta;
+  if ( (thePropDir==alongMomentum && dS<0.) ||
+       (thePropDir==oppositeToMomentum && dS>0.) )  return std::pair<bool,double>(false,0);
+  //
+  // Return result
+  //
+  return std::pair<bool,double>(true,dS);
+}
+
+std::pair<bool,double>
+HelixForwardPlaneCrossing::pathLength(const ravesurf::Plane& ravePlane) {
+  //
+  // Protect against p_z=0 and calculate path length
+  //
+  if ( fabs(theCosTheta/theSinTheta)<FLT_MIN )  return std::pair<bool,double>(false,0);
+  double dS = (ravePlane.position().z()-theZ0) / theCosTheta;
   if ( (thePropDir==alongMomentum && dS<0.) ||
        (thePropDir==oppositeToMomentum && dS>0.) )  return std::pair<bool,double>(false,0);
   //

@@ -5,6 +5,10 @@
 
 /** Calculates intersections of a helix with planes of
  *  any orientation using a parabolic approximation. */
+namespace ravesurf{
+	class Plane;
+}
+
 
 class HelixArbitraryPlaneCrossing2Order : public HelixPlaneCrossing {
 
@@ -37,6 +41,8 @@ public:
    *  starting point is given in the constructor.
    */
   virtual std::pair<bool,double> pathLength(const Plane&);
+
+  virtual std::pair<bool,double> pathLength(const ravesurf::Plane& ravePlane);
 
   /** Position at pathlength s from the starting point.
    */

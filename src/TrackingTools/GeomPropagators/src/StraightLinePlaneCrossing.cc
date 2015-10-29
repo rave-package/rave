@@ -2,6 +2,8 @@
 
 #include "DataFormats/GeometrySurface/interface/Plane.h"
 
+#include "rave/Plane.h"
+
 #include <cmath>
 #include <cfloat>
 
@@ -42,6 +44,31 @@ StraightLinePlaneCrossing::pathLength (const Plane& plane) const {
   return std::pair<bool,double>(true,dS);
 }
 
+std::pair<bool,double>
+StraightLinePlaneCrossing::pathLength (const ravesurf::Plane& ravePlane) const {
+  //
+  // Protect against p_normal=0 and calculate path length
+  //
+  PositionTypeDouble planePosition(ravePlane.position());
+  DirectionTypeDouble planeNormal(ravePlane.normalVector());
+//   double pz = plane.localZ(GlobalVector(theP0));
+  double pz = planeNormal.dot(theP0);
+//   cout << "pz = " << pz << endl;
+  if ( fabs(pz)<FLT_MIN )  return std::pair<bool,double>(false,0);
+//   double dS = -plane.localZ(GlobalPoint(theX0))/pz;
+  double dS = -planeNormal.dot(theX0-planePosition)/pz;
+//   if ( thePropDir==alongMomentum )  cout << "alongMomentum ";
+//   else if ( thePropDir==oppositeToMomentum )  cout << "oppositeToMomentum ";
+//   else  cout << "anyDirection ";
+//   cout << dS << endl;
+  if ( (thePropDir==alongMomentum && dS<0.) ||
+       (thePropDir==oppositeToMomentum && dS>0.) )  return std::pair<bool,double>(false,0);
+  //
+  // Return result
+  //
+  return std::pair<bool,double>(true,dS);
+}
+
 std::pair<bool,StraightLinePlaneCrossing::PositionType> 
 StraightLinePlaneCrossing::position(const Plane& plane) const
 {
@@ -50,3 +77,10 @@ StraightLinePlaneCrossing::position(const Plane& plane) const
     else return std::pair<bool,PositionType>(false, PositionType());
 }
 
+std::pair<bool,StraightLinePlaneCrossing::PositionType>
+StraightLinePlaneCrossing::position(const ravesurf::Plane& ravePlane) const
+{
+    std::pair<bool,double> crossed = pathLength(ravePlane);
+    if (crossed.first) return std::pair<bool,PositionType>(true, position(crossed.second));
+    else return std::pair<bool,PositionType>(false, PositionType());
+}

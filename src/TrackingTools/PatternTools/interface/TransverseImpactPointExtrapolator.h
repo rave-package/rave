@@ -42,6 +42,10 @@ public:
   /// as above, but from TrajectoryStateOnSurface
   TrajectoryStateOnSurface extrapolate(const TrajectoryStateOnSurface tsos,
 				       const GlobalPoint& vtx) const;
+
+  // cms format
+  TrajectoryStateOnSurface extrapolate (const rave::Track& raveTrack,
+  						const GlobalPoint& vtx) const;
   
   /// extrapolation with user-supplied propagator
   TrajectoryStateOnSurface extrapolate(const FreeTrajectoryState& fts,
@@ -52,6 +56,7 @@ public:
 				       const GlobalPoint& vtx,
 				       const Propagator& u) const;
 
+
 private:
   /// extrapolation of (multi) TSOS with (internal or user-supplied) propagator
   TrajectoryStateOnSurface doExtrapolation (const TrajectoryStateOnSurface tsos, 
@@ -60,6 +65,10 @@ private:
   /// extrapolation of (single) FTS with (internal or user-supplied) propagator
   TrajectoryStateOnSurface doExtrapolation (const FreeTrajectoryState& fts, 
 					    const GlobalPoint& vtx, 
+					    const Propagator& u) const;
+
+  TrajectoryStateOnSurface doExtrapolation (const rave::Track& raveTrack,
+					    const GlobalPoint& vtx,
 					    const Propagator& u) const;
   /// computation of the TIP surface
   ReferenceCountingPointer<BoundPlane> tipSurface (const GlobalPoint& position,

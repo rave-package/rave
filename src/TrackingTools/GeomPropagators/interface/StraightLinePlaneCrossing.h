@@ -7,6 +7,9 @@
 #include <utility>
 
 class Plane;
+namespace ravesurf{
+class Plane;
+}
 
 /** Calculates intersections of a line with a plane.
  */
@@ -34,6 +37,7 @@ public:
    *  along the helix from the starting point to the plane.
    */
   std::pair<bool,double> pathLength (const Plane& plane) const;
+  std::pair<bool,double> pathLength (const ravesurf::Plane&) const;
 
   /** Position at pathlength s from the starting point.
    */
@@ -41,7 +45,8 @@ public:
 
   /** Simplified interface in case the path length is not needed
    */
-  std::pair<bool,PositionType> position(const Plane& plane) const;
+  std::pair<bool,PositionType> position(const Plane&) const;
+  std::pair<bool,PositionType> position(const ravesurf::Plane&) const;
 
 private:
   //

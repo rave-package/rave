@@ -66,6 +66,9 @@ public:
   /// propagation to plane with path length  -- using rave::Track and CMS Plane
   std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const Plane& Plane) const;
   
+  /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
+    std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
+
 
   /// propagation to cylinder
   TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, const Cylinder& cylinder) const {
@@ -159,13 +162,24 @@ private:
 				  GlobalVector& p,
 				  double& s) const;
 
+  /// parameter propagation to plane (returns position, momentum and path length) -- using rave::Track and ravesurf::Plane
+  bool propagateParametersOnPlane(const rave::Track& raveTrack,
+  				  const ravesurf::Plane& ravePlane,
+  				  GlobalPoint& x,
+  				  GlobalVector& p,
+  				  double& s) const;
 
   /// straight line parameter propagation to a plane
   bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, const Plane&, GlobalPoint&, double&) const;
+
+  bool propagateWithLineCrossing (const GlobalPoint&, const GlobalVector&, const ravesurf::Plane&, GlobalPoint&, double&) const;
+
   /// straight line parameter propagation to a cylinder
   bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, const Cylinder&, GlobalPoint&, double&) const;
   /// helix parameter propagation to a plane using HelixPlaneCrossing
   bool propagateWithHelixCrossing(HelixPlaneCrossing&, const Plane&, const float, GlobalPoint&, GlobalVector&, double& s) const;
+
+  bool propagateWithHelixCrossing (HelixPlaneCrossing&, const ravesurf::Plane&, const float, GlobalPoint&, GlobalVector&, double& ) const;
 
   virtual const rave::MagneticField* magneticField() const {return theField;}
 

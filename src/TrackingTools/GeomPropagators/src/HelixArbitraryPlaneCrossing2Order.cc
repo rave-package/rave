@@ -6,6 +6,8 @@
 #include <cmath>
 #include <cfloat>
 
+#include "rave/Plane.h"
+
 HelixArbitraryPlaneCrossing2Order::HelixArbitraryPlaneCrossing2Order(const PositionType& point,
 								     const DirectionType& direction,
 								     const float curvature,
@@ -92,6 +94,68 @@ HelixArbitraryPlaneCrossing2Order::pathLength(const Plane& plane) {
   //
   return solutionByDirection(dS1,dS2);
 }
+
+std::pair<bool,double>
+HelixArbitraryPlaneCrossing2Order::pathLength(const ravesurf::Plane& ravePlane) {
+  //
+  // get local z-vector in global co-ordinates and
+  // distance to starting point
+  //
+  GlobalVector normalToPlane = ravePlane.normalVector();
+  double nPx = normalToPlane.x();
+  double nPy = normalToPlane.y();
+  double nPz = normalToPlane.z();
+  double cP = ravePlane.localZ(GlobalPoint(theX0,theY0,theZ0));
+  //
+  // coefficients of 2nd order equation to obtain intersection point
+  // in approximation (without curvature-related factors).
+  //
+  double ceq1 = theRho*(nPx*theSinPhi0-nPy*theCosPhi0);
+  double ceq2 = nPx*theCosPhi0 + nPy*theSinPhi0 + nPz*theCosTheta/theSinTheta;
+  double ceq3 = cP;
+  //
+  // Check for degeneration to linear equation (zero
+  //   curvature, forward plane or direction perp. to plane)
+  //
+  double dS1,dS2;
+  if ( fabs(ceq1)>FLT_MIN ) {
+    double deq1 = ceq2*ceq2;
+    double deq2 = ceq1*ceq3;
+    if ( fabs(deq1)<FLT_MIN || fabs(deq2/deq1)>1.e-6 ) {
+      //
+      // Standard solution for quadratic equations
+      //
+      double deq = deq1+2*deq2;
+      if ( deq<0. )  return std::pair<bool,double>(false,0);
+      double ceq = -0.5*(ceq2+(ceq2>0?1:-1)*sqrt(deq));
+      dS1 = -2*ceq/ceq1/theSinTheta;
+      dS2 = ceq3/ceq/theSinTheta;
+    }
+    else {
+      //
+      // Solution by expansion of sqrt(1+deq)
+      //
+      double ceq = ceq2/ceq1/theSinTheta;
+      double deq = deq2/deq1;
+      deq *= (1-deq/2);
+      dS1 = -ceq*deq;
+      dS2 = ceq*(2+deq);
+    }
+  }
+  else {
+    //
+    // Special case: linear equation
+    //
+    dS1 = dS2 = -ceq3/ceq2*(1/theSinTheta);
+  }
+  //
+  // Choose and return solution
+  //
+  return solutionByDirection(dS1,dS2);
+}
+
+
+
 //
 // Position after a step of path length s (2nd order)
 //

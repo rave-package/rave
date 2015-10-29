@@ -74,14 +74,15 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   typedef GloballyPositioned<float>::PositionType PositionType;
   // typedef GloballyPositioned<float>::RotationType RotationType;
   CmsToRaveObjects backward;
-  RaveToCmsObjects forward;
-  GlobalPoint pt = forward.convert ( rplane.positionRave() );
-  TkRotation<float> rot;
-  ::Plane plane ( pt, rot );
+  //RaveToCmsObjects forward;
+  //GlobalPoint pt = forward.convert ( rplane.positionRave() );
+  //TkRotation<float> rot;
+  //::Plane plane ( pt, rot );
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(),
      anyDirection );
   // FIXME merde! another one of those pesky reference counting probs!
-  pair < TrajectoryStateOnSurface, double > to = prop.propagateWithPath ( orig, plane );
+  pair < TrajectoryStateOnSurface, double > to = prop.propagateWithPath ( orig, rplane );
+  //pair < TrajectoryStateOnSurface, double > to = prop.propagateWithPath ( orig, plane );
   TrajectoryStateOnSurface * tsos = new TrajectoryStateOnSurface ( to.first );
   tsoses.push_back ( tsos );
   ret = backward.convert ( orig.id(), *tsos, orig.chi2(), orig.ndof(),

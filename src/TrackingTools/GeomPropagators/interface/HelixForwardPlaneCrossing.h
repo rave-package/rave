@@ -3,9 +3,12 @@
 
 #include "DataFormats/TrajectorySeed/interface/PropagationDirection.h"
 #include "TrackingTools/GeomPropagators/interface/HelixPlaneCrossing.h"
-
 /** Calculates intersections of a helix with planes perpendicular to the z-axis.
  */
+namespace ravesurf{
+	class Plane;
+}
+
 
 class HelixForwardPlaneCrossing : public HelixPlaneCrossing {
 public:
@@ -23,6 +26,7 @@ public:
    */
   virtual std::pair<bool,double> pathLength(const Plane& plane);
 
+  virtual std::pair<bool,double> pathLength(const ravesurf::Plane& plane);
   /** Position at pathlength s from the starting point.
    */
   virtual PositionType position(double s) const;

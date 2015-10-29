@@ -36,6 +36,13 @@ TransverseImpactPointExtrapolator::extrapolate (const FreeTrajectoryState& fts,
 }
 
 TrajectoryStateOnSurface 
+TransverseImpactPointExtrapolator::extrapolate (const rave::Track& raveTrack,
+						const GlobalPoint& vtx) const
+{
+  return doExtrapolation(raveTrack, vtx, *thePropagator);
+}
+
+TrajectoryStateOnSurface
 TransverseImpactPointExtrapolator::extrapolate (const TrajectoryStateOnSurface tsos, 
 						const GlobalPoint& vtx) const
 {
@@ -141,6 +148,42 @@ TransverseImpactPointExtrapolator::doExtrapolation (const FreeTrajectoryState& f
   return p.propagate(fts,*surface);
   }
 }
+
+TrajectoryStateOnSurface
+TransverseImpactPointExtrapolator::doExtrapolation (const rave::Track& raveTrack,
+						    const GlobalPoint& vtx,
+						    const Propagator& p) const
+{
+  //
+  // Compute tip surface
+  //
+  if (fabs(raveTrack.transverseCurvature())<1.E-6){
+    LogDebug("TransverseImpactPointExtrapolator")<< "negligeable curvature: using a trick to extrapolate:\n";
+
+    //0T field probably
+    //x is perpendicular to the momentum
+    GlobalVector xLocal = GlobalVector(-raveTrack.momentum().y(),raveTrack.momentum().x(),0).unit();
+    //y along global Z
+    GlobalVector yLocal(0.,0.,1.);
+    //z accordingly
+    GlobalVector zLocal(xLocal.cross(yLocal));
+
+    Surface::PositionType origin(vtx);
+    Surface::RotationType rotation(xLocal,yLocal,zLocal);
+    ReferenceCountingPointer<BoundPlane> surface =  PlaneBuilder().plane(origin,rotation);
+
+    return p.propagate(raveTrack,*surface);
+  }else{
+  ReferenceCountingPointer<BoundPlane> surface =
+    tipSurface(raveTrack.position(),raveTrack.momentum(),
+	       1./raveTrack.transverseCurvature(),vtx);
+  //
+  // propagate
+  //
+  return p.propagate(raveTrack,*surface);
+  }
+}
+
 
 ReferenceCountingPointer<BoundPlane>
 TransverseImpactPointExtrapolator::tipSurface (const GlobalPoint& position,

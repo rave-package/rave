@@ -5,6 +5,8 @@
 #include <cmath>
 #include <iostream>
 
+#include "rave/Plane.h"
+
 HelixArbitraryPlaneCrossing::HelixArbitraryPlaneCrossing(const PositionType& point,
 							 const DirectionType& direction,
 							 const float curvature,
@@ -109,6 +111,83 @@ HelixArbitraryPlaneCrossing::pathLength(const Plane& plane) {
   //
   return std::pair<bool,double>(true,dSTotal);
 }
+
+
+std::pair<bool,double>
+HelixArbitraryPlaneCrossing::pathLength(const ravesurf::Plane& ravePlane) {
+  //
+  // Constants used for control of convergence
+  //
+  const int maxIterations(100);
+  //
+  // maximum distance to plane (taking into account numerical precision)
+  //
+  float maxNumDz = theNumericalPrecision*ravePlane.position().mag();
+  float safeMaxDist = (theMaxDistToPlane>maxNumDz?theMaxDistToPlane:maxNumDz);
+  //
+  // Prepare internal value of the propagation direction and position / direction vectors for iteration
+  //
+  PropagationDirection propDir = thePropDir;
+  PositionTypeDouble xnew(theX0,theY0,theZ0);
+  DirectionTypeDouble pnew(theCosPhi0,theSinPhi0,theCosTheta/theSinTheta);
+  //
+  // Prepare iterations: count and total pathlength
+  //
+  int iteration(maxIterations);
+  double dSTotal(0.);
+  //
+  bool first(true);
+  while ( notAtSurface(ravePlane,xnew,safeMaxDist) ) {
+    //
+    // return empty solution vector if no convergence after maxIterations iterations
+    //
+    if ( --iteration<0 ) {
+      edm::LogInfo("HelixArbitraryPlaneCrossing") << "pathLength : no convergence";
+      return std::pair<bool,double>(false,0);
+    }
+    //
+    // Use existing 2nd order object at first pass, create temporary object
+    // for subsequent passes.
+    //
+    std::pair<bool,double> deltaS2;
+    if ( first ) {
+      first = false;
+      deltaS2 = theQuadraticCrossingFromStart.pathLength(ravePlane);
+    }
+    else {
+      HelixArbitraryPlaneCrossing2Order quadraticCrossing(xnew.x(),xnew.y(),xnew.z(),
+							  pnew.x(),pnew.y(),
+							  theCosTheta,theSinTheta,
+							  theRho,
+							  anyDirection);
+      deltaS2 = quadraticCrossing.pathLength(ravePlane);
+    }
+    if ( !deltaS2.first )  return deltaS2;
+    //
+    // Calculate and sort total pathlength (max. 2 solutions)
+    //
+    dSTotal += deltaS2.second;
+    PropagationDirection newDir = dSTotal>=0 ? alongMomentum : oppositeToMomentum;
+    if ( propDir == anyDirection ) {
+      propDir = newDir;
+    }
+    else {
+      if ( newDir!=propDir )  return std::pair<bool,double>(false,0);
+    }
+    //
+    // Step forward by dSTotal.
+    //
+    xnew = positionInDouble(dSTotal);
+    pnew = directionInDouble(dSTotal);
+  }
+  //
+  // Return result
+  //
+  return std::pair<bool,double>(true,dSTotal);
+}
+
+
+
 //
 // Position on helix after a step of path length s.
 //
@@ -197,6 +276,13 @@ bool HelixArbitraryPlaneCrossing::notAtSurface (const Plane& plane,
 						const PositionTypeDouble& point,
 						const float maxDist) const {
   float dz = plane.localZ(Surface::GlobalPoint(point.x(),point.y(),point.z()));
+  return fabs(dz)>maxDist;
+}
+
+bool HelixArbitraryPlaneCrossing::notAtSurface (const ravesurf::Plane& ravePlane,
+						const PositionTypeDouble& point,
+						const float maxDist) const {
+  float dz = ravePlane.localZ(Surface::GlobalPoint(point.x(),point.y(),point.z()));
   return fabs(dz)>maxDist;
 }
 

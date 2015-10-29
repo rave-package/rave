@@ -10,6 +10,10 @@
  *  Exact if the magnetic field is parallel to the plane.
  */
 
+namespace ravesurf{
+	class Plane;
+}
+
 class HelixBarrelPlaneCrossingByCircle : public HelixPlaneCrossing {
 public:
 
@@ -24,6 +28,8 @@ public:
 				    PropagationDirection propDir=alongMomentum);
 
   virtual std::pair<bool,double> pathLength( const Plane&);
+
+  virtual std::pair<bool,double> pathLength( const ravesurf::Plane&);
 
   virtual PositionType position( double s) const;
 

@@ -5,6 +5,9 @@
 
 #include <utility>
 class Plane;
+namespace ravesurf{
+class Plane;
+}
 
 /** Abstract interface for the crossing of a helix with a plane.
  */
@@ -26,6 +29,8 @@ public:
    *  starting point is given in the constructor.
    */
   virtual std::pair<bool,double> pathLength( const Plane&) = 0;
+
+  virtual std::pair<bool,double> pathLength( const ravesurf::Plane&) = 0;
 
   /** Returns the position along the helix that corresponds to path
    *  length "s" from the starting point. If s is obtained from the
