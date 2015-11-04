@@ -3,7 +3,7 @@
 namespace ravesurf {
 Cylinder::Cylinder ( const rave::Point3D & pos, const rave::Point3D & normal,
     float radius )
-  : pos_ ( pos ), norm_ ( normal )
+  : pos_ ( pos ), norm_ ( normal ), radius_ (radius)
 {}
 
 rave::Point3D Cylinder::position() const
