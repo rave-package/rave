@@ -322,16 +322,16 @@ Plane RaveToCmsObjects::convert ( const ravesurf::Plane & r ) const
 
 Cylinder RaveToCmsObjects::convert ( const ravesurf::Cylinder & c ) const
 {
-  GlobalVector axis = toVector ( c.axis() );
+  GlobalVector axis = toVector ( c.axisRave() );
   if (  axis.x() != 0. || axis.y() != 0. )
   {
     cout << "[RaveToCmsObjects] error: cylinder arent yet rotated. Need to implement."
          << endl;
   }
-  GlobalPoint pos = convert ( c.position() );
+  GlobalPoint pos = convert ( c.positionRave() );
   // now convert r.axis() to a TkRotation thingy
   TkRotation<float> rot;
-  float radius = c.radius();
+  float radius = c.radiusRave();
   return Cylinder ( pos, rot, radius );
 }
 

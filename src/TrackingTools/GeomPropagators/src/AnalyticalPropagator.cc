@@ -235,6 +235,37 @@ std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPa
   return propagatedStateWithPath(raveTrack,*plane,gtp,s);
 }
 
+std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder & raveCylinder) const
+{
+  // check curvature
+  double rho = raveTrack.transverseCurvature();
+
+  // propagate parameters
+  GlobalPoint x;
+  GlobalVector p;
+  double s = 0;
+
+  bool parametersOK = this->propagateParametersOnCylinder(raveTrack, raveCylinder, x, p, s);
+  // check status and deltaPhi limit
+  float dphi2 = s*rho;
+  dphi2 = dphi2*dphi2*raveTrack.momentum().perp2()/raveTrack.momentum().mag2();
+  if ( !parametersOK || dphi2>theMaxDPhi2 )
+  {
+	  return TsosWP(TrajectoryStateOnSurface(),0.);
+  }
+  //
+  // Compute propagated state and check change in curvature
+  //
+  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge(),theField);
+  if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
+    return TsosWP(TrajectoryStateOnSurface(),0.);
+  //
+  // create result on TangentPlane (local parameters & errors are better defined)
+  //
+  ReferenceCountingPointer<TangentPlane> plane(raveCylinder.tangentPlane(x));
+  return propagatedStateWithPath(raveTrack,*plane,gtp,s);
+}
+
 
 
 std::pair<TrajectoryStateOnSurface,double>
@@ -392,6 +423,54 @@ bool AnalyticalPropagator::propagateParametersOnCylinder(
   //
   HelixBarrelCylinderCrossing cylinderCrossing(raveTrack.position(),raveTrack.momentum(),rho,
 					       propagationDirection(),cylinder);
+  std::cout << "	!cylinderCrossing.hasSolution() " << !cylinderCrossing.hasSolution() << std::endl;
+  if ( !cylinderCrossing.hasSolution() )  return false;
+  // path length
+  s = cylinderCrossing.pathLength();
+  // point
+  x = cylinderCrossing.position();
+  // direction (renormalised)
+  p = cylinderCrossing.direction().unit()*raveTrack.momentum().mag();
+  std::cout << "	dd" <<  std::endl;
+  return true;
+}
+
+bool AnalyticalPropagator::propagateParametersOnCylinder(
+  const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder,
+  GlobalPoint& x, GlobalVector& p, double& s) const
+{
+  GlobalPoint sp = raveCylinder.toGlobal(LocalPoint(0.,0.));
+  if (sp.x()!=0. || sp.y()!=0.) {
+	  throw PropagationException("Cannot propagate to an arbitrary cylinder");
+  }
+  // preset output
+  x = raveTrack.position();
+  p = raveTrack.momentum();
+  s = 0;
+  // (transverse) curvature
+  double rho = raveTrack.transverseCurvature();
+  //
+  // Straight line approximation? |rho|<1.e-10 equivalent to ~ 1um
+  // difference in transversal position at 10m.
+  //
+  std::cout << "	rho " << rho << std::endl;
+  if( fabs(rho)<1.e-10 )
+    return propagateWithLineCrossing(raveTrack.position(),p,raveCylinder,x,s);
+  //
+  // Helix case
+  //
+  // check for possible intersection
+  std::cout << "	rho " << rho << std::endl;
+  const double tolerance = 1.e-4; // 1 micron distance
+  double rdiff = x.perp() - raveCylinder.radius();
+  std::cout << "	rdiff " << rdiff << std::endl;
+  std::cout << "	tolerance " << tolerance << std::endl;
+  if ( fabs(rdiff) < tolerance )  return true;
+  //
+  // Instantiate HelixBarrelCylinderCrossing and get solutions
+  //
+  HelixBarrelCylinderCrossing cylinderCrossing(raveTrack.position(),raveTrack.momentum(),rho,
+					       propagationDirection(),raveCylinder);
   std::cout << "	!cylinderCrossing.hasSolution() " << !cylinderCrossing.hasSolution() << std::endl;
   if ( !cylinderCrossing.hasSolution() )  return false;
   // path length
@@ -605,6 +684,30 @@ AnalyticalPropagator::propagateWithLineCrossing (const GlobalPoint& x0,
   s = propResult.second;
   // point (reconverted to GlobalPoint)
   x = GlobalPoint(planeCrossing.position(s));
+  //
+  return true;
+}
+
+bool
+AnalyticalPropagator::propagateWithLineCrossing (const GlobalPoint& x0,
+						 const GlobalVector& p0,
+						 const ravesurf::Cylinder& raveCylinder,
+						 GlobalPoint& x, double& s) const {
+  //
+  // Instantiate auxiliary object for finding intersection.
+  // Frame-independant point and vector are created explicitely to
+  // avoid confusing gcc (refuses to compile with temporary objects
+  // in the constructor).
+  //
+  StraightLineBarrelCylinderCrossing cylCrossing(x0,p0,propagationDirection());
+  //
+  // get solution
+  //
+  std::pair<bool,double> propResult = cylCrossing.pathLength(raveCylinder);
+  if ( !propResult.first )  return false;
+  s = propResult.second;
+  // point (reconverted to GlobalPoint)
+  x = cylCrossing.position(s);
   //
   return true;
 }

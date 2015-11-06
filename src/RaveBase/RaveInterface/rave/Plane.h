@@ -18,7 +18,7 @@ namespace ravesurf {
  *
  */
 
-class RaveDllExport Plane: public Surface
+class Plane: public Surface
 {
   public:
     Plane ( const rave::Point3D & pos, const rave::Point3D & normal );

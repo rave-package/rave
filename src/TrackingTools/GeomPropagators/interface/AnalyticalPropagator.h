@@ -70,25 +70,33 @@ public:
     std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
 
 
-  /// propagation to cylinder
-  TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, const Cylinder& cylinder) const {
-    return propagateWithPath(fts,cylinder).first;
-  }
 
+  /// propagation to cylinder
+    TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, const Cylinder& cylinder) const {
+      return propagateWithPath(fts,cylinder).first;
+  }
 
   /// propagation to cylinder -- using rave::Track
     TrajectoryStateOnSurface propagate(const rave::Track& raveTrack, const Cylinder& cylinder) const {
       return propagateWithPath(raveTrack,cylinder).first;
-    }
+  }
+
+  /// propagation to cylinder -- using rave::Track and ravesurf::Cylinder
+    TrajectoryStateOnSurface propagate(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const {
+      return propagateWithPath(raveTrack,raveCylinder).first;
+  }
 
   /// propagation to cylinder with path length
   std::pair<TrajectoryStateOnSurface,double> 
   propagateWithPath(const FreeTrajectoryState& fts, const Cylinder& cylinder) const;
 
-
   /// propagation to cylinder with path length -- using rave::Track and CMS Cylinder
   std::pair<TrajectoryStateOnSurface,double>
   propagateWithPath(const rave::Track& raveTrack, const Cylinder& Cylinder) const;
+
+  /// propagation to cylinder with path length -- using rave::Track and ravesurf::Cylinder
+  std::pair<TrajectoryStateOnSurface,double>
+  propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;
 
 
   /** limitation of change in transverse direction
@@ -146,6 +154,14 @@ private:
   				     GlobalVector& p,
   				     double& s) const;
 
+  /// parameter propagation to cylinder (returns position, momentum and path length) -- using rave::Track and ravesurf::Cylinder
+    bool propagateParametersOnCylinder(const rave::Track& raveTrack,
+  				     const ravesurf::Cylinder& raveCylinder,
+   				     GlobalPoint& x,
+   				     GlobalVector& p,
+   				     double& s) const;
+
+
 
   /// parameter propagation to plane (returns position, momentum and path length)
   bool propagateParametersOnPlane(const FreeTrajectoryState& fts, 
@@ -176,6 +192,10 @@ private:
 
   /// straight line parameter propagation to a cylinder
   bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, const Cylinder&, GlobalPoint&, double&) const;
+
+  /// straight line parameter propagation to a cylinder
+  bool propagateWithLineCrossing(const GlobalPoint&, const GlobalVector&, const ravesurf::Cylinder&, GlobalPoint&, double&) const;
+
   /// helix parameter propagation to a plane using HelixPlaneCrossing
   bool propagateWithHelixCrossing(HelixPlaneCrossing&, const Plane&, const float, GlobalPoint&, GlobalVector&, double& s) const;
 

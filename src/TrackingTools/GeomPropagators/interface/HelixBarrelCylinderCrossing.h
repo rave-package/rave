@@ -5,6 +5,8 @@
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
 #include "DataFormats/TrajectorySeed/interface/PropagationDirection.h"
+#include <rave/Cylinder.h>
+
 
 class Cylinder;
 
@@ -25,7 +27,12 @@ public:
   HelixBarrelCylinderCrossing( const GlobalPoint& startingPos,
 			       const GlobalVector& startingDir,
 			       double rho, PropagationDirection propDir, 
-			       const Cylinder& cyl);
+			       const ravesurf::Cylinder& raveCyl);
+
+  HelixBarrelCylinderCrossing( const GlobalPoint& startingPos,
+			       const GlobalVector& startingDir,
+			       double rho, PropagationDirection propDir,
+			       const Cylinder& Cyl);
 
   bool hasSolution() const { return theSolExists;}
 

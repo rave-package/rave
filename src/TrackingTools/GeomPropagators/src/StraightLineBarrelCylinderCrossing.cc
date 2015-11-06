@@ -36,6 +36,30 @@ StraightLineBarrelCylinderCrossing::pathLength (const Cylinder& cylinder) const
 }
 
 std::pair<bool,double>
+StraightLineBarrelCylinderCrossing::pathLength (const ravesurf::Cylinder& raveCylinder) const
+{
+  //
+  // radius of cylinder and transversal position relative to axis
+  //
+  double R(raveCylinder.radius());
+  GlobalPoint axis(raveCylinder.toGlobal(Cylinder::LocalPoint(0.,0.)));
+  PositionType2D xt2d(theX0.x()-axis.x(),theX0.y()-axis.y());
+  //
+  // transverse direction
+  //
+  DirectionType2D pt2d(theP0.x(),theP0.y());
+  //
+  // solution of quadratic equation for s - assume |theP0|=1
+  //
+  RealQuadEquation eq(pt2d.mag2(),2.*xt2d.dot(pt2d),xt2d.mag2()-R*R);
+  if ( !eq.hasSolution )  return std::pair<bool,double>(false,0.);
+  //
+  // choice of solution and verification of direction
+  //
+  return chooseSolution(eq.first,eq.second);
+}
+
+std::pair<bool,double>
 StraightLineBarrelCylinderCrossing::chooseSolution (const double s1, 
 						    const double s2) const
 {

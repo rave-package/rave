@@ -6,6 +6,7 @@
 #include "DataFormats/GeometryVector/interface/Basic2DVector.h"
 
 #include "DataFormats/TrajectorySeed/interface/PropagationDirection.h"
+#include <rave/Cylinder.h>
 
 #include <utility>
 
@@ -28,6 +29,8 @@ public:
    *  along the line from the starting point to the cylinder.
    */
   std::pair<bool,double> pathLength (const Cylinder& cyl) const;
+
+  std::pair<bool,double> pathLength (const ravesurf::Cylinder& raveCyl) const;
 
   /** Returns the position along the line that corresponds to path
    *  length "s" from the starting point. If s is obtained from the
