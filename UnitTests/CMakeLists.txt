@@ -14,7 +14,7 @@ set(RAVEUNITTESTS_CPP
 add_executable(raveunittests
     ${RAVEUNITTESTS_CPP} 
 )
-    
+
 target_link_libraries(raveunittests
 	RaveCore
 	RaveBase
@@ -23,4 +23,16 @@ target_link_libraries(raveunittests
 	boost_unit_test_framework
 )
 	
+# refactor tests
+add_executable(refactortests
+        RaveCylinder
+	RavePlane
+)
 
+target_link_libraries(refactortests
+	RaveCore
+	RaveBase
+	RaveVertex
+	RaveVertexKinematics
+	boost_unit_test_framework
+)

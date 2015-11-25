@@ -31,7 +31,7 @@ void KinematicTreeFactory::wipe() const
 }
 
 KinematicTreeFactory::KinematicTreeFactory (
-  const rave::MagneticField & f, const rave::Propagator & p, int verbosity ) :
+  const rave::MagneticField & f, const rave::VacuumPropagator & p, int verbosity ) :
     theField ( f.copy() ), thePropagator ( p.copy() ),
     theVerbosity ( verbosity )
 {
@@ -39,7 +39,7 @@ KinematicTreeFactory::KinematicTreeFactory (
 }
 
 rave::KinematicTreeFactory::KinematicTreeFactory (
-  const rave::MagneticField & f, const rave::Propagator & p,
+  const rave::MagneticField & f, const rave::VacuumPropagator & p,
   const rave::Ellipsoid3D & beamspot, int verbosity ) :
     theField ( f.copy() ), thePropagator ( p.copy() ),
     theVerbosity ( verbosity )
@@ -70,13 +70,15 @@ void KinematicTreeFactory::setup()
 
   PropagatorSingleton::Instance()->initialise(); // init the analytical propagator
 
+  // not necessary
+  /*
   if ( dynamic_cast < rave::VacuumPropagator * > ( thePropagator ) == 0 )
   {
     // not a vacuum propagator, so we register in the singleton
     PropagatorWrapper w ( *thePropagator );
     PropagatorSingleton::Instance()->registry ( w );
   }
-
+  */
   
   BlockWipedPoolAllocated::usePool();
 }
@@ -323,7 +325,7 @@ std::vector< rave::KinematicParticle > KinematicTreeFactory::useParticleFitter (
   return particles_cs;
 }
 
-const rave::Propagator & KinematicTreeFactory::getPropagator() const
+const rave::VacuumPropagator & KinematicTreeFactory::getPropagator() const
 {
   return *thePropagator;
 }

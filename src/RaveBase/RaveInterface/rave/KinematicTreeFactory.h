@@ -18,6 +18,7 @@
 #include <rave/VacuumPropagator.h>
 #include <rave/Ellipsoid3D.h>
 
+
 namespace rave
 {
 
@@ -37,11 +38,11 @@ class RaveDllExport KinematicTreeFactory
 {
   public:
     KinematicTreeFactory ( const rave::MagneticField & f = ConstantMagneticField(),
-                           const rave::Propagator & p = VacuumPropagator(),
+			   const rave::VacuumPropagator & p = VacuumPropagator(),
                            int verbosity = 1 );
 
     KinematicTreeFactory ( const rave::MagneticField & f,
-                           const rave::Propagator & p,
+                           const rave::VacuumPropagator & p,
                            const rave::Ellipsoid3D & beamspot,
                            int verbosity = 1 );
 
@@ -100,7 +101,7 @@ class RaveDllExport KinematicTreeFactory
       std::string parameters = "ppf:lppf", bool beamspot=false ) const;
     
     /// returns the propagator that is used
-    const rave::Propagator & getPropagator() const;
+    const rave::VacuumPropagator & getPropagator() const;
 
     /// returns the magnetic field
     const rave::MagneticField & getMagneticField() const;
@@ -124,7 +125,7 @@ class RaveDllExport KinematicTreeFactory
     void wipe() const;
 
     rave::MagneticField * theField;
-    rave::Propagator * thePropagator;
+    rave::VacuumPropagator * thePropagator;
     int theVerbosity;
     mutable std::vector< rave::KinematicTree > toBeUnlinkedTrees;
     mutable std::vector< rave::KinematicParticle > toBeUnlinkedParticles;

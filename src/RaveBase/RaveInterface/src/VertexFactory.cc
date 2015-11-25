@@ -31,9 +31,11 @@ namespace {
 }
 
 VertexFactory::VertexFactory ( const rave::MagneticField & field,
-                   const rave::Propagator & prop,
-                   const std::string & method,
-                   int verbosity ) :
+                               //const rave::Propagator & prop,
+                               //const ::AnalyticalPropagator & prop,
+                               const rave::VacuumPropagator & prop,
+                               const std::string & method,
+                               int verbosity ) :
   theRector ( getRector ( method ) ), theMethod ( method ),
   theField ( field.copy() ) , theProp ( prop.copy() ),
   theVerbosity ( verbosity )
@@ -45,10 +47,12 @@ VertexFactory::VertexFactory ( const rave::MagneticField & field,
 }
 
 VertexFactory::VertexFactory ( const rave::MagneticField & field,
-                   const rave::Propagator & prop,
-                   const rave::Ellipsoid3D & beamspot,
-                   const std::string & method,
-                   int verbosity ) :
+                               //const rave::Propagator & prop,
+                               //const ::AnalyticalPropagator & prop,
+			       const rave::VacuumPropagator & prop,
+                               const rave::Ellipsoid3D & beamspot,
+                               const std::string & method,
+                               int verbosity ) :
   theRector ( getRector ( method ) ), theMethod ( method ),
   theField ( field.copy() ) , theProp ( prop.copy() ),
   theVerbosity ( verbosity )
@@ -63,6 +67,7 @@ void VertexFactory::setup()
   //MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( *theField ) );
   rave::MagneticFieldSingleton::Instance()->registry (  theField  );
   PropagatorSingleton::Instance()->initialise(); // init the analytical propagator
+  /*
   if ( dynamic_cast < rave::VacuumPropagator * > ( theProp ) == 0 )
   {
     // not a vacuum propagator, so we register in the singleton
@@ -70,6 +75,7 @@ void VertexFactory::setup()
     PropagatorSingleton::Instance()->registry ( w );
 
   }
+  */
 
   BlockWipedPoolAllocated::usePool();
 }
@@ -517,7 +523,7 @@ const rave::Ellipsoid3D & VertexFactory::getBeamspot() const
   return rave::BeamSpotSingleton::get();
 }
 
-const rave::Propagator & VertexFactory::getPropagator() const
+const rave::VacuumPropagator & VertexFactory::getPropagator() const
 {
     return *theProp;
 }

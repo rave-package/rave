@@ -31,7 +31,7 @@ namespace {
   }
 }
   
-rave::Propagator * rave::VacuumPropagator::copy() const
+rave::VacuumPropagator * rave::VacuumPropagator::copy() const
 {
   return new rave::VacuumPropagator ( * this );
 }

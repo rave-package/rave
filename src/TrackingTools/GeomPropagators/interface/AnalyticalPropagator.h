@@ -28,6 +28,12 @@ class AnalyticalPropagator : public Propagator {
 
 public:
 
+   AnalyticalPropagator():
+		  theMaxDPhi2(0),
+		  theMaxDBzRatio(0),
+		  theField(nullptr){}
+
+
   AnalyticalPropagator( const rave::MagneticField* field,
 		        PropagationDirection dir = alongMomentum,
 			float maxDPhi = 1.6) :
