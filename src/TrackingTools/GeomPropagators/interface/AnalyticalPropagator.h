@@ -75,6 +75,10 @@ public:
   /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
     std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
 
+  /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
+    std::pair<rave::Track,double> propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
+
+
 
 
   /// propagation to cylinder
@@ -104,8 +108,10 @@ public:
   std::pair<TrajectoryStateOnSurface,double>
   propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;
 
-
-  /** limitation of change in transverse direction
+  // Moritz das hier gibt direkt den Track zurueck
+  /// propagation to cylinder with path length -- using rave::Track and ravesurf::Cylinder
+  std::pair<rave::Track,double>
+  propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;  /** limitation of change in transverse direction
    *  (to avoid loops).
    */
   virtual bool setMaxDirectionChange( float phiMax) { 
@@ -145,6 +151,14 @@ private:
   			   const Surface& surface,
   			   const GlobalTrajectoryParameters& gtp,
   			   const double& s) const;
+
+  // Moritz taking raveTrack returning raveTrack
+  std::pair<rave::Track,double>
+      propagatedStateWithPathRave (const rave::Track& raveTrack,
+    			   const Surface& surface,
+    			   const GlobalTrajectoryParameters& gtp,
+    			   const double& s) const;
+
 
   /// parameter propagation to cylinder (returns position, momentum and path length)
   bool propagateParametersOnCylinder(const FreeTrajectoryState& fts, 
@@ -211,6 +225,7 @@ private:
 
 private:
   typedef std::pair<TrajectoryStateOnSurface,double> TsosWP;
+  typedef std::pair<rave::Track,double> raveTrackWP;
   float theMaxDPhi2;
   float theMaxDBzRatio;
   const rave::MagneticField* theField;

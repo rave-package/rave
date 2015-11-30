@@ -171,6 +171,51 @@ std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPa
   return propagatedStateWithPath(raveTrack,raveplane,gtp,s);
 }
 
+// Moritz Work
+
+std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Plane& raveplane) const
+{
+  // check curvature
+  double rho = raveTrack.transverseCurvature();
+
+  // propagate parameters
+  GlobalPoint x;
+  GlobalVector p;
+  double s;
+
+  // check if already on plane
+  const float maxDistToPlane(0.1e-4);
+  const float numericalPrecision(5.e-7);
+  float maxDz = numericalPrecision*raveplane.position().mag();
+  if ( fabs(raveplane.localZ(raveTrack.position()))>(maxDistToPlane>maxDz?maxDistToPlane:maxDz) ) {
+    // propagate
+    bool parametersOK = this->propagateParametersOnPlane(raveTrack, raveplane, x, p, s);
+    // check status and deltaPhi limit
+    float dphi2 = s*rho;
+    dphi2 = dphi2*dphi2*raveTrack.momentum().perp2()/raveTrack.momentum().mag2();
+    if ( !parametersOK || dphi2>theMaxDPhi2 )
+    {
+    	return raveTrackWP(rave::Track(),0.);
+    }
+  }
+  else {
+    x = raveTrack.position();
+    p = raveTrack.momentum();
+    s = 0.;
+  }
+  //
+  // Compute propagated state and check change in curvature
+  //
+  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge(),theField);
+  if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
+	  return raveTrackWP(rave::Track(),0.);
+  //
+  // construct TrajectoryStateOnSurface
+  //
+  return propagatedStateWithPathRave(raveTrack,raveplane,gtp,s);
+}
+// return raveTrackWP(resultRaveTrack,s);
+
 
 
 std::pair<TrajectoryStateOnSurface,double>
@@ -266,6 +311,42 @@ std::pair<TrajectoryStateOnSurface,double> AnalyticalPropagator::propagateWithPa
   return propagatedStateWithPath(raveTrack,*plane,gtp,s);
 }
 
+// Moritz Work
+std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Cylinder & raveCylinder) const
+{
+  // check curvature
+  double rho = raveTrack.transverseCurvature();
+
+  // propagate parameters
+  GlobalPoint x;
+  GlobalVector p;
+  double s = 0;
+
+  bool parametersOK = this->propagateParametersOnCylinder(raveTrack, raveCylinder, x, p, s);
+  // check status and deltaPhi limit
+  float dphi2 = s*rho;
+  dphi2 = dphi2*dphi2*raveTrack.momentum().perp2()/raveTrack.momentum().mag2();
+  if ( !parametersOK || dphi2>theMaxDPhi2 )
+  {
+	  return raveTrackWP(rave::Track(),0.);
+  }
+  //
+  // Compute propagated state and check change in curvature
+  //
+  GlobalTrajectoryParameters gtp(x,p,raveTrack.charge(),theField);
+  if ( fabs(rho)>1.e-10 && fabs((gtp.transverseCurvature()-rho)/rho)>theMaxDBzRatio )
+	  return raveTrackWP(rave::Track(),0.);
+  //
+  // create result on TangentPlane (local parameters & errors are better defined)
+  //
+  ReferenceCountingPointer<TangentPlane> plane(raveCylinder.tangentPlane(x));
+
+  // wie kommt man zu dem rave track
+  // backward.convert ( *tsos, orig.chi2(), orig.ndof(),  0, orig.tag() );
+
+  return propagatedStateWithPathRave(raveTrack,*plane,gtp,s);
+}
+
 
 
 std::pair<TrajectoryStateOnSurface,double>
@@ -342,6 +423,80 @@ AnalyticalPropagator::propagatedStateWithPath (const rave::Track& raveTrack,
     return TsosWP(tsos,s);
   }
 }
+
+// Moritz Work
+// function kann man eigentlich umschreiben, weil die Abfrage hasError unsinning ist, soweit ich das gesehen habe,
+// ist das bei rave tracke egal!
+// bei convert gibt es noch den trackId -1 check
+std::pair<rave::Track,double>
+AnalyticalPropagator::propagatedStateWithPathRave (const rave::Track& raveTrack,
+					       const Surface& surface,
+					       const GlobalTrajectoryParameters& gtp,
+					       const double& s) const
+{
+
+
+  //
+  // for forward propagation: state is before surface,
+  // for backward propagation: state is after surface
+  //
+  SurfaceSide side = PropagationDirectionFromPath()(s,propagationDirection())==alongMomentum
+    ? beforeSurface : afterSurface;
+  //
+  //
+  // error propagation (if needed) and conversion to a TrajectoryStateOnSurface
+  //
+  CmsToRaveObjects backward;
+  //
+  if (raveTrack.hasError()) {
+    //
+    // compute jacobian
+    //
+    AnalyticalCurvilinearJacobian analyticalJacobian(raveTrack.parameters(), gtp.position(), gtp.momentum(), s);
+    const AlgebraicMatrix55 &jacobian = analyticalJacobian.jacobian();
+    CurvilinearTrajectoryError cte(ROOT::Math::Similarity(jacobian, raveTrack.curvilinearError().matrix()));
+    TrajectoryStateOnSurface tsos (gtp,cte,surface,side);
+    tsos.freeState()->setTrackId ( raveTrack.trackId() );
+
+    //const TrajectoryStateOnSurface & s   with   *(s.freeState())   --> const FreeTrajectoryState & grr
+    const FreeTrajectoryState grr = *(tsos.freeState());
+    rave::Vector6D st = backward.convert ( grr.parameters() );
+    rave::Covariance6D err = backward.convert ( grr.cartesianError() );
+
+    // rave::Track ( st, err, s.charge(), chi2, ndf, p, tag );
+    // das kann man aber besser machen: initializer gleich so speichern.
+    rave::Track resultRaveTrack( st, err, grr.charge(), raveTrack.chi2(), raveTrack.ndof(),  0, raveTrack.tag() );
+    // necessary? tsos.freeState()->setTrackId ( raveTrack.trackId() );
+    return raveTrackWP(resultRaveTrack, s); // das tsos ist dann der rave track!!!!
+
+  }
+  else {
+    //
+    // return state without errors
+    //
+	TrajectoryStateOnSurface tsos (gtp,surface,side);
+	tsos.freeState()->setTrackId ( raveTrack.trackId() );
+
+	const FreeTrajectoryState grr = *(tsos.freeState());
+	rave::Vector6D st = backward.convert ( grr.parameters() );
+	rave::Covariance6D err = backward.convert ( grr.cartesianError() );
+
+	rave::Track resultRaveTrack( st, err, grr.charge(), raveTrack.chi2(), raveTrack.ndof(),  0, raveTrack.tag() );
+    return raveTrackWP(resultRaveTrack,s);
+
+  }
+}
+
+/* Remember
+  pair < TrajectoryStateOnSurface, double > ot = prop.propagateWithPath ( orig, rcyl );
+  TrajectoryStateOnSurface * tsos = new TrajectoryStateOnSurface ( ot.first );
+  tsoses.push_back ( tsos );
+  rave::Track ret = backward.convert ( *tsos, orig.chi2(), orig.ndof(),  0, orig.tag() );
+  return pair < rave::Track, double > ( ret, ot.second );
+  rave::Track: (FreeTrajectoryState, s.trackID(), rave::Vector6D ?, rave::Covariance6D err, s.charge, chi2, ndof, *p, tag)
+
+ */
+
 
 
 bool AnalyticalPropagator::propagateParametersOnCylinder(
