@@ -9,6 +9,7 @@
 #include "DataFormats/GeometryCommonDetAlgo/interface/GlobalError.h"
 #include "DataFormats/GeometrySurface/interface/Plane.h"
 #include "DataFormats/GeometrySurface/interface/Cylinder.h"
+#include <rave/Charge.h>
 
 #ifdef WITH_KINEMATICS
 
@@ -35,7 +36,7 @@ class Vertex;
 class Coviarance6D;
 class Plane;
 class Cylinder;
-typedef signed Charge;
+typedef signed TrackCharge;
 }
 
 namespace ravesurf
@@ -47,7 +48,6 @@ class Cylinder;
 class RaveToCmsObjects
 {
   public:
-    GlobalTrajectoryParameters convert ( const rave::Track & ) const;
     GlobalTrajectoryParameters convert ( const rave::Vector6D &, const rave::Charge & ) const;
     TransientVertex convert ( const rave::Vertex & ) const;
     CartesianTrajectoryError convert ( const rave::Covariance6D & ) const;

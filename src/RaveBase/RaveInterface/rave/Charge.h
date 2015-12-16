@@ -3,7 +3,7 @@
 
 namespace rave
 {
-  typedef signed Charge;
+  typedef int Charge;
 }
 
 #endif

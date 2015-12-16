@@ -1,6 +1,4 @@
 #include "RaveBase/RaveInterface/rave/VacuumPropagator.h"
-#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
-#include "RaveBase/Converters/interface/CmsToRaveObjects.h"
 #include "TrackingTools/PatternTools/interface/TransverseImpactPointExtrapolator.h"
 #include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "TrackingTools/TrajectoryState/interface/PerigeeConversions.h"
@@ -37,28 +35,14 @@ rave::VacuumPropagator * rave::VacuumPropagator::copy() const
 }
     
 
-// achtung: der converted track hat keine track id! ist das beruecksichtig?
 pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & orig,
                           const ravesurf::Cylinder & rcyl ) const
 {
   clearTsoses();
-  // typedef typename GloballyPositioned<float>::PositionType PositionType;
-  // typedef typename GloballyPositioned<float>::RotationType RotationType;
   typedef GloballyPositioned<float>::PositionType PositionType;
   typedef GloballyPositioned<float>::RotationType RotationType;
-  //RaveToCmsObjects forward;
-  CmsToRaveObjects backward;
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(), anyDirection );
-  //GlobalPoint pt = forward.convert ( rcyl.positionRave() );
-  //TkRotation<float> rot;
-  //::Cylinder cyl ( pt, rot, rcyl.radiusRave() );
-  // FIXME merde! another one of those pesky reference counting probs!
-  //pair < TrajectoryStateOnSurface, double > ot = prop.propagateWithPath ( orig, cyl );
   pair < rave::Track, double > ot = prop.propagateWithPathRave ( orig, rcyl );
-  //TrajectoryStateOnSurface * tsos = new TrajectoryStateOnSurface ( ot.first );
-  //tsoses.push_back ( tsos );
-  //rave::Track ret = backward.convert ( *tsos, orig.chi2(), orig.ndof(),  0, orig.tag() );
-  //return pair < rave::Track, double > ( ret, ot.second );
   return ot;
 }
 
@@ -67,38 +51,19 @@ rave::VacuumPropagator::~VacuumPropagator()
   clearTsoses();
 }
 
+
 pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & orig,
                           const ravesurf::Plane & rplane ) const
 {
   tsoses.clear();
-  //rave::Track ret;
-  // typedef typename GloballyPositioned<float>::PositionType PositionType;
-  // typedef typename GloballyPositioned<float>::RotationType RotationType;
-
   typedef GloballyPositioned<float>::PositionType PositionType;
 
-  // typedef GloballyPositioned<float>::RotationType RotationType;
-
-  //CmsToRaveObjects backward;
-  //RaveToCmsObjects forward;
-  //GlobalPoint pt = forward.convert ( rplane.positionRave() );
-  //TkRotation<float> rot;
-  //::Plane plane ( pt, rot );
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(), anyDirection );
-
-  /*
-  // FIXME merde! another one of those pesky reference counting probs!
-  pair < TrajectoryStateOnSurface, double > to = prop.propagateWithPath ( orig, rplane );
-  //pair < TrajectoryStateOnSurface, double > to = prop.propagateWithPath ( orig, plane );
-  TrajectoryStateOnSurface * tsos = new TrajectoryStateOnSurface ( to.first );
-  tsoses.push_back ( tsos );
-  ret = backward.convert ( orig.id(), *tsos, orig.chi2(), orig.ndof(), orig.originalObject(), orig.tag() );
-  return pair < rave::Track, double > ( ret, to.second );
-  */
   pair < rave::Track, double > to = prop.propagateWithPathRave ( orig, rplane );
   return to;
 }
 
+/*
 rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
     const rave::Point3D & pt, bool transverse ) const
 {
@@ -125,5 +90,6 @@ rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
       orig.ndof(), orig.originalObject(), orig.tag() );
   return ret;
 }
+*/
 
 rave::VacuumPropagator::VacuumPropagator() {}

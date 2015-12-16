@@ -54,14 +54,11 @@ Vector6D PerigeeToRaveObjects::convert(
 }
 
 Covariance6D PerigeeToRaveObjects::convert(
-  const PerigeeCovariance5D & error, const Vector6D & state,
-  const Charge charge) const
+  const PerigeeCovariance5D & error, const GlobalTrajectoryParameters & gtp) const
 {
   // PerigeeParameters5D ps = RaveToPerigeeObjects().convert(state, charge);
 
   RaveToCmsObjects frameworkInputConverter;
-  GlobalTrajectoryParameters gtp =
-    frameworkInputConverter.convert(state, charge);
   PerigeeTrajectoryError pte =
     frameworkInputConverter.convert(error);
 

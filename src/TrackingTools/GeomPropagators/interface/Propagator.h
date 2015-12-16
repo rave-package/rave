@@ -60,19 +60,7 @@ public:
   virtual TrajectoryStateOnSurface 
   propagate (const FreeTrajectoryState&, const Cylinder&) const = 0;
 
-  // cms format
-  virtual TrajectoryStateOnSurface
-  propagate (const rave::Track&, const Surface&) const;
-
-  virtual TrajectoryStateOnSurface
-  propagate (const rave::Track&, const Plane&) const = 0;
-
-  virtual TrajectoryStateOnSurface 
-  propagate (const rave::Track&, const Cylinder&) const = 0;
-
-
-
-  /** The following three methods are equivalent to the corresponding
+   /** The following three methods are equivalent to the corresponding
    *  methods above,
    *  but if the starting state is a TrajectoryStateOnSurface, it's better 
    *  to use it as such rather than use just the FreeTrajectoryState

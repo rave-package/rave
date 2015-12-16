@@ -1,197 +1,140 @@
 #include "RaveBase/RaveInterface/rave/Track.h"
 #include "RaveBase/RaveEngine/interface/RaveId.h"
 
+
 using namespace rave;
 using namespace std;
 
-vector < pair < float, BasicTrack > > Track::convert ( const vector < pair < float, Track > > & o ) const
-{
-  vector < pair < float, BasicTrack > > ret;
-  for ( vector< pair < float, Track > >::const_iterator i=o.begin(); i!=o.end() ; ++i )
-  {
-    ret.push_back ( pair < float, BasicTrack > ( i->first, i->second.basicTrack() ) );
-  }
-  return ret;
-}
 
-Track::Track( const Vector6D & s, const Covariance6D & e, Charge q,
-   float chi2, float ndof, void * p, string d ) : 
-     Base ( new BasicTrack ( s, e, q, chi2, ndof, p, d ) )
+Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CartesianTrajectoryError & cte,
+		      float chi2, float ndof, void * originaltrack, std::string tag):
+				FreeTrajectoryState(gtp, cte),
+				theRaveCharge(gtp.charge()),
+				theChi2(chi2),
+				theNdof(ndof),
+				thePointer(originaltrack),
+				theTag(tag),
+				theIsValid(true),
+				theId(id)
+{theTrackId=id;}
+
+
+Track::Track( const GlobalTrajectoryParameters & gtp, const CartesianTrajectoryError & cte,
+		      float chi2, float ndof, void * originaltrack, std::string tag):
+				FreeTrajectoryState(gtp, cte),
+				theRaveCharge(gtp.charge()),
+				theChi2(chi2),
+				theNdof(ndof),
+				thePointer(originaltrack),
+				theTag(tag),
+				theIsValid(true),
+				theId(RaveId::uniqueId())
+{theId=-2;}
+
+
+Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CurvilinearTrajectoryError & cte,
+		      float chi2, float ndof, void * originaltrack, std::string tag ):
+				FreeTrajectoryState(gtp, cte),
+				theRaveCharge(gtp.charge()),
+				theChi2(chi2),
+				theNdof(ndof),
+				thePointer(originaltrack),
+				theTag(tag),
+				theIsValid(true),
+				theId(id)
+{theTrackId=id;}
+
+
+Track::Track( int id, const GlobalTrajectoryParameters & gtp,
+		      float chi2, float ndof, int originaltrack,  std::string tag ):
+				FreeTrajectoryState(gtp),
+				theRaveCharge(gtp.charge()),
+				theChi2(chi2),
+				theNdof(ndof),
+				thePointer(&originaltrack), // passt das? Nein
+				theTag(tag),
+				theIsValid(true),
+				theId(id)
+{theTrackId=id;}
+
+
+Track::Track():
+				FreeTrajectoryState(),
+				theChi2(-1),
+				theNdof(-1),
+				thePointer(0),
+				theIsValid(false),
+				theId(RaveId::uniqueId())
 {}
 
-Track::Track( int id, const Vector6D & s, const Covariance6D & e, Charge q,
-   float chi2, float ndof, void * p, string d ) : 
-     Base ( new BasicTrack ( id, s, e, q, chi2, ndof, p, d ) )
-{}
-
-Track::Track( const Vector6D & s, const Covariance6D & e, Charge q,
-   float chi2, float ndof, int p, string d ) : 
-  Base ( new BasicTrack ( s, e, q, chi2, ndof, (void *) (p), d ) )
-{}
-
-Track::Track ( const vector < pair < float, Track > > & c ) :
-  Base ( new BasicTrack  ( convert ( c ) ) ),
-  theComponents ( c )
-{}
-
-Track::Track ( int id, const vector < pair < float, Track > > & c ) :
-  Base ( new BasicTrack  ( id, convert ( c ) ) ),
-  theComponents ( c )
-{}
-
-Track::Track ( const BasicTrack & o ) : Base ( o.clone() )
-{}
-
-Track::Track () : Base ( new BasicTrack () )
-{}
-
-const rave::BasicTrack & Track::basicTrack() const
-{
-  return data();
-}
 
 string Track::tag() const
 {
-  return data().tag();
+  return theTag;
 }
 
-Charge Track::chargeRave() const
+
+Charge Track::raveCharge() const
 {
-  return data().chargeRave();
+  return theRaveCharge;
 }
+
 
 int Track::id() const
 {
-  return data().id();
+  return theId;
 }
 
-const Vector6D & Track::state() const
-{
-  return data().state();
-}
-
-const Vector3D & Track::momentumRave() const
-{
-  return data().momentumRave();
-}
-
-const Point3D & Track::positionRave() const
-{
-  return data().positionRave();
-}
-
-float Track::pt() const
-{
-  return this->momentumRave().perp();
-}
-
-const Covariance6D & Track::error() const
-{
-  return data().error();
-}
 
 void * Track::originalObject() const
 {
-  return data().originalObject();
+	return thePointer;
 }
 
-vector < pair < float, Track > > Track::components() const
+
+const ::GlobalTrajectoryParameters & Track::state() const
 {
-  return theComponents;
+	return theGlobalParameters;
 }
+
+
+const CartesianTrajectoryError & Track::CartesianError() const
+{
+    return theCartesianError;
+}
+
+
+const CurvilinearTrajectoryError & Track::CurvilinearError() const
+{
+    return theCurvilinearError;
+}
+
 
 bool Track::isValid() const
 {
-  return data().isValid();
+  return theIsValid;
 }
+
 
 bool Track::operator< ( const Track & o ) const
 {
     return ( id() < o.id() );
 }
 
+
 bool Track::operator== ( const Track & o ) const
 {
   return ( id() == o.id() );
 }
 
+
 float Track::chi2() const
 {
-  return data().chi2();
+  return theChi2;
 }
+
 
 float Track::ndof() const
 {
-  return data().ndof();
-}
-
-const PerigeeParameters5D & Track::perigeeParameters() const
-{
-  return data().perigeeParameters();
-}
-
-const PerigeeCovariance5D & Track::perigeeCovariance() const
-{
-  return data().perigeeCovariance();
-}
-
-// cms format
-int Track::trackId() const
-{
-	return data().trackId();
-}
-
-GlobalPoint Track::position() const
-{
-	return data().position();
-}
-
-GlobalVector Track::momentum() const
-{
-	return data().momentum();
-}
-
-TrackCharge Track::charge() const
-{
-	return data().charge();
-}
-
-double Track::signedInverseMomentum() const
-{
-	return data().signedInverseMomentum();
-}
-
-double Track::transverseCurvature() const
-{
-    return data().transverseCurvature();
-}
-
-bool Track::hasCartesianError() const
-{
-	return data().hasCartesianError();
-}
-
-bool Track::hasCurvilinearError() const
-{
-	return data().hasCurvilinearError();
-}
-
-bool Track::hasError() const
-{
-	return data().hasError();
-}
-
-const GlobalTrajectoryParameters& Track::parameters() const
-{
-	return data().parameters();
-}
-
-const CartesianTrajectoryError& Track::cartesianError() const
-{
-	return data().cartesianError();
-}
-
-const CurvilinearTrajectoryError& Track::curvilinearError() const
-{
-    return data().curvilinearError();
+  return theNdof;
 }

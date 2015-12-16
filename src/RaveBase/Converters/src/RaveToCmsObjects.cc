@@ -14,6 +14,7 @@
 #include <rave/Cylinder.h>
 
 
+
 // for gsf
 #ifdef HAS_GSF
 #include "TrackingTools/TransientTrack/interface/GsfTransientTrack.h"
@@ -29,11 +30,6 @@ using namespace std;
 
 namespace {
   // 
-}
-
-GlobalTrajectoryParameters RaveToCmsObjects::convert ( const rave::Track & s ) const
-{
-  return convert( s.state(), s.chargeRave() );
 }
 
 GlobalTrajectoryParameters RaveToCmsObjects::convert(const rave::Vector6D & state, const rave::Charge & charge) const
@@ -160,7 +156,6 @@ reco::TransientTrack RaveToCmsObjects::tTrack ( const rave::Track & rt ) const
     cout << "[RaveToCmsObjects]      `- impactPoint: " << ret.impactPointState().components().size()
          << " components" << endl;
          */
-    
     // reco::TransientTrack ret=TransientTrack(new GsfTransientTrack(*t, theField ) );
     // reco::TransientTrack ret=TransientTrackFromFTSFactory().build ( fts );
     ret.setId ( rt.id() );
@@ -177,12 +172,24 @@ reco::TransientTrack RaveToCmsObjects::tTrack ( const rave::Track & rt ) const
 
 FreeTrajectoryState RaveToCmsObjects::convertTrackToFTS ( const rave::Track & rt ) const
 {
-  AlgebraicSymMatrix66 cov6D = RaveToAlgebraicObjects().convert ( rt.error() );
-  GlobalTrajectoryParameters gtp = convert( rt );
+  GlobalTrajectoryParameters gtp = rt.state() ;
 
-  FreeTrajectoryState fts ( gtp, CartesianTrajectoryError ( cov6D ) );
-  fts.setTrackId ( rt.id() );
-  return fts;
+  if (rt.hasCartesianError()){
+	  FreeTrajectoryState fts ( gtp, rt.CartesianError() );
+	  fts.setTrackId ( rt.id() );
+	  return fts;
+  	  }
+  // function obsolete anyway and no CurvLine error!
+  /*
+  else if (rt.hasCurvilinearError()){
+	  FreeTrajectoryState fts ( gtp, CartesianTrajectoryError ( rt.CurvilinearError() ) );
+  	  }
+  */
+  else {
+	  FreeTrajectoryState fts ( gtp );
+	  fts.setTrackId ( rt.id() );
+	  return fts;
+  }
 }
 
 

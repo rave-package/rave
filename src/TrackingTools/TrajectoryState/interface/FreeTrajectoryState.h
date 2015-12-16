@@ -164,7 +164,7 @@ private:
 // convert cartesian errors to curvilinear
   void createCurvilinearError() const;
 
-private:
+protected:
   GlobalTrajectoryParameters  theGlobalParameters;
   CartesianTrajectoryError    theCartesianError;
   CurvilinearTrajectoryError  theCurvilinearError;

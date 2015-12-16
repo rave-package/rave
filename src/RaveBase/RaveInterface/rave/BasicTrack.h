@@ -28,7 +28,7 @@ namespace rave
 class BasicTrack :
 	public RaveReferenceCounted, 
 	public AbstractTrack,
-        public AbstractPerigeeAccess
+    public AbstractPerigeeAccess
 {
   public:
     typedef RaveProxyBase< BasicTrack, CopyUsingNew<BasicTrack> > Proxy;
@@ -51,10 +51,10 @@ class BasicTrack :
 
     BasicTrack();
 
-    Charge chargeRave() const;
+    Charge charge() const;
     const Vector6D & state() const;
-    const Vector3D & momentumRave() const;
-    const Point3D & positionRave() const;
+    const Vector3D & momentum() const;
+    const Point3D & position() const;
     const Covariance6D & error() const;
     void * originalObject() const;
     std::string tag() const;
@@ -74,74 +74,6 @@ class BasicTrack :
     bool operator< ( const rave::BasicTrack & ) const;
 
 
-    // additional CMS functions
-    int trackId() const { return theTrackId; }
-
-    void setTrackId( int id ) { theTrackId=id; }
-    // access
-    // propagate access to parameters
-    GlobalPoint position() const { return theGlobalParameters.position(); }
-    GlobalVector momentum() const { return theGlobalParameters.momentum(); }
-    TrackCharge charge() const { return theGlobalParameters.charge(); }
-    double signedInverseMomentum() const {return theGlobalParameters.signedInverseMomentum(); }
-    double transverseCurvature() const { return theGlobalParameters.transverseCurvature(); }
-
-    // direct access
-    bool hasCartesianError() const {return theCartesianErrorValid;}
-    bool hasCurvilinearError() const {return theCurvilinearErrorValid;}
-    bool hasError() const { return theCurvilinearErrorValid || theCartesianErrorValid; }
-    const GlobalTrajectoryParameters& parameters() const { return theGlobalParameters; }
-    const CartesianTrajectoryError& cartesianError() const {
-        if (!hasError()) throw TrajectoryStateException(
-          "FreeTrajectoryState: attempt to access errors when none available");
-        if (!theCartesianErrorValid)
-          createCartesianError();
-        return theCartesianError;
-    }
-    const CurvilinearTrajectoryError& curvilinearError() const {
-        if (!hasError()) throw TrajectoryStateException(
-          "FreeTrajectoryState: attempt to access errors when none available");
-        if (!theCurvilinearErrorValid)
-        	createCurvilinearError();
-        return theCurvilinearError;
-    }
-    void rescaleError(double factor) {
-        bool zeroField = parameters().magneticFieldInInverseGeV(GlobalPoint(0,0,0)).mag2()==0;
-        if (zeroField) {
-          if (theCartesianErrorValid){
-    	if (!theCurvilinearErrorValid) createCurvilinearError();
-    	theCurvilinearError.zeroFieldScaling(factor*factor);
-    	createCartesianError();
-          }else
-    	if (theCurvilinearErrorValid) theCurvilinearError.zeroFieldScaling(factor*factor);
-        } else{
-          if (theCartesianErrorValid){
-    	theCartesianError *= (factor*factor);
-          }
-          if (theCurvilinearErrorValid){
-    	theCurvilinearError *= (factor*factor);
-          }
-        }
-    }
-
-    void setCartesianError(const CartesianTrajectoryError &err) {
-            theCartesianError = err; theCartesianErrorValid = true;
-    }
-    void setCartesianError(const AlgebraicSymMatrix66 &err) {
-            theCartesianError = CartesianTrajectoryError(err); theCartesianErrorValid = true;
-    }
-    void setCurvilinearError(const CurvilinearTrajectoryError &err) {
-            theCurvilinearError = err; theCurvilinearErrorValid = true;
-    }
-    void setCurvilinearError(const AlgebraicSymMatrix55 &err) {
-            theCurvilinearError = CurvilinearTrajectoryError(err); theCurvilinearErrorValid = true;
-    }
-
-    // properties
-    bool canReach(double radius) const;
-
-
-
   private:
     void createMomPos();
     
@@ -157,20 +89,6 @@ class BasicTrack :
     float theChi2;
     float theNdof;
     std::vector < std::pair < float, BasicTrack > > theComponents;
-
-
-    // additional cms format
-    GlobalTrajectoryParameters  theGlobalParameters;
-    CartesianTrajectoryError    theCartesianError;
-    CurvilinearTrajectoryError  theCurvilinearError;
-    bool                        theCartesianErrorValid;
-    bool                        theCurvilinearErrorValid;
-    int                         theTrackId; // which track does this belong to
-
-    // convert curvilinear errors to cartesian
-    void createCartesianError() const;
-    // convert cartesian errors to curvilinear
-    void createCurvilinearError() const;
 
   private:
     void calculateCachedPerigeeRepresentation() const;

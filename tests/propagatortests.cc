@@ -5,12 +5,17 @@
 #include <rave/ConstantMagneticField.h>
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 
+#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
+
 using namespace std;
 
 namespace {
   rave::Track track1()
   {
+	RaveToCmsObjects forward;
+
     rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
+    GlobalTrajectoryParameters gtp1 = forward.convert(state1, 1.0);
     rave::Covariance6D cov1 (
         1.5e-7,    3.6e-7,    4.0e-14,
                    8.5e-7,    9.6e-14,
@@ -21,12 +26,18 @@ namespace {
                                        4.9e-3,   -2.0e-3,   -4.4e-3,
                                                   9.2e-4,    1.8e-3,
                                                              4.1e-3 );
-    return rave::Track ( state1, cov1, 1, 0., 0. ) ;
+    CartesianTrajectoryError cte1 = forward.convert(cov1);
+
+    //return rave::Track ( state1, cov1, 1, 0., 0. ) ;
+    return rave::Track ( gtp1, cte1, 0., 0. );
   }
   
   rave::Track track2()
   {
+	RaveToCmsObjects forward;
+
     rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
+    GlobalTrajectoryParameters gtp1 = forward.convert(state1, -1.0);
     rave::Covariance6D cov1 (
         1.5e-7,    3.6e-7,    4.0e-14,
                    8.5e-7,    9.6e-14,
@@ -37,7 +48,10 @@ namespace {
                                        4.9e-3,   -2.0e-3,   -4.4e-3,
                                                   9.2e-4,    1.8e-3,
                                                              4.1e-3 );
-    return rave::Track ( state1, cov1, -1, 0., 0. ) ;
+    CartesianTrajectoryError cte1 = forward.convert(cov1);
+
+    //return rave::Track ( state1, cov1, -1, 0., 0. ) ;
+    return rave::Track ( gtp1, cte1, 0., 0. );
   }
 }
 
@@ -73,6 +87,7 @@ class MyPropagator : public rave::Propagator
 
 int main(void)
 {
+  /*
   rave::VertexFactory f ( rave::ConstantMagneticField ( 3.8 ) );
   cout << "propagatortests" << endl;
   rave::VacuumPropagator vacuumpropagator;
@@ -81,6 +96,9 @@ int main(void)
   rave::Point3D pivot ( 0., 0., 0. );
   rave::Track vacuumed = vacuumpropagator.closestTo ( t1, pivot,true  );
   cout << "vacuumed at " << vacuumed << endl;
+  */
+  rave::Point3D pivot ( 0., 0., 0. );
+
 
   // added Test 
   rave::VertexFactory f2 ( rave::ConstantMagneticField ( 3.2 ) );
@@ -94,9 +112,9 @@ int main(void)
 
   // additional tests for cms swicht - first some track tests
   rave::Track t3 = track1();
-  cout << "Track charge: old " << t3.chargeRave() << " new " << t3.charge() << endl;
-  cout << "Track momentum: old " << t3.momentumRave() << " new " << t3.momentum() << endl;
-  cout << "Track position: old " << t3.positionRave() << " new " << t3.position() << endl;
+  cout << "Track charge: old " << t3.charge() << " new " << t3.charge() << endl;
+  cout << "Track momentum: old " << t3.momentum() << " new " << t3.momentum() << endl;
+  cout << "Track position: old " << t3.position() << " new " << t3.position() << endl;
   cout << "Track trackId: old " << t3.id() << " new " << t3.trackId() << endl;
   cout << "Track signInvMom " << t3.signedInverseMomentum() << endl;
   cout << "Track transCurv " << t3.transverseCurvature() << endl;

@@ -8,6 +8,7 @@
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 
+#include "RaveBase/RaveInterface/rave/Track.h"
 #include "boost/cast.hpp"
 
 #include <cmath>
@@ -71,79 +72,29 @@ rave::Track CmsToRaveObjects::convert ( const reco::TransientTrack & t, int id )
   ostr << "id" << id;
   // return convert ( t.impactPointState(), t.chi2(), t.ndof(), 0, ostr.str() );
   return convert ( id, t.initialFreeState(), t.chi2(), t.ndof(), 0, ostr.str() );
+
 }
 
-rave::Track CmsToRaveObjects::convert ( const TrajectoryStateOnSurface & s, float chi2,
-                                        float ndf, void * p, const string & tag ) const
-{
-  return convert ( *(s.freeState()), chi2, ndf, p, tag );
-  // FIXME change here?
-  /*
-  rave::Vector6D st = convert ( s.globalParameters() );
-  rave::Covariance6D err = convert ( s.cartesianError() );
-  return rave::Track ( st, err, s.charge(), chi2, ndf, p, tag );
-  */
-}
-
-rave::Track CmsToRaveObjects::convert ( int id, const TrajectoryStateOnSurface & s, 
-    float chi2, float ndf, void * p, const string & tag ) const
-{
-  /*
-  return convert ( id, *(s.freeState()), chi2, ndf, p, tag );
-  */
-  if ( s.freeState()->trackId() != id )
-  {
-    edm::LogError ("CmsToRaveObjects" ) << " track id mismatch! " << id << " versus " << s.freeState()->trackId();
-  }
-  rave::Vector6D st = convert ( s.globalParameters() );
-  rave::Covariance6D err = convert ( s.cartesianError() );
-  if ( id != -1 )
-    return rave::Track ( id, st, err, s.charge(), chi2, ndf, p, tag );
-  return rave::Track ( st, err, s.charge(), chi2, ndf, p, tag );
-}
-
-rave::BasicTrack CmsToRaveObjects::toBasicTrack ( const TrajectoryStateOnSurface & s, float chi2,
-                                        float ndf, void * p, const string & tag ) const
-{
-  rave::Vector6D st = convert ( s.globalParameters() );
-  rave::Covariance6D err = convert ( s.cartesianError() );
-  if ( s.freeState() && s.freeState()->trackId() != -1 )
-  {
-    return rave::BasicTrack ( s.freeState()->trackId(), st, err, s.charge(), chi2, ndf, p, tag );
-  }
-  return rave::BasicTrack ( st, err, s.charge(), chi2, ndf, p, tag );
-}
-
-rave::Track CmsToRaveObjects::convert ( const FreeTrajectoryState & s ) const
-{
-  rave::Vector6D st = convert ( s.parameters() );
-  rave::Covariance6D err = convert ( s.cartesianError() );
-  if ( s.trackId() != -1 )
-  {
-    return rave::Track ( s.trackId(), st, err, s.charge(), num::quiet_NaN() /*chi2*/,
-                         num::quiet_NaN () /*ndof*/, 0, "" );
-  }
-  return rave::Track ( st, err, s.charge(), num::quiet_NaN() /*chi2*/,
-                       num::quiet_NaN () /*ndof*/, 0, "" );
-}
 
 rave::Track CmsToRaveObjects::convert ( const FreeTrajectoryState & s, float chi2, float ndf, 
                                         void * p, const string & tag ) const
 {
-  rave::Vector6D st = convert ( s.parameters() );
-  rave::Covariance6D err = convert ( s.cartesianError() );
+  const GlobalTrajectoryParameters gtp = s.parameters();
+  const CartesianTrajectoryError cte =  s.cartesianError();
   if ( s.trackId() != -1 )
   {
-    return rave::Track ( s.trackId(), st, err, s.charge(), chi2, ndf, p, tag );
+    return rave::Track ( s.trackId(), gtp, cte, chi2, ndf, p, tag );
   }
-  return rave::Track ( st, err, s.charge(), chi2, ndf, p, tag );
+  return rave::Track ( gtp, cte, chi2, ndf, p, tag );
 }
+
+
 
 rave::Track CmsToRaveObjects::convert ( int id, const FreeTrajectoryState & s, float chi2, float ndf, 
                                         void * p, const string & tag ) const
 {
-  rave::Vector6D st = convert ( s.parameters() );
-  rave::Covariance6D err = convert ( s.cartesianError() );
+  const GlobalTrajectoryParameters gtp = s.parameters();
+  const CartesianTrajectoryError cte =  s.cartesianError();
   if ( (s.trackId() != -1) && ( id != s.trackId() ) )
   {
     edm::LogError ( "CmsToRaveObjects" ) << "error! we get two different ids for this one rave::Track";
@@ -151,10 +102,11 @@ rave::Track CmsToRaveObjects::convert ( int id, const FreeTrajectoryState & s, f
 
   if ( s.trackId() == -1 )
   {
-    return rave::Track ( st, err, s.charge(), chi2, ndf, p, tag );
+    return rave::Track ( gtp, cte, chi2, ndf, p, tag );
   }
-  return rave::Track ( id, st, err, s.charge(), chi2, ndf, p, tag );
+  return rave::Track ( id, gtp, cte, chi2, ndf, p, tag );
 }
+
 
 rave::Vector6D CmsToRaveObjects::convert ( const GlobalTrajectoryParameters & p ) const
 {

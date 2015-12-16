@@ -7,13 +7,20 @@
 #include <rave/VertexFactory.h>
 #include <rave/ConstantMagneticField.h>
 
+#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
+
 using namespace std;
 
 namespace {
   vector< rave::Track > createTracks()
   {
-    rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
-    rave::Covariance6D cov1 (
+	// new
+	RaveToCmsObjects forward;
+
+	// hier sollte ich aber eine Funktion schreiben, die das ermoeglicht, ohne den Convert!
+	rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
+	GlobalTrajectoryParameters gtp1 = forward.convert(state1, 1.0);
+	rave::Covariance6D cov1 (
          1.5e-7,    3.6e-7,    4.0e-14,
                     8.5e-7,    9.6e-14,
                                1.7e-6,
@@ -23,7 +30,11 @@ namespace {
                                          4.9e-3,   -2.0e-3,   -4.4e-3,
                                                     9.2e-4,    1.8e-3,
                                                                4.1e-3 );
+
+    CartesianTrajectoryError cte1 = forward.convert(cov1);
+
     rave::Vector6D state2 (-0.0006, -0.0006, 0.0018 , -57.1634, -57.6416, -40.0142 );
+    GlobalTrajectoryParameters gtp2 = forward.convert(state2, 1.0);
     rave::Covariance6D cov2 (
         5.0e-7,    -5.0e-7,   -1.1e-14,
                     5.0e-7,    1.1e-14,
@@ -34,9 +45,13 @@ namespace {
                                          6.7e-2,    6.7e-2,    4.7e-2,
                                                     6.8e-2,    4.7e-2,
                                                                3.3e-2 );
+    CartesianTrajectoryError cte2 = forward.convert(cov2);
+
     vector< rave::Track > particles;
-    particles.push_back( rave::Track ( state1, cov1, 1, 0., 0. ) );
-    particles.push_back( rave::Track ( state2, cov2, 1, 0., 0. ) );
+    // particles.push_back( rave::Track ( state1, cov1, 1, 0., 0. ) );
+    particles.push_back( rave::Track ( gtp1, cte1, 0., 0. ) );
+    // particles.push_back( rave::Track ( state2, cov2, 1, 0., 0. ) );
+    particles.push_back( rave::Track ( gtp2, cte2, 0., 0. ) );
     return particles;
   }
 }

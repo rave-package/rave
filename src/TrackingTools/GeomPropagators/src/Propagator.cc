@@ -21,26 +21,6 @@ Propagator::propagate( const FreeTrajectoryState& state,
   throw PropagationException("The surface is neither Cylinder nor Plane");
 }
 
-// cms format
-
-TrajectoryStateOnSurface
-Propagator::propagate( const rave::Track& raveTrack,
-		       const Surface& sur) const
-{
-  // try plane first, most probable case (disk "is a" plane too)
-  const Plane* bp = dynamic_cast<const Plane*>(&sur);
-  if (bp != 0) return propagate( raveTrack, *bp);
-
-  // if not plane try cylinder
-  const Cylinder* bc = dynamic_cast<const Cylinder*>(&sur);
-  if (bc != 0) return propagate( raveTrack, *bc);
-
-  // unknown surface - can't do it!
-  throw PropagationException("The surface is neither Cylinder nor Plane");
-}
-
-
-
 TrajectoryStateOnSurface 
 Propagator::propagate (const TrajectoryStateOnSurface& state, 
 		       const Surface& sur) const

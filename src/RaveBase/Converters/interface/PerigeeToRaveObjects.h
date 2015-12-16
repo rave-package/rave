@@ -8,7 +8,10 @@
 #include "RaveBase/RaveInterface/rave/PerigeeParameters3D.h"
 #include "RaveBase/RaveInterface/rave/PerigeeParameters5D.h"
 #include "RaveBase/RaveInterface/rave/PerigeeCovariance5D.h"
+
 #include <rave/MagneticField.h>
+#include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
+
 #ifdef WITH_KINEMATICS
 #include "RaveBase/RaveInterface/rave/Vector7D.h"
 #include "RaveBase/RaveInterface/rave/Covariance7D.h"
@@ -30,7 +33,7 @@ class PerigeeToRaveObjects
   public:
     Vector3D convert(const PerigeeParameters3D &) const;
     Vector6D convert(const PerigeeParameters5D &, const Charge, const Point3D & referencePoint) const;
-    Covariance6D convert(const PerigeeCovariance5D & error, const Vector6D & state, const Charge charge) const;
+    Covariance6D convert(const PerigeeCovariance5D & error, const GlobalTrajectoryParameters & gtp) const;
 
   #ifdef WITH_KINEMATICS
   public:

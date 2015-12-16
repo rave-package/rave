@@ -8,6 +8,8 @@
 #include <rave/ProxyBase.h>
 #include <string>
 
+#include "TrackingTools/TrajectoryState/interface/FreeTrajectoryState.h"
+#include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
 
 namespace rave
 {
@@ -16,12 +18,13 @@ namespace rave
  *  The class is reference counted, so dont worry about memory management.
  */
 
-class RaveDllExport Track : private rave::BasicTrack::Proxy
+class Track:  public ::FreeTrajectoryState
 {
-  typedef rave::BasicTrack::Proxy Base;
   public:
 
     /**
+     *  to be updated!
+     *
      *  Create a RaveTrack from a 6-dimensional euclidean trajectory state
      *  plus covariance matrix, plus charge, plus an optional
      *  pointer to the "original track", whatever that means.
@@ -29,69 +32,48 @@ class RaveDllExport Track : private rave::BasicTrack::Proxy
      *       Lengths are given in cm, momenta in GeV/c.
      */
 
-    Track( const rave::Vector6D &, const rave::Covariance6D &, Charge,
-           float chi2, float ndof,
-           void * originaltrack = 0, std::string tag="" );
-    Track( int id, const rave::Vector6D &, const rave::Covariance6D &, Charge,
-           float chi2, float ndof,
-           void * originaltrack = 0, std::string tag="" );
-    Track( const rave::Vector6D &, const rave::Covariance6D &, rave::Charge,
-           float chi2, float ndof,
-           int originaltrack, std::string tag="" );
+    Track( int id, const GlobalTrajectoryParameters &, const CartesianTrajectoryError &,
+             float chi2, float ndof, void * originaltrack = 0, std::string tag="" );
 
-    /// Create a Track from its components.
-    Track( const std::vector < std::pair < float, rave::Track > > & components );
-    Track( int id, const std::vector < std::pair < float, rave::Track > > & components );
+    Track( const GlobalTrajectoryParameters &, const CartesianTrajectoryError &,
+                 float chi2, float ndof, void * originaltrack = 0, std::string tag="" );
 
-    Track ( const rave::BasicTrack & );
+    Track( int id, const GlobalTrajectoryParameters &, const CurvilinearTrajectoryError &,
+                 float chi2, float ndof, void * originaltrack = 0, std::string tag="" );
+
+    Track( int id, const GlobalTrajectoryParameters &,
+                     float chi2, float ndof, int originaltrack = 0, std::string tag="" );
+
     Track();
 
-    rave::Charge chargeRave() const;
-    const rave::Vector6D & state() const;
-    const rave::Vector3D & momentumRave() const;
-    const rave::Point3D & positionRave() const;
-    float pt() const;
-    const rave::Covariance6D & error() const;
-    void * originalObject() const;
-    std::string tag() const;
-    /// track id, meant to be unique for every track
-    int id() const;
+    Charge raveCharge() const;
+    const GlobalTrajectoryParameters & state() const;
+    const CartesianTrajectoryError & CartesianError() const;
+    const CurvilinearTrajectoryError & CurvilinearError() const;
 
-    /// the track id can also be set. Use with great care!
-    // void setId( int );
+    int id() const;
+    void * originalObject() const;
+
 
     float chi2() const;
     float ndof() const;
-
-    const rave::PerigeeParameters5D & perigeeParameters() const;
-    const rave::PerigeeCovariance5D & perigeeCovariance() const;
+    std::string tag() const;
 
     bool isValid() const;
-    std::vector < std::pair < float, rave::Track > > components() const;
-
     bool operator< ( const rave::Track & ) const;
     bool operator== ( const rave::Track & ) const;
 
 
-    // cms format set functions etc missing
-
-    int trackId() const;
-    GlobalPoint position() const;
-    GlobalVector momentum() const;
-    TrackCharge charge() const;
-    double signedInverseMomentum() const;
-    double transverseCurvature() const;
-    bool hasCartesianError() const;
-    bool hasCurvilinearError() const;
-    bool hasError() const;
-    const GlobalTrajectoryParameters& parameters() const;
-    const CartesianTrajectoryError& cartesianError() const;
-    const CurvilinearTrajectoryError& curvilinearError() const;
-
 private:
-    const rave::BasicTrack & basicTrack() const;
-    std::vector < std::pair < float, BasicTrack > > convert ( const std::vector < std::pair < float, Track > > & ) const;
-    std::vector < std::pair < float, rave::Track > > theComponents;
+
+    int theId; // rave interface id, there is also an internal (cms) theTrackId
+    Charge theRaveCharge;
+    void * thePointer;
+    std::string theTag;
+    bool theIsValid;
+    float theChi2;
+    float theNdof;
+
 
 };
 

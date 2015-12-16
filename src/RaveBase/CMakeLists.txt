@@ -6,7 +6,7 @@ set(RAVEBASE_CPP
 	Converters/src/CmsToRaveObjects.cc 
 	#	Converters/src/MagneticFieldWrapper.cc 
 	Converters/src/PerigeeToRaveObjects.cc 
-	Converters/src/PropagatorWrapper.cc 
+	#	Converters/src/PropagatorWrapper.cc 
 	Converters/src/RaveStreamers.cc 
 	Converters/src/RaveToAlgebraicObjects.cc 
 	Converters/src/RaveToCmsObjects.cc 
@@ -15,7 +15,7 @@ set(RAVEBASE_CPP
 	RaveEngine/src/RaveVertexReconstructor.cc 
 	RaveEngine/src/RaveParameterSetBuilder.cc 
 	RaveEngine/src/RaveBeamSpotSingleton.cc 
-	RaveInterface/src/BasicTrack.cc 
+	#	RaveInterface/src/BasicTrack.cc 
 	RaveInterface/src/BasicVertex.cc 
 	RaveInterface/src/CheckedFloat.cc 
 	RaveInterface/src/ConstantMagneticField.cc 

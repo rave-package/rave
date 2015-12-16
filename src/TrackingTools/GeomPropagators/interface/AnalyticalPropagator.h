@@ -69,12 +69,6 @@ public:
   /// propagation to plane with path length  
   std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const FreeTrajectoryState& fts, const Plane& plane) const;
 
-  /// propagation to plane with path length  -- using rave::Track and CMS Plane
-  std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const Plane& Plane) const;
-  
-  /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
-    std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
-
   /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
     std::pair<rave::Track,double> propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
 
@@ -100,15 +94,6 @@ public:
   std::pair<TrajectoryStateOnSurface,double> 
   propagateWithPath(const FreeTrajectoryState& fts, const Cylinder& cylinder) const;
 
-  /// propagation to cylinder with path length -- using rave::Track and CMS Cylinder
-  std::pair<TrajectoryStateOnSurface,double>
-  propagateWithPath(const rave::Track& raveTrack, const Cylinder& Cylinder) const;
-
-  /// propagation to cylinder with path length -- using rave::Track and ravesurf::Cylinder
-  std::pair<TrajectoryStateOnSurface,double>
-  propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;
-
-  // Moritz das hier gibt direkt den Track zurueck
   /// propagation to cylinder with path length -- using rave::Track and ravesurf::Cylinder
   std::pair<rave::Track,double>
   propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;  /** limitation of change in transverse direction
@@ -152,7 +137,7 @@ private:
   			   const GlobalTrajectoryParameters& gtp,
   			   const double& s) const;
 
-  // Moritz taking raveTrack returning raveTrack
+  // taking raveTrack returning raveTrack
   std::pair<rave::Track,double>
       propagatedStateWithPathRave (const rave::Track& raveTrack,
     			   const Surface& surface,

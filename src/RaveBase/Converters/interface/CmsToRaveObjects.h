@@ -42,13 +42,6 @@ class CartesianTrajectoryError;
 class CmsToRaveObjects 
 {
   public:
-    rave::Track convert ( const TrajectoryStateOnSurface &, float chi2=0., float ndf=0., 
-                          void * orig=0, const std::string & tag="" ) const;
-    rave::Track convert ( int id, const TrajectoryStateOnSurface &, float chi2=0., float ndf=0., 
-                          void * orig=0, const std::string & tag="" ) const;
-    rave::BasicTrack toBasicTrack ( const TrajectoryStateOnSurface &, float chi2=0., float ndf=0., 
-                          void * orig=0, const std::string & tag="" ) const;
-    rave::Track convert ( const FreeTrajectoryState & ) const;
     rave::Track convert ( const FreeTrajectoryState &, float chi2, float ndf, void * id, const std::string & tag ) const;
     rave::Track convert ( int id, const FreeTrajectoryState &, float chi2, float ndf, void * orig, const std::string & tag ) const;
     rave::Track convert ( const reco::TransientTrack & t, int id=0 ) const;

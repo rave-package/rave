@@ -66,15 +66,6 @@ BasicTrack::BasicTrack( const Vector6D & s, const Covariance6D & e, Charge q,
 {
   // theComponents.push_back ( *this );
   createMomPos();
-
-  // cms format
-  RaveToCmsObjects forward;
-  AlgebraicSymMatrix66 cov6D = RaveToAlgebraicObjects().convert ( e );
-  theGlobalParameters = forward.convert( s, q );
-  theCartesianError = CartesianTrajectoryError( cov6D );
-  theCartesianErrorValid = true;
-  theCurvilinearErrorValid = false;
-  theTrackId = theId; // ok?
 }
 
 void BasicTrack::createMomPos()
@@ -92,16 +83,6 @@ BasicTrack::BasicTrack( int id, const Vector6D & s, const Covariance6D & e, Char
 {
   // theComponents.push_back ( *this );
   createMomPos();
-
-  // cms format
-  RaveToCmsObjects forward;
-  AlgebraicSymMatrix66 cov6D = RaveToAlgebraicObjects().convert ( e );
-  theGlobalParameters = forward.convert( s, q );
-  theCartesianError = CartesianTrajectoryError( cov6D );
-  theCartesianErrorValid = true;
-  theCurvilinearErrorValid = false;
-  theTrackId = theId; // ok?
-
 }
 
 float BasicTrack::chi2() const
@@ -129,10 +110,12 @@ bool BasicTrack::isValid() const
   return theIsValid;
 }
 
-Charge BasicTrack::chargeRave() const
+
+Charge BasicTrack::charge() const
 {
   return theCharge;
 }
+
 
 int BasicTrack::id() const
 {
@@ -144,12 +127,12 @@ const Vector6D & BasicTrack::state() const
   return theState;
 }
 
-const Vector3D & BasicTrack::momentumRave() const
+const Vector3D & BasicTrack::momentum() const
 {
   return theMomentum;
 }
 
-const Point3D & BasicTrack::positionRave() const
+const Point3D & BasicTrack::position() const
 {
   return thePosition;
 }

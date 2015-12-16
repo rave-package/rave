@@ -5,6 +5,7 @@
 #include "RaveBase/RaveInterface/rave/PerigeeParameters3D.h"
 #include "RaveBase/RaveInterface/rave/PerigeeParameters5D.h"
 #include "RaveBase/RaveInterface/rave/PerigeeCovariance5D.h"
+#include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
 
 #ifdef WITH_KINEMATICS
 #include "RaveBase/RaveInterface/rave/Vector7D.h"
@@ -29,12 +30,8 @@ class RaveToPerigeeObjects
 {
   public:
     PerigeeParameters3D convert(const Vector3D &, const Charge) const;
-    PerigeeParameters5D convert(
-      const Vector6D &, const Charge,
-      const Point3D & referencePoint = Point3D(0.,0.,0.)) const;
-    PerigeeCovariance5D convert(
-      const Covariance6D & error, const Vector6D & state, const Charge charge,
-      const Point3D & referencePointconst = Point3D(0.,0.,0.)) const;
+    PerigeeParameters5D convert(const Vector6D &, const Charge, const Point3D & referencePoint = Point3D(0.,0.,0.)) const;
+    PerigeeCovariance5D convert(const Covariance6D & error, const Vector6D & state, const Charge charge, const Point3D & referencePointconst = Point3D(0.,0.,0.)) const;
 
   #ifdef WITH_KINEMATICS
   public:
