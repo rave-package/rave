@@ -9,7 +9,6 @@ using namespace std;
 Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CartesianTrajectoryError & cte,
 		      float chi2, float ndof, void * originaltrack, std::string tag):
 				FreeTrajectoryState(gtp, cte),
-				theRaveCharge(gtp.charge()),
 				theChi2(chi2),
 				theNdof(ndof),
 				thePointer(originaltrack),
@@ -21,7 +20,7 @@ Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CartesianTra
 Track::Track( const GlobalTrajectoryParameters & gtp, const CartesianTrajectoryError & cte,
 		      float chi2, float ndof, void * originaltrack, std::string tag):
 				FreeTrajectoryState(gtp, cte),
-				theRaveCharge(gtp.charge()),
+				//theRaveCharge(gtp.charge()),
 				theChi2(chi2),
 				theNdof(ndof),
 				thePointer(originaltrack),
@@ -33,7 +32,6 @@ Track::Track( const GlobalTrajectoryParameters & gtp, const CartesianTrajectoryE
 Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CurvilinearTrajectoryError & cte,
 		      float chi2, float ndof, void * originaltrack, std::string tag ):
 				FreeTrajectoryState(gtp, cte),
-				theRaveCharge(gtp.charge()),
 				theChi2(chi2),
 				theNdof(ndof),
 				thePointer(originaltrack),
@@ -45,7 +43,6 @@ Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CurvilinearT
 Track::Track( int id, const GlobalTrajectoryParameters & gtp,
 		      float chi2, float ndof, int originaltrack,  std::string tag ):
 				FreeTrajectoryState(gtp),
-				theRaveCharge(gtp.charge()),
 				theChi2(chi2),
 				theNdof(ndof),
 				thePointer(&originaltrack), // passt das? Nein
@@ -66,12 +63,6 @@ Track::Track():
 string Track::tag() const
 {
   return theTag;
-}
-
-
-Charge Track::raveCharge() const
-{
-  return theRaveCharge;
 }
 
 int Track::id() const

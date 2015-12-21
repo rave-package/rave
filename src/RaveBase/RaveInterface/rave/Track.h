@@ -46,7 +46,7 @@ class Track:  public ::FreeTrajectoryState
 
     Track();
 
-    Charge raveCharge() const;
+    //Charge raveCharge() const;
     const GlobalTrajectoryParameters & state() const;
     const CartesianTrajectoryError & CartesianError() const;
     const CurvilinearTrajectoryError & CurvilinearError() const;
@@ -66,7 +66,6 @@ class Track:  public ::FreeTrajectoryState
 
 private:
 
-    Charge theRaveCharge;
     void * thePointer;
     std::string theTag;
     bool theIsValid;
