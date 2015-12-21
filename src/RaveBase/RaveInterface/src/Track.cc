@@ -14,8 +14,7 @@ Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CartesianTra
 				theNdof(ndof),
 				thePointer(originaltrack),
 				theTag(tag),
-				theIsValid(true),
-				theId(id)
+				theIsValid(true)
 {theTrackId=id;}
 
 
@@ -27,9 +26,8 @@ Track::Track( const GlobalTrajectoryParameters & gtp, const CartesianTrajectoryE
 				theNdof(ndof),
 				thePointer(originaltrack),
 				theTag(tag),
-				theIsValid(true),
-				theId(RaveId::uniqueId())
-{theId=-2;}
+				theIsValid(true)
+{theTrackId=RaveId::uniqueId();}
 
 
 Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CurvilinearTrajectoryError & cte,
@@ -40,8 +38,7 @@ Track::Track( int id, const GlobalTrajectoryParameters & gtp, const CurvilinearT
 				theNdof(ndof),
 				thePointer(originaltrack),
 				theTag(tag),
-				theIsValid(true),
-				theId(id)
+				theIsValid(true)
 {theTrackId=id;}
 
 
@@ -53,8 +50,7 @@ Track::Track( int id, const GlobalTrajectoryParameters & gtp,
 				theNdof(ndof),
 				thePointer(&originaltrack), // passt das? Nein
 				theTag(tag),
-				theIsValid(true),
-				theId(id)
+				theIsValid(true)
 {theTrackId=id;}
 
 
@@ -63,9 +59,8 @@ Track::Track():
 				theChi2(-1),
 				theNdof(-1),
 				thePointer(0),
-				theIsValid(false),
-				theId(RaveId::uniqueId())
-{}
+				theIsValid(false)
+{theTrackId=-1;}
 
 
 string Track::tag() const
@@ -79,12 +74,10 @@ Charge Track::raveCharge() const
   return theRaveCharge;
 }
 
-
 int Track::id() const
 {
-  return theId;
+  return theTrackId;
 }
-
 
 void * Track::originalObject() const
 {

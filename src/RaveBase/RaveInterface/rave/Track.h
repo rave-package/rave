@@ -66,7 +66,6 @@ class Track:  public ::FreeTrajectoryState
 
 private:
 
-    int theId; // rave interface id, there is also an internal (cms) theTrackId
     Charge theRaveCharge;
     void * thePointer;
     std::string theTag;
