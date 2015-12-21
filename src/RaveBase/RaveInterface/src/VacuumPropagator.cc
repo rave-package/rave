@@ -9,6 +9,8 @@
 #include "rave/Plane.h"
 #include "rave/Cylinder.h"
 
+#include "RaveBase/Converters/interface/CmsToRaveObjects.h"
+#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 #include <iostream>
 
@@ -38,6 +40,7 @@ rave::VacuumPropagator * rave::VacuumPropagator::copy() const
 pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & orig,
                           const ravesurf::Cylinder & rcyl ) const
 {
+
   clearTsoses();
   typedef GloballyPositioned<float>::PositionType PositionType;
   typedef GloballyPositioned<float>::RotationType RotationType;
@@ -63,33 +66,32 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   return to;
 }
 
-/*
+
 rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
     const rave::Point3D & pt, bool transverse ) const
 {
   RaveToCmsObjects forward;
-  CmsToRaveObjects backward;
+
   GlobalPoint pos = forward.convert ( pt );
 
   if ( transverse )
   {
-    //FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
+    FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
     TransverseImpactPointExtrapolator tipe( MagneticFieldSingleton::Instance() );
     TrajectoryStateOnSurface tsos = tipe.extrapolate( orig, pos );
-    rave::Track ret = backward.convert ( orig.id(), tsos, orig.chi2(), orig.ndof(),
-       orig.originalObject(), orig.tag() );
+    rave::Track ret ( orig.id(), tsos.globalParameters(), tsos.cartesianError(), orig.chi2(), orig.ndof(), orig.originalObject(), orig.tag() );
     return ret;
   }
   
+
   PerigeeConversions conv;
-  AlgebraicVector3 momentum = forward.toAlgebraicVector3 ( orig.state().momentum() );
-  AlgebraicSymMatrix66 error = forward.convert ( orig.error() ).matrix();
-  TrajectoryStateClosestToPoint tscp = conv.trajectoryStateClosestToPoint
-    ( momentum, pos, orig.chargeRave(), error , MagneticFieldSingleton::Instance()  );
-  rave::Track ret = backward.convert ( orig.id(), tscp.theState(), orig.chi2(), 
-      orig.ndof(), orig.originalObject(), orig.tag() );
+  AlgebraicVector3 momentum = orig.parameters().momVector();
+  AlgebraicSymMatrix66 error = orig.cartesianError().matrix();
+  TrajectoryStateClosestToPoint tscp = conv.trajectoryStateClosestToPoint( momentum, pos, orig.charge(), error , MagneticFieldSingleton::Instance()  );
+  rave::Track ret ( orig.id(), tscp.theState().parameters(), tscp.theState().cartesianError() , orig.chi2(), orig.ndof(), orig.originalObject(), orig.tag() );
+
   return ret;
 }
-*/
+
 
 rave::VacuumPropagator::VacuumPropagator() {}
