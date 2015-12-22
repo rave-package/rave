@@ -76,7 +76,6 @@ rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
 
   if ( transverse )
   {
-    FreeTrajectoryState fts = forward.convertTrackToFTS ( orig );
     TransverseImpactPointExtrapolator tipe( MagneticFieldSingleton::Instance() );
     TrajectoryStateOnSurface tsos = tipe.extrapolate( orig, pos );
     rave::Track ret ( orig.id(), tsos.globalParameters(), tsos.cartesianError(), orig.chi2(), orig.ndof(), orig.originalObject(), orig.tag() );

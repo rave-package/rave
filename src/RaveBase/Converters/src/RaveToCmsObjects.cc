@@ -123,7 +123,6 @@ reco::TransientTrack RaveToCmsObjects::tTrack ( const rave::Track & rt ) const
   if ( rt.components().size() )
   {
     // edm::LogError("RaveToCmsObjects") << "cannot yet handle multi component tracks. FIXME implement me. In " << __LINE__;
-    FreeTrajectoryState fts = convertTrackToFTS( rt );
     const vector < pair < float, rave::Track > > & comps=rt.components();
     MultiTrajectoryStateAssembler assembler;
     // MultiTrajectoryStateCombiner combiner;
@@ -132,14 +131,14 @@ reco::TransientTrack RaveToCmsObjects::tTrack ( const rave::Track & rt ) const
 
     // construct a cylinder around beampipe
     // Cylinder c ( GlobalPoint ( 0., 0., 0. ), TkRotation<float>(), 0.001 );
-    BoundPlane *p = PerpendicularBoundPlaneBuilder () ( fts.position(), fts.momentum() );
+    BoundPlane *p = PerpendicularBoundPlaneBuilder () ( rt.position(), rt.momentum() );
 
     // edm::LogError("RaveToCmsObjects") << comps.size() << " components.";
     for ( vector< pair < float, rave::Track > >::const_iterator i=comps.begin(); i!=comps.end() ; ++i )
     {
-      FreeTrajectoryState ftsc = convertTrackToFTS( i->second );
+      //FreeTrajectoryState ftsc = convertTrackToFTS( i->second );
       // FIXME no weight anymore?!?
-      TrajectoryStateOnSurface tsosc ( ftsc, *p, SurfaceSideDefinition::afterSurface ); //, i->first );
+      TrajectoryStateOnSurface tsosc ( i->second, *p, SurfaceSideDefinition::afterSurface ); //, i->first );
       assembler.addState ( tsosc );
       // cmscomps.push_back ( tsosc );
     }
@@ -163,33 +162,10 @@ reco::TransientTrack RaveToCmsObjects::tTrack ( const rave::Track & rt ) const
     return ret;
   }
   #endif
-  FreeTrajectoryState fts = convertTrackToFTS( rt );
   // GlobalPoint ref ( rt.state().x(), rt.state().y(), rt.state().z() );
-  reco::TransientTrack ret=TransientTrackFromFTSFactory().build ( fts ); // , ref ); //, rt.id(), rt.chi2(), rt.ndof(), ( void * ) ( &rt ) );
+  reco::TransientTrack ret=TransientTrackFromFTSFactory().build ( rt ); // , ref ); //, rt.id(), rt.chi2(), rt.ndof(), ( void * ) ( &rt ) );
   ret.setId ( rt.id() );
   return ret;
-}
-
-FreeTrajectoryState RaveToCmsObjects::convertTrackToFTS ( const rave::Track & rt ) const
-{
-  GlobalTrajectoryParameters gtp = rt.state() ;
-
-  if (rt.hasCartesianError()){
-	  FreeTrajectoryState fts ( gtp, rt.CartesianError() );
-	  fts.setTrackId ( rt.id() );
-	  return fts;
-  	  }
-  // function obsolete anyway and no CurvLine error!
-  /*
-  else if (rt.hasCurvilinearError()){
-	  FreeTrajectoryState fts ( gtp, CartesianTrajectoryError ( rt.CurvilinearError() ) );
-  	  }
-  */
-  else {
-	  FreeTrajectoryState fts ( gtp );
-	  fts.setTrackId ( rt.id() );
-	  return fts;
-  }
 }
 
 

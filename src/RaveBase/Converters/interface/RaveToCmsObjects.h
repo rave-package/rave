@@ -57,7 +57,6 @@ class RaveToCmsObjects
     AlgebraicVector3 toAlgebraicVector3 ( const rave::Vector3D & ) const;
     GlobalError convert ( const rave::Covariance3D & ) const;
     reco::TransientTrack tTrack ( const rave::Track & ) const;
-    FreeTrajectoryState convertTrackToFTS ( const rave::Track & ) const;
 
     PerigeeTrajectoryParameters convert(const rave::PerigeeParameters5D &, const rave::Charge &) const;
     PerigeeTrajectoryError convert(const rave::PerigeeCovariance5D &) const;
