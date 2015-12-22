@@ -63,7 +63,7 @@ public:
   std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const FreeTrajectoryState& fts, const Plane& plane) const;
 
   /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
-    std::pair<rave::Track,double> propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
+    std::pair<rave::Track,double> propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
 
   /// propagation to cylinder
     TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, const Cylinder& cylinder) const {
@@ -76,7 +76,7 @@ public:
 
   /// propagation to cylinder with path length -- using rave::Track and ravesurf::Cylinder
   std::pair<rave::Track,double>
-  propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;  /** limitation of change in transverse direction
+  propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const;  /** limitation of change in transverse direction
    *  (to avoid loops).
    */
   virtual bool setMaxDirectionChange( float phiMax) { 
@@ -112,7 +112,7 @@ private:
 
   /// taking raveTrack returning raveTrack
   std::pair<rave::Track,double>
-      propagatedStateWithPathRave (const rave::Track& raveTrack,
+      propagatedStateWithPath(const rave::Track& raveTrack,
     			   const Surface& surface,
     			   const GlobalTrajectoryParameters& gtp,
     			   const double& s) const;

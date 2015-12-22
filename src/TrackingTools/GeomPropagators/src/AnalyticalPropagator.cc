@@ -70,7 +70,7 @@ AnalyticalPropagator::propagateWithPath(const FreeTrajectoryState& fts,
 }
 
 
-std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Plane& raveplane) const
+std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPath(const rave::Track& raveTrack, const ravesurf::Plane& raveplane) const
 {
   // check curvature
   double rho = raveTrack.transverseCurvature();
@@ -109,7 +109,7 @@ std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPathRave(const 
   //
   // construct TrajectoryStateOnSurface
   //
-  return propagatedStateWithPathRave(raveTrack,raveplane,gtp,s);
+  return propagatedStateWithPath(raveTrack,raveplane,gtp,s);
 }
 // return raveTrackWP(resultRaveTrack,s);
 
@@ -145,7 +145,7 @@ AnalyticalPropagator::propagateWithPath(const FreeTrajectoryState& fts,
   return propagatedStateWithPath(fts,*plane,gtp,s);
 }
 
-std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Cylinder & raveCylinder) const
+std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPath(const rave::Track& raveTrack, const ravesurf::Cylinder & raveCylinder) const
 {
   // check curvature
   double rho = raveTrack.transverseCurvature();
@@ -176,7 +176,7 @@ std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPathRave(const 
 
    // backward.convert ( *tsos, orig.chi2(), orig.ndof(),  0, orig.tag() );
 
-  return propagatedStateWithPathRave(raveTrack,*plane,gtp,s);
+  return propagatedStateWithPath(raveTrack,*plane,gtp,s);
 }
 
 
@@ -219,7 +219,7 @@ AnalyticalPropagator::propagatedStateWithPath (const FreeTrajectoryState& fts,
 }
 
 std::pair<rave::Track,double>
-AnalyticalPropagator::propagatedStateWithPathRave (const rave::Track& raveTrack,
+AnalyticalPropagator::propagatedStateWithPath (const rave::Track& raveTrack,
 					       const Surface& surface,
 					       const GlobalTrajectoryParameters& gtp,
 					       const double& s) const

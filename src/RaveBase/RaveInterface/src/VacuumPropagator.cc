@@ -45,7 +45,7 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   typedef GloballyPositioned<float>::PositionType PositionType;
   typedef GloballyPositioned<float>::RotationType RotationType;
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(), anyDirection );
-  pair < rave::Track, double > ot = prop.propagateWithPathRave ( orig, rcyl );
+  pair < rave::Track, double > ot = prop.propagateWithPath ( orig, rcyl );
   return ot;
 }
 
@@ -62,7 +62,7 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   typedef GloballyPositioned<float>::PositionType PositionType;
 
   AnalyticalPropagator prop ( MagneticFieldSingleton::Instance(), anyDirection );
-  pair < rave::Track, double > to = prop.propagateWithPathRave ( orig, rplane );
+  pair < rave::Track, double > to = prop.propagateWithPath ( orig, rplane );
   return to;
 }
 
