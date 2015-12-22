@@ -59,38 +59,18 @@ public:
     return propagateWithPath(fts,plane).first;
   }
 
-
-  /// propagation to plane -- using rave::Track
-  TrajectoryStateOnSurface propagate(const rave::Track& raveTrack, const Plane& plane) const {
-    return propagateWithPath(raveTrack,plane).first;
-  }
-
-
   /// propagation to plane with path length  
   std::pair<TrajectoryStateOnSurface,double> propagateWithPath(const FreeTrajectoryState& fts, const Plane& plane) const;
 
   /// propagation to plane with path length  -- using rave::Track and ravesurf::Plane
     std::pair<rave::Track,double> propagateWithPathRave(const rave::Track& raveTrack, const ravesurf::Plane& Plane) const;
 
-
-
-
   /// propagation to cylinder
     TrajectoryStateOnSurface propagate(const FreeTrajectoryState& fts, const Cylinder& cylinder) const {
       return propagateWithPath(fts,cylinder).first;
   }
 
-  /// propagation to cylinder -- using rave::Track
-    TrajectoryStateOnSurface propagate(const rave::Track& raveTrack, const Cylinder& cylinder) const {
-      return propagateWithPath(raveTrack,cylinder).first;
-  }
-
-  /// propagation to cylinder -- using rave::Track and ravesurf::Cylinder
-    TrajectoryStateOnSurface propagate(const rave::Track& raveTrack, const ravesurf::Cylinder& raveCylinder) const {
-      return propagateWithPath(raveTrack,raveCylinder).first;
-  }
-
-  /// propagation to cylinder with path length
+   /// propagation to cylinder with path length
   std::pair<TrajectoryStateOnSurface,double> 
   propagateWithPath(const FreeTrajectoryState& fts, const Cylinder& cylinder) const;
 
@@ -130,14 +110,7 @@ private:
 			   const GlobalTrajectoryParameters& gtp, 
 			   const double& s) const;
 
-  /// propagation of errors (if needed) and generation of a new TSOS -- using rave::Track
-  std::pair<TrajectoryStateOnSurface,double>
-    propagatedStateWithPath (const rave::Track& raveTrack,
-  			   const Surface& surface,
-  			   const GlobalTrajectoryParameters& gtp,
-  			   const double& s) const;
-
-  // taking raveTrack returning raveTrack
+  /// taking raveTrack returning raveTrack
   std::pair<rave::Track,double>
       propagatedStateWithPathRave (const rave::Track& raveTrack,
     			   const Surface& surface,

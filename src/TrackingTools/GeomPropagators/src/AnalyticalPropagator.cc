@@ -1,5 +1,4 @@
 #include "TrackingTools/GeomPropagators/interface/AnalyticalPropagator.h"
-
 #include "DataFormats/GeometrySurface/interface/Cylinder.h"
 #include "DataFormats/GeometrySurface/interface/TangentPlane.h"
 #include "DataFormats/GeometrySurface/interface/Plane.h"
@@ -14,9 +13,7 @@
 #include "TrackingTools/GeomPropagators/interface/PropagationDirectionFromPath.h"
 #include "TrackingTools/TrajectoryState/interface/SurfaceSideDefinition.h"
 #include "TrackingTools/GeomPropagators/interface/PropagationExceptions.h"
-
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
-
 #include <cmath>
 
 using namespace SurfaceSideDefinition;
@@ -177,8 +174,7 @@ std::pair<rave::Track,double> AnalyticalPropagator::propagateWithPathRave(const 
   //
   ReferenceCountingPointer<TangentPlane> plane(raveCylinder.tangentPlane(x));
 
-  // wie kommt man zu dem rave track
-  // backward.convert ( *tsos, orig.chi2(), orig.ndof(),  0, orig.tag() );
+   // backward.convert ( *tsos, orig.chi2(), orig.ndof(),  0, orig.tag() );
 
   return propagatedStateWithPathRave(raveTrack,*plane,gtp,s);
 }
@@ -218,44 +214,6 @@ AnalyticalPropagator::propagatedStateWithPath (const FreeTrajectoryState& fts,
     //
     TrajectoryStateOnSurface tsos (gtp,surface,side);
     tsos.freeState()->setTrackId ( fts.trackId() );
-    return TsosWP(tsos,s);
-  }
-}
-
-
-std::pair<TrajectoryStateOnSurface,double>
-AnalyticalPropagator::propagatedStateWithPath (const rave::Track& raveTrack,
-					       const Surface& surface,
-					       const GlobalTrajectoryParameters& gtp,
-					       const double& s) const
-{
-  //
-  // for forward propagation: state is before surface,
-  // for backward propagation: state is after surface
-  //
-  SurfaceSide side = PropagationDirectionFromPath()(s,propagationDirection())==alongMomentum
-    ? beforeSurface : afterSurface;
-  //
-  //
-  // error propagation (if needed) and conversion to a TrajectoryStateOnSurface
-  //
-  if (raveTrack.hasError()) {
-    //
-    // compute jacobian
-    //
-    AnalyticalCurvilinearJacobian analyticalJacobian(raveTrack.parameters(), gtp.position(), gtp.momentum(), s);
-    const AlgebraicMatrix55 &jacobian = analyticalJacobian.jacobian();
-    CurvilinearTrajectoryError cte(ROOT::Math::Similarity(jacobian, raveTrack.curvilinearError().matrix()));
-    TrajectoryStateOnSurface tsos (gtp,cte,surface,side);
-    tsos.freeState()->setTrackId ( raveTrack.trackId() );
-    return TsosWP(tsos,s);
-  }
-  else {
-    //
-    // return state without errors
-    //
-    TrajectoryStateOnSurface tsos (gtp,surface,side);
-    tsos.freeState()->setTrackId ( raveTrack.trackId() );
     return TsosWP(tsos,s);
   }
 }
