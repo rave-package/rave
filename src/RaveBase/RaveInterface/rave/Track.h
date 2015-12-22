@@ -44,6 +44,10 @@ class Track:  public ::FreeTrajectoryState
     Track( int id, const GlobalTrajectoryParameters &,
                      float chi2, float ndof, int originaltrack = 0, std::string tag="" );
 
+    Track( const std::vector < std::pair < float, Track > > & components );
+
+    Track( int id, const std::vector < std::pair < float, Track > > & components );
+
     Track();
 
     //Charge raveCharge() const;
@@ -60,6 +64,8 @@ class Track:  public ::FreeTrajectoryState
     std::string tag() const;
 
     bool isValid() const;
+    std::vector < std::pair < float, rave::Track > > components() const;
+    void setComponents ( const std::vector < std::pair < float, rave::Track > > & );
     bool operator< ( const rave::Track & ) const;
     bool operator== ( const rave::Track & ) const;
 
@@ -71,6 +77,7 @@ private:
     bool theIsValid;
     float theChi2;
     float theNdof;
+    std::vector < std::pair < float, Track > > theComponents;
 
 
 };
