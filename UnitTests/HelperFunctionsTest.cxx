@@ -9,17 +9,22 @@
 #include <iostream>
 
 #include <rave/Version.h>
+#include <rave/Vector6D.h>
 #include <rave/Covariance6D.h>
+#include <rave/Charge.h>
 
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/CmsToRaveObjects.h"
 #include "RaveBase/Converters/interface/HelperFunctions.h"
+#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
+#include "DataFormats/GeometryVector/interface/GlobalPoint.h"
+#include "DataFormats/GeometryVector/interface/GlobalVector.h"
 
 
 
 BOOST_AUTO_TEST_CASE(HelperFunctionsTest)
 {
-   std::cout << "[helperfunctionstest] HelperFunctions::convertFloatToCartesianTrajcetoryError test"<<std::endl;
+   std::cout << "[helperfunctionstest] Testing HelperFunctions::convertFloatToCartesianTrajcetoryError"<<std::endl;
 
    RaveToCmsObjects forward;
    CmsToRaveObjects backward;
@@ -55,7 +60,26 @@ BOOST_AUTO_TEST_CASE(HelperFunctionsTest)
 
    BOOST_CHECK( cte1.matrix() == cte2.matrix() );
    BOOST_CHECK( cov1 == cov2 );
+
+   std::cout << "[helperfunctionstest] Testing HelperFunctions::convertToGlobalTrajcetoryState"<<std::endl;
+
+   GlobalTrajectoryParameters gtp1 = helper.convertToGlobalTrajecetoryState( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524, 1.0 );
+
+   GlobalPoint pos2(0.0001, 0.0001, 0.0001);
+   GlobalVector mom2(-31.2685, 13.0785, 28.7524);
+   TrackCharge charge2(1.0);
+   GlobalTrajectoryParameters gtp2 (pos2, mom2, charge2, rave::MagneticFieldSingleton::Instance());
+
+   rave::Vector6D state3( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
+
+
+   // use back-conversion for checking
+   // fixme use gtp == instead
+   rave::Vector6D state1 = backward.convert(gtp1);
+   rave::Vector6D state2 = backward.convert(gtp2);
+
+   BOOST_CHECK( state1 == state3 );
+   BOOST_CHECK( state2 == state3 );
+
  }
-
-
 

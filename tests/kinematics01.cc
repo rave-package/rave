@@ -9,20 +9,16 @@
 
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/HelperFunctions.h"
+#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 
 using namespace std;
 
 namespace {
   vector< rave::Track > createTracks()
   {
-	RaveToCmsObjects forward;
 	HelperFunctions helper;
 
-	rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
-
-	//should also be fixed!
-	GlobalTrajectoryParameters gtp1 = forward.convert(state1, 1.0);
-
+	GlobalTrajectoryParameters gtp1 = helper.convertToGlobalTrajecetoryState( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524, 1.0 );
 	CartesianTrajectoryError cte1 = helper.convertFloatToCartesianTrajcetoryError(
 			1.5e-7,    3.6e-7,    4.0e-14,
                        8.5e-7,    9.6e-14,
@@ -35,11 +31,7 @@ namespace {
                                                                4.1e-3 );
 
 
-    rave::Vector6D state2 (-0.0006, -0.0006, 0.0018 , -57.1634, -57.6416, -40.0142 );
-
-    // same here!
-    GlobalTrajectoryParameters gtp2 = forward.convert(state2, 1.0);
-
+	GlobalTrajectoryParameters gtp2 = helper.convertToGlobalTrajecetoryState(-0.0006, -0.0006, 0.0018 , -57.1634, -57.6416, -40.0142, 1.0 );
     CartesianTrajectoryError cte2 = helper.convertFloatToCartesianTrajcetoryError(
     		5.0e-7,    -5.0e-7,   -1.1e-14,
     		                    5.0e-7,    1.1e-14,
