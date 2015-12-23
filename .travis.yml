@@ -50,4 +50,5 @@ script:
   - ./tests/kinematics03
   - ./tests/propagatortests
   - ./UnitTests/raveunittests
+  - ./UnitTests/refactortests
 
