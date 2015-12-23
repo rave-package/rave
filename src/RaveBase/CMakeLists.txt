@@ -7,6 +7,7 @@ set(RAVEBASE_CPP
 	#	Converters/src/MagneticFieldWrapper.cc 
 	Converters/src/PerigeeToRaveObjects.cc 
 	#	Converters/src/PropagatorWrapper.cc 
+	Converters/src/HelperFunctions.cc
 	Converters/src/RaveStreamers.cc 
 	Converters/src/RaveToAlgebraicObjects.cc 
 	Converters/src/RaveToCmsObjects.cc 
