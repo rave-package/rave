@@ -27,6 +27,7 @@ target_link_libraries(raveunittests
 add_executable(refactortests
         RaveCylinder
 	RavePlane
+	HelperFunctionsTest
 )
 
 target_link_libraries(refactortests
