@@ -9,7 +9,7 @@
  */
 
 
-CartesianTrajectoryError   convertFloatToCartesianTrajcetoryError ( float dxx, float dxy, float dxz,
+CartesianTrajectoryError   HelperFunctions::convertFloatToCartesianTrajcetoryError ( float dxx, float dxy, float dxz,
            						                                    float dyy, float dyz, float dzz,
                                                                     float dxpx, float dxpy, float dxpz,
                                                                     float dypx, float dypy, float dypz,
