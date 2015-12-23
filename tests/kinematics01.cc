@@ -8,22 +8,25 @@
 #include <rave/ConstantMagneticField.h>
 
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
+#include "RaveBase/Converters/interface/HelperFunctions.h"
 
 using namespace std;
 
 namespace {
   vector< rave::Track > createTracks()
   {
-	// new
 	RaveToCmsObjects forward;
+	HelperFunctions helper;
 
-	// hier sollte ich aber eine Funktion schreiben, die das ermoeglicht, ohne den Convert!
 	rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
+
+	//should also be fixed!
 	GlobalTrajectoryParameters gtp1 = forward.convert(state1, 1.0);
-	rave::Covariance6D cov1 (
-         1.5e-7,    3.6e-7,    4.0e-14,
-                    8.5e-7,    9.6e-14,
-                               1.7e-6,
+
+	CartesianTrajectoryError cte1 = helper.convertFloatToCartesianTrajcetoryError(
+			1.5e-7,    3.6e-7,    4.0e-14,
+                       8.5e-7,    9.6e-14,
+                                   1.7e-6,
                                         -1.4e-16,  -3.4e-16,   1.8e-24,
                                         -3.3e-16,  -8.1e-16,   4.3e-24,
                                         -3.9e-9,   -9.4e-9,    5.0e-17,
@@ -31,26 +34,25 @@ namespace {
                                                     9.2e-4,    1.8e-3,
                                                                4.1e-3 );
 
-    CartesianTrajectoryError cte1 = forward.convert(cov1);
 
     rave::Vector6D state2 (-0.0006, -0.0006, 0.0018 , -57.1634, -57.6416, -40.0142 );
+
+    // same here!
     GlobalTrajectoryParameters gtp2 = forward.convert(state2, 1.0);
-    rave::Covariance6D cov2 (
-        5.0e-7,    -5.0e-7,   -1.1e-14,
-                    5.0e-7,    1.1e-14,
-                               1.2e-6,
-                                         1.5e-16,  -1.5e-16,   3.4e-24,
-                                        -1.5e-16,   1.5e-16,  -3.4e-24,
-                                         4.2e-9,   -4.2e-9,    9.7e-17,
-                                         6.7e-2,    6.7e-2,    4.7e-2,
-                                                    6.8e-2,    4.7e-2,
-                                                               3.3e-2 );
-    CartesianTrajectoryError cte2 = forward.convert(cov2);
+
+    CartesianTrajectoryError cte2 = helper.convertFloatToCartesianTrajcetoryError(
+    		5.0e-7,    -5.0e-7,   -1.1e-14,
+    		                    5.0e-7,    1.1e-14,
+    		                               1.2e-6,
+    		                                         1.5e-16,  -1.5e-16,   3.4e-24,
+    		                                        -1.5e-16,   1.5e-16,  -3.4e-24,
+    		                                         4.2e-9,   -4.2e-9,    9.7e-17,
+    		                                         6.7e-2,    6.7e-2,    4.7e-2,
+    		                                                    6.8e-2,    4.7e-2,
+    		                                                               3.3e-2 );
 
     vector< rave::Track > particles;
-    // particles.push_back( rave::Track ( state1, cov1, 1, 0., 0. ) );
     particles.push_back( rave::Track ( gtp1, cte1, 0., 0. ) );
-    // particles.push_back( rave::Track ( state2, cov2, 1, 0., 0. ) );
     particles.push_back( rave::Track ( gtp2, cte2, 0., 0. ) );
     return particles;
   }
