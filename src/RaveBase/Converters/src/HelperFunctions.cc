@@ -1,5 +1,8 @@
 #include "RaveBase/Converters/interface/HelperFunctions.h"
 #include "DataFormats/CLHEP/interface/Migration.h"
+#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
+#include "DataFormats/GeometryVector/interface/GlobalPoint.h"
+#include "DataFormats/GeometryVector/interface/GlobalVector.h"
 
 /*
  * HelperFunctions.cc
@@ -42,6 +45,16 @@ CartesianTrajectoryError   HelperFunctions::convertFloatToCartesianTrajcetoryErr
 	  return CartesianTrajectoryError ( s );
 	}
 
+GlobalTrajectoryParameters   HelperFunctions::convertToGlobalTrajecetoryState( float x, float y, float z,
+							                                  float px, float py, float pz,
+															  TrackCharge charge)
+{
+	GlobalPoint pos(x, y, z);
+	GlobalVector mom(px, py, pz);
+	TrackCharge c(charge);
+	GlobalTrajectoryParameters gtp(pos, mom, c, rave::MagneticFieldSingleton::Instance());
+	return gtp;
+}
 
 
 

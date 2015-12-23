@@ -1,4 +1,7 @@
 #include "TrackingTools/TrajectoryParametrization/interface/CartesianTrajectoryError.h"
+#include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
+#include "DataFormats/TrajectoryState/interface/TrackCharge.h"
+
 /*
  * HelperFunctions.h
  *
@@ -25,6 +28,12 @@ public:
                                                                        float dzpx, float dzpy, float dzpz,
                                                                        float dpxpx, float dpxpy, float dpxpz,
                                                                        float dpypy, float dpypz, float dpzpz );
+
+	GlobalTrajectoryParameters   convertToGlobalTrajecetoryState( float x, float y, float z,
+								                                  float px, float py, float pz,
+																  TrackCharge charge);
+
+
 };
 
 
