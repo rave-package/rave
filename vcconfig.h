@@ -13,18 +13,3 @@
 #define isnan boost::math::isnan
 #define isfinite boost::math::isfinite
 #define finite isfinite
-
-
-// This tells the linker to make the marked classes accessible within 
-// the DLL
-#if defined(_MSC_VER)
-# define RaveDllExport __declspec(dllexport)
-#else
-# define RaveDllExport
-#endif
-
-
-// Disable use of GNU extensions
-#if defined(_MSC_VER)
-# define DISABLE_GNU_EXTENSIONS
-#endif
