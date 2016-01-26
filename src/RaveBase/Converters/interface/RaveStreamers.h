@@ -20,24 +20,24 @@
 
 #include <ostream>
 
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Point3D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Covariance3D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Covariance33D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Covariance6D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Ellipsoid3D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Vector6D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Track & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Vertex & );
+ std::ostream& operator<< (std::ostream& os, const rave::Point3D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Covariance3D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Covariance33D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Covariance6D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Ellipsoid3D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Vector6D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Track & );
+ std::ostream& operator<< (std::ostream& os, const rave::Vertex & );
 
 // #ifdef WITH_KINEMATICS
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Vector7D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Covariance7D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::Vector4D & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::KinematicParticle & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::KinematicVertex & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::KinematicTree & );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::PerigeeParameters6D & p );
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::PerigeeCovariance6D & p );
+ std::ostream& operator<< (std::ostream& os, const rave::Vector7D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Covariance7D & );
+ std::ostream& operator<< (std::ostream& os, const rave::Vector4D & );
+ std::ostream& operator<< (std::ostream& os, const rave::KinematicParticle & );
+ std::ostream& operator<< (std::ostream& os, const rave::KinematicVertex & );
+ std::ostream& operator<< (std::ostream& os, const rave::KinematicTree & );
+ std::ostream& operator<< (std::ostream& os, const rave::PerigeeParameters6D & p );
+ std::ostream& operator<< (std::ostream& os, const rave::PerigeeCovariance6D & p );
 // #endif
 
 #endif

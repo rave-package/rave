@@ -25,7 +25,7 @@ namespace rave
  *
  * @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport BasicMultipleKinematicConstraint :
+class  BasicMultipleKinematicConstraint :
     public BasicKinematicConstraint
 {
   public:

@@ -22,7 +22,7 @@ namespace rave
  *  "sensible" is done in most use cases.
  */
 
-class RaveDllExport FlavorTagFactory 
+class  FlavorTagFactory 
 {
   public:
     /**

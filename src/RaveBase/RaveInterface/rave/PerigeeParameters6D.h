@@ -23,7 +23,7 @@ namespace rave {
  * @author Fabian Moser <fabiamos@gmail.com>
  */
 
-class RaveDllExport PerigeeParameters6D :
+class  PerigeeParameters6D :
     public PerigeeParameters5D,
       boost::equality_comparable< PerigeeParameters6D >
 {
@@ -45,7 +45,7 @@ class RaveDllExport PerigeeParameters6D :
 
 };
 
-RaveDllExport bool operator== (const rave::PerigeeParameters6D & lhs, const rave::PerigeeParameters6D & rhs);
+ bool operator== (const rave::PerigeeParameters6D & lhs, const rave::PerigeeParameters6D & rhs);
 
 } // namespace rave
 

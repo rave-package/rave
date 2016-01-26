@@ -31,7 +31,7 @@ class VertexReconstructor;
  *               The default is chosen such that something "sensible" is done 
  *               in most use cases.
  */
-class RaveDllExport VertexFactory
+class  VertexFactory
 {
   public:
     VertexFactory ( const rave::MagneticField & m = rave::ConstantMagneticField(),

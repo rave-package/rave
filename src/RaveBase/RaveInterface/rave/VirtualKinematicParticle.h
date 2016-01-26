@@ -21,7 +21,7 @@ namespace rave
 /**
  @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport VirtualKinematicParticle :
+class  VirtualKinematicParticle :
     public KinematicParticle
 {
   public:

@@ -39,7 +39,7 @@ class BasicKinematicTree;
  *
  * @author Fabian Moser <fabiamos@gmail.com>
  */
-class RaveDllExport BasicKinematicVertex :
+class  BasicKinematicVertex :
     public RaveReferenceCounted,
     public AbstractVertex
 {

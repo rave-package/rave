@@ -4,7 +4,7 @@
 #include <string>
 
 namespace rave {
-class RaveDllExport Exception {
+class  Exception {
 public:
   Exception( const std::string & );
   std::string what() const;

@@ -20,7 +20,7 @@ namespace rave
 /**
         @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport Covariance4D :
+class  Covariance4D :
     public rave::Covariance3D
 {
   public:
@@ -44,7 +44,7 @@ class RaveDllExport Covariance4D :
 
 };
 
-RaveDllExport bool operator==(const rave::Covariance4D & lhs, const rave::Covariance4D & rhs);
+ bool operator==(const rave::Covariance4D & lhs, const rave::Covariance4D & rhs);
 
 } // namespace rave
 

@@ -13,7 +13,7 @@ namespace rave
  * This is an interface class for classes providing access to perigee 
  * parameters
  */
-class RaveDllExport AbstractPerigeeAccess
+class  AbstractPerigeeAccess
 {
   public:
     virtual const PerigeeParameters5D & perigeeParameters() const = 0;

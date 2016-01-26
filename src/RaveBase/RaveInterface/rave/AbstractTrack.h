@@ -7,7 +7,7 @@
 
 namespace rave 
 {
-class RaveDllExport AbstractTrack 
+class  AbstractTrack 
 {
   /**
    *  Abstract base class for all vertices.

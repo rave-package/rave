@@ -10,7 +10,7 @@ namespace rave
  * @brief A simple VacuumPropagator class
  */
 
-class RaveDllExport VacuumPropagator : public AnalyticalPropagator
+class  VacuumPropagator : public AnalyticalPropagator
 {
   public:
     VacuumPropagator();

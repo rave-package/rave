@@ -11,7 +11,7 @@ namespace rave
 /** \class RaveEllipsoid3D is a 3d point plus covariance matrix.
  */
 
-class RaveDllExport Ellipsoid3D
+class  Ellipsoid3D
 {
   public:
 

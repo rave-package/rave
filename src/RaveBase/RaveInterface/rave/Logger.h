@@ -5,7 +5,7 @@
 #include <iostream>
 
 namespace rave {
-class RaveDllExport Logger {
+class  Logger {
 public:
   static void writeToConsole();
   static void writeToFile ( const std::string & filename );

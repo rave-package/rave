@@ -17,7 +17,7 @@ namespace rave {
  * (see P.Billoir, S.Qian, "Fast vertex fitting...", NIM A311 (1992) 139-150)
  */
 
-class RaveDllExport PerigeeParameters5D :
+class  PerigeeParameters5D :
     public rave::PerigeeParameters3D,
     boost::equality_comparable< PerigeeParameters5D >
 {
@@ -36,7 +36,7 @@ class RaveDllExport PerigeeParameters5D :
     CheckedFloat theZP;
 };
 
-RaveDllExport bool operator== (const rave::PerigeeParameters5D & lhs, const rave::PerigeeParameters5D & rhs);
+ bool operator== (const rave::PerigeeParameters5D & lhs, const rave::PerigeeParameters5D & rhs);
 
 } // namespace rave
 

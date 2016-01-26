@@ -14,7 +14,7 @@
  */
 
 template <class T, class Cloner > 
-class RaveDllExport RaveProxyBase {
+class  RaveProxyBase {
 public:
 
   RaveProxyBase() : theData(0) {}

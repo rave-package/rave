@@ -18,7 +18,7 @@ namespace rave
  * The standard unit here is Tesla.
  */
 
-class RaveDllExport MagneticField
+class  MagneticField
 {
   public:
     virtual GlobalVector inTesla ( const GlobalPoint & ) const = 0;

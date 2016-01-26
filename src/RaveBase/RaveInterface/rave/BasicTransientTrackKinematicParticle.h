@@ -29,7 +29,7 @@ namespace rave
  *
  * @author Fabian Moser <fabiamos@gmail.com>
  */
-class RaveDllExport BasicTransientTrackKinematicParticle :
+class  BasicTransientTrackKinematicParticle :
       public BasicKinematicParticle
 {
   public:

@@ -11,7 +11,7 @@ namespace rave
  * @class RaveCovariance3To6D is for the track-to-vertex-covariance
  */
 
-class RaveDllExport Covariance3To6D :
+class  Covariance3To6D :
       boost::equality_comparable<Covariance3To6D>
 {
   public:
@@ -70,7 +70,7 @@ class RaveDllExport Covariance3To6D :
     CheckedFloat thedzpz;
 };
 
-RaveDllExport bool operator== ( const rave::Covariance3To6D & lhs, const rave::Covariance3To6D & rhs );
+ bool operator== ( const rave::Covariance3To6D & lhs, const rave::Covariance3To6D & rhs );
 
 } // namespace rave
 

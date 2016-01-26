@@ -27,7 +27,7 @@ namespace rave
  * @author Fabian Moser <fabiamos@gmail.com>
  */
 
-class RaveDllExport Covariance7D :
+class  Covariance7D :
       public Covariance6D,
       boost::equality_comparable<Covariance7D>
 {
@@ -73,7 +73,7 @@ class RaveDllExport Covariance7D :
     CheckedFloat thedmm;
 };
 
-RaveDllExport bool operator== ( const rave::Covariance7D & lhs, const rave::Covariance7D & rhs );
+ bool operator== ( const rave::Covariance7D & lhs, const rave::Covariance7D & rhs );
 
 } // namespace rave
 

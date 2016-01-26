@@ -32,7 +32,7 @@ class KinematicTreeFactory;
  * @author Fabian Moser <fabiamos@gmail.com>
  */
 
-class RaveDllExport BasicKinematicTree :
+class  BasicKinematicTree :
       public RaveReferenceCounted
 {
   public:

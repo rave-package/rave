@@ -15,7 +15,7 @@ namespace rave
  * Masses and energies in GeV.
  */
 
-class RaveDllExport Point3D :
+class  Point3D :
     boost::equality_comparable< Point3D >,
     boost::additive< Point3D >,
     boost::multiplicative< Point3D, double >
@@ -51,10 +51,10 @@ class RaveDllExport Point3D :
     CheckedFloat thez;
 };
 
-RaveDllExport bool operator==(const rave::Point3D & lhs, const rave::Point3D & rhs);
-RaveDllExport rave::Point3D & operator+=( rave::Point3D & lhs, const rave::Point3D & rhs);
-RaveDllExport rave::Point3D & operator*=( rave::Point3D & lhs, double scale );
-RaveDllExport rave::Point3D & operator-=( rave::Point3D & lhs, const rave::Point3D & rhs);
+ bool operator==(const rave::Point3D & lhs, const rave::Point3D & rhs);
+ rave::Point3D & operator+=( rave::Point3D & lhs, const rave::Point3D & rhs);
+ rave::Point3D & operator*=( rave::Point3D & lhs, double scale );
+ rave::Point3D & operator-=( rave::Point3D & lhs, const rave::Point3D & rhs);
 
 } // namespace rave
 

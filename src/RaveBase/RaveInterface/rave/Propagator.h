@@ -15,7 +15,7 @@ namespace rave {
  * Returns another rave::Track, albeit at a different position.
  */
 
-class RaveDllExport Propagator
+class  Propagator
 {
   public:
     virtual Propagator * copy() const = 0;

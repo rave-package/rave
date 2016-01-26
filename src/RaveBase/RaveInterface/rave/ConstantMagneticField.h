@@ -10,7 +10,7 @@ namespace rave {
  * @ingroup Rave
  */
 
-class RaveDllExport ConstantMagneticField : 
+class  ConstantMagneticField : 
       public MagneticField
 {
   public:

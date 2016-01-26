@@ -214,7 +214,7 @@ std::ostream & operator << ( std::ostream & os, const rave::PerigeeParameters6D 
       return os;
 }
 
-RaveDllExport std::ostream& operator<< (std::ostream& os, const rave::PerigeeCovariance6D & c )                                               
+ std::ostream& operator<< (std::ostream& os, const rave::PerigeeCovariance6D & c )                                               
 {                                                                                                                                             
   #define sep " "<<std::setw(12)                                                                                                              
   os << std::setprecision(4) << std::scientific << std::right                                                                                 

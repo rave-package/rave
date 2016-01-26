@@ -13,7 +13,7 @@ namespace rave
  *  Lengths are given in cm, momenta in GeV/c.
  */
 
-class RaveDllExport Vector6D :
+class  Vector6D :
     boost::equality_comparable<Vector6D>
 {
   public:
@@ -52,7 +52,7 @@ class RaveDllExport Vector6D :
     CheckedFloat thepz;
 };
 
-RaveDllExport bool operator==(const Vector6D & lhs, const Vector6D & rhs);
+ bool operator==(const Vector6D & lhs, const Vector6D & rhs);
 
 } // namespace rave
 

@@ -5,7 +5,7 @@
 
 namespace rave
 {
-  RaveDllExport std::string Version(); 
+   std::string Version(); 
 }
 
 #endif

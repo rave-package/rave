@@ -20,7 +20,7 @@ namespace rave
 /**
         @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport Vector4D :
+class  Vector4D :
       public rave::Vector3D,
       boost::equality_comparable<Vector4D>,
       boost::additive< Vector4D >
@@ -48,9 +48,9 @@ class RaveDllExport Vector4D :
 
 };
 
-RaveDllExport bool operator==(const rave::Vector4D & lhs, const rave::Vector4D & rhs);
-RaveDllExport rave::Vector4D & operator+=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
-RaveDllExport rave::Vector4D & operator-=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
+ bool operator==(const rave::Vector4D & lhs, const rave::Vector4D & rhs);
+ rave::Vector4D & operator+=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
+ rave::Vector4D & operator-=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
 
 } // namespace rave
 

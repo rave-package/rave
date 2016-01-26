@@ -20,7 +20,7 @@ namespace rave
 /**
  @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport KinematicConstraint :
+class  KinematicConstraint :
       public BasicKinematicConstraint::Proxy
 {
     typedef BasicKinematicConstraint::Proxy Base;

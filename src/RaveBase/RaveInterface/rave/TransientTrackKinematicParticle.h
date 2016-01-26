@@ -28,7 +28,7 @@ namespace rave {
  * Rave's kinematic fitting possibilities.
  */
 
-class RaveDllExport TransientTrackKinematicParticle :
+class  TransientTrackKinematicParticle :
       public KinematicParticle
 {
   public:

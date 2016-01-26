@@ -10,7 +10,7 @@ namespace rave
  * @class RaveCovariance3D a class for vertex(position) errors.
  */
 
-class RaveDllExport Covariance3D
+class  Covariance3D
   //: boost::equality_comparable<Covariance3D>
 {
   public:
@@ -40,7 +40,7 @@ class RaveDllExport Covariance3D
     CheckedFloat thedzz;
 };
 
-RaveDllExport bool operator==(const rave::Covariance3D & lhs, const rave::Covariance3D & rhs);
+ bool operator==(const rave::Covariance3D & lhs, const rave::Covariance3D & rhs);
 
 } // namespace rave
 

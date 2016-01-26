@@ -31,7 +31,7 @@ namespace rave
  * Masses in GeV.
  */
 
-class RaveDllExport Vector7D :
+class  Vector7D :
     public Vector6D,
     boost::equality_comparable<Vector7D>
 {
@@ -64,7 +64,7 @@ class RaveDllExport Vector7D :
 
 };
 
-RaveDllExport bool operator==(const rave::Vector7D & lhs, const rave::Vector7D & rhs);
+ bool operator==(const rave::Vector7D & lhs, const rave::Vector7D & rhs);
 
 } // namespace rave
 

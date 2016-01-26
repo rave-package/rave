@@ -5,7 +5,7 @@
 
 namespace rave {
 
-class RaveDllExport CheckedFloatException :
+class  CheckedFloatException :
   public std::exception
 {
   public:
@@ -19,7 +19,7 @@ class RaveDllExport CheckedFloatException :
  * @class CheckedFloat wraps the float type into various checking routines
  */
 
-class RaveDllExport CheckedFloat
+class  CheckedFloat
 {
   typedef float InternalType;
   public:

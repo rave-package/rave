@@ -57,7 +57,7 @@ class TransientTrackKinematicParticle;
  * @author Fabian Moser <fabiamos@gmail.com>
  */
 
-class RaveDllExport BasicKinematicParticle :
+class  BasicKinematicParticle :
       public RaveReferenceCounted,
       public AbstractTrack,
       public AbstractPerigeeAccess,

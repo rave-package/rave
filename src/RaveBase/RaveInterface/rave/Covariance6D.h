@@ -11,7 +11,7 @@ namespace rave
  * @class RaveCovariance6D a covariance matrix class for the track error
  */
 
-class RaveDllExport Covariance6D :
+class  Covariance6D :
       boost::equality_comparable<Covariance6D>
 {
   public:
@@ -86,7 +86,7 @@ class RaveDllExport Covariance6D :
     CheckedFloat thedpzpz;
 };
 
-RaveDllExport bool operator== ( const rave::Covariance6D & lhs, const rave::Covariance6D & rhs );
+ bool operator== ( const rave::Covariance6D & lhs, const rave::Covariance6D & rhs );
 
 } // namespace rave
 

@@ -21,7 +21,7 @@ namespace rave
 /**
  @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport KinematicTree :
+class  KinematicTree :
       public BasicKinematicTree::Proxy
 {
     typedef BasicKinematicTree::Proxy Base;

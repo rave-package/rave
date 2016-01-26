@@ -28,7 +28,7 @@ namespace rave
  * by the KinematicTreeFactory and represents the particles generated
  * during the kinematic fitting.
  */
-class RaveDllExport KinematicParticle :
+class  KinematicParticle :
       public BasicKinematicParticle::Proxy,
       public boost::less_than_comparable< KinematicParticle >
 {

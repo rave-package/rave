@@ -34,7 +34,7 @@ namespace rave
  *
  * @author Fabian Moser <fabiamos@gmail.com>
  */
-class RaveDllExport KinematicTreeFactory
+class  KinematicTreeFactory
 {
   public:
     KinematicTreeFactory ( const rave::MagneticField & f = ConstantMagneticField(),

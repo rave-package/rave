@@ -26,7 +26,7 @@ namespace rave
  *
  * @author Fabian Moser <fabiamos@gmail.com>
 */
-class RaveDllExport KinematicConstraintBuilder
+class  KinematicConstraintBuilder
 {
   public:
     KinematicConstraintBuilder();

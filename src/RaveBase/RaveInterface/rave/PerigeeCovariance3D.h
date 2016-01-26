@@ -16,7 +16,7 @@ namespace rave {
  * first characters here.
  */
 
-class RaveDllExport PerigeeCovariance3D
+class  PerigeeCovariance3D
 {
   public:
     PerigeeCovariance3D(float drr, float drt, float drp,
