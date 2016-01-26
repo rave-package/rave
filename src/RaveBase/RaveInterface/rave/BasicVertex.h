@@ -5,8 +5,6 @@
 #include <rave/Point3D.h>
 #include <rave/Covariance3D.h>
 #include <rave/Covariance33D.h>
-#include <rave/CopyUsingNew.h>
-#include <rave/ProxyBase.h>
 #include <rave/AbstractVertex.h>
 #include <utility>
 #include <vector>
@@ -18,8 +16,7 @@ namespace rave
 class Track;
 class BasicTrack;
 
-class RaveDllExport BasicVertex : 
-	public RaveReferenceCounted, 
+class BasicVertex :
 	public AbstractVertex
 {
   /**
@@ -31,7 +28,6 @@ class RaveDllExport BasicVertex :
    *  and chi-squared.
    */
   public:  
-    typedef RaveProxyBase< BasicVertex, CopyUsingNew<BasicVertex> > Proxy;
     const Point3D & position() const;
     const Covariance3D & error() const;
     const Covariance33D & trackToVertexCovariance( int id ) const;

@@ -12,9 +12,9 @@
 namespace rave 
 {
 
-class RaveDllExport Vertex : private rave::BasicVertex::Proxy
+class Vertex : public rave::BasicVertex
 {
-  typedef rave::BasicVertex::Proxy Base;
+    //typedef rave::BasicVertex::Proxy Base;
   /**
    *  The output of the rave library: a reconstructed vertex.
    *  A position in 3d space, plus its error.
@@ -27,46 +27,14 @@ class RaveDllExport Vertex : private rave::BasicVertex::Proxy
     Vertex(); //< default constructor, creating invalid vertex. 
     Vertex( const rave::BasicVertex & );
     
-    const rave::Point3D & position() const; //< The vertex position
-    const rave::Covariance3D & error() const; //< The position's error
-
-    /// retrieve the track to vertex covariance matrix
-    const rave::Covariance33D & trackToVertexCovariance ( 
-        const rave::Track & i ) const; 
-
-    /// do we have the information of track to vertex covs?
-    bool hasTrackToVertexCovariance() const;
-
-    /// retrieve the track to track covariance matrix
-    const rave::Covariance3D & trackToTrackCovariance (
-        const rave::Track & i, const rave::Track & j ) const;
-
-    void addTrackToVertexCovariance ( const rave::Track & t, 
+    void addTrackToVertexCovariance ( const rave::Track & t,
         const rave::Covariance33D & cov );
 
     void addTrackToTrackCovariance ( const rave::Track & t1,
         const rave::Track & t2, const rave::Covariance3D & cov );
 
-    /**
-     *  the tracks plus the track weights
-     */
-    const std::vector < std::pair < float, rave::Track > > & weightedTracks() const;
-
-    std::vector < rave::Track > tracks() const; //< the original tracks
-    std::vector < rave::Track > refittedTracks() const; //< the refitted tracks
-    /**
-     *  the refitted tracks, with the weights
-     */
-    const std::vector < std::pair < float, rave::Track > > & weightedRefittedTracks() const;
-    float ndf() const; //< number of degrees of freedom (may be fractional)
-    float chiSquared() const; //< the total vertex fit chi squared.
-    int id() const; // the vertex "id"
-    bool isValid() const;
-    bool hasRefittedTracks() const; //< do we have a collection of smoothed tracks?
     bool operator< ( const rave::Vertex & ) const;
     bool operator== ( const rave::Vertex & ) const;
-
-    rave::Track refittedTrack ( const rave::Track & orig ) const;
 
     /**
      *  The vertex components - only used in the Gaussian
