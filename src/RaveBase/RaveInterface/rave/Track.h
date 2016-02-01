@@ -14,8 +14,9 @@
 namespace rave
 {
 
-/** \class RaveTrack defines the input to the rave library.
- *  The class is reference counted, so dont worry about memory management.
+/**
+ * RaveTrack defines the input to the rave library.
+ *
  */
 
 class Track:  public ::FreeTrajectoryState
@@ -23,11 +24,9 @@ class Track:  public ::FreeTrajectoryState
   public:
 
     /**
-     *  to be updated!
      *
-     *  Create a RaveTrack from a 6-dimensional euclidean trajectory state
-     *  plus covariance matrix, plus charge, plus an optional
-     *  pointer to the "original track", whatever that means.
+     *  Create a RaveTrack from GlobalTrajectoryParameters, Cartesian TrajectoryError,
+     *  chi2, ndof and optional pointer to the "original track" and a tag.
      *
      *       Lengths are given in cm, momenta in GeV/c.
      */
@@ -50,7 +49,6 @@ class Track:  public ::FreeTrajectoryState
 
     Track();
 
-    //Charge raveCharge() const;
     const GlobalTrajectoryParameters & state() const;
     const CartesianTrajectoryError & CartesianError() const;
     const CurvilinearTrajectoryError & CurvilinearError() const;
