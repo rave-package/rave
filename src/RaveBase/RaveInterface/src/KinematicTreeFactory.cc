@@ -50,8 +50,6 @@ rave::KinematicTreeFactory::KinematicTreeFactory (
 
 KinematicTreeFactory::~KinematicTreeFactory()
 {
-	//if ( theField ) delete theField;
- 	if ( thePropagator) delete thePropagator;
 }
 
 void KinematicTreeFactory::setup()

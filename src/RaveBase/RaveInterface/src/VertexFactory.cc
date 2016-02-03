@@ -88,7 +88,6 @@ VertexFactory::~VertexFactory()
 	// comment out....
 	//if ( theField ) delete theField;
     MagneticFieldSingleton::Instance()->release();
-    if ( theProp) delete theProp;
     PropagatorSingleton::Instance()->release();
     if ( theRector ) delete theRector;
     for ( map < string, rave::VertexReconstructor * >::const_iterator i=theRectors.begin(); 

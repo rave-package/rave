@@ -17,7 +17,7 @@
 #include <rave/ConstantMagneticField.h>
 #include <rave/VacuumPropagator.h>
 #include <rave/Ellipsoid3D.h>
-
+#include <memory>
 
 namespace rave
 {
@@ -125,7 +125,7 @@ class  KinematicTreeFactory
     void wipe() const;
 
     rave::MagneticField * theField;
-    rave::VacuumPropagator * thePropagator;
+    std::shared_ptr < rave::VacuumPropagator > thePropagator;
     int theVerbosity;
     mutable std::vector< rave::KinematicTree > toBeUnlinkedTrees;
     mutable std::vector< rave::KinematicParticle > toBeUnlinkedParticles;

@@ -212,7 +212,7 @@ class  VertexFactory
 
     std::string theMethod;
     rave::MagneticField * theField;
-    rave::VacuumPropagator * theProp;
+    std::shared_ptr < rave::VacuumPropagator > theProp;
     int theVerbosity;
 };
 

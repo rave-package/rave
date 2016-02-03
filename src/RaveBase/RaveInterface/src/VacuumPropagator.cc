@@ -14,6 +14,7 @@
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 #include <iostream>
 
+
 using namespace std;
 
 namespace {
@@ -30,12 +31,13 @@ namespace {
     */
   }
 }
-  
-rave::VacuumPropagator * rave::VacuumPropagator::copy() const
+
+
+shared_ptr< rave::VacuumPropagator > rave::VacuumPropagator::copy() const
 {
-  return new rave::VacuumPropagator ( * this );
+  return make_shared < rave::VacuumPropagator > ( * this );
 }
-    
+
 
 pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & orig,
                           const ravesurf::Cylinder & rcyl ) const
