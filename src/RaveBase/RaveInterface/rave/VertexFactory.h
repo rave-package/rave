@@ -185,10 +185,6 @@ class  VertexFactory
     
     const rave::VertexReconstructor & reconstructor() const;
 
-    /**
-     * a virtual init, for subclasses.
-     */
-    virtual void init() {};
     void wipe() const; //< wipe InEvent ref counted objects
     
   private:
