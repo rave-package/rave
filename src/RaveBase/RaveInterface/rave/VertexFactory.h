@@ -51,6 +51,12 @@ class  VertexFactory
     virtual ~VertexFactory();
     VertexFactory operator= ( const rave::VertexFactory & o );
 
+
+    std::vector < Vertex > errorInitFactory() const;
+
+    std::vector < Vertex > errorInitMethod(const std::string & method ) const;
+
+
     /** Reconstruct vertices, using the default reconstruction method
      * \paramname use_beamspot defines, if the beamspot information
      * is taken into account.

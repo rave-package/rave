@@ -120,13 +120,23 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & trks, const
 }
 
 
+vector < Vertex > VertexFactory::errorInitMethod(const string & method ) const
+{
+      edm::LogError("rave::VertexFactory") << "cannot initialse \"" << method << "\"";
+      return vector < Vertex > ();
+}
+
+vector < Vertex > VertexFactory::errorInitFactory() const
+{
+  edm::LogError("rave::VertexFactory") << "trying to use uninitialised factory!";
+  return vector < Vertex > ();
+}
+
+
 vector < Vertex > VertexFactory::create ( const vector < Track > & trks, bool use_bs ) const
 {
-  if ( !theRector )
-  {
-    edm::LogError("rave::VertexFactory") << "trying to use uninitialised factory!";
-    return vector < Vertex > ();
-  }
+  if ( !theRector ) errorInitFactory();
+
   vector < Track > empty;
   vector < Vertex > ret= fit ( empty, trks, *theRector, rave::Point3D(), 
                                false, use_bs, false );
@@ -136,11 +146,8 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & trks, bool us
 vector < Vertex > VertexFactory::create ( const vector < Track > & trks, const Track & ghost_track, bool use_bs ) const
 {   
   cout << "rave::VertexFactory using methode create with trks, ghost_track, use_bs" << use_bs << endl;
-    if ( !theRector )
-    {
-      edm::LogError("rave::VertexFactory") << "trying to use uninitialised factory!";
-      return vector < Vertex > ();
-    }
+    if ( !theRector ) errorInitFactory();
+
     vector < Track > empty;
     vector < Vertex > ret = fit ( empty, trks, *theRector, 
         rave::Point3D(), false, use_bs, false, ghost_track ); 
@@ -150,11 +157,8 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & trks, const T
 vector < Vertex > VertexFactory::create ( const vector < Track > & prims,
      const vector < Track > & secs, bool use_bs ) const
 {
-    if ( !theRector )
-    {
-      edm::LogError("rave::VertexFactory") << "trying to use uninitialised factory!";
-      return vector < Vertex > ();
-    }
+    if ( !theRector ) errorInitFactory();
+
     vector < Vertex > ret = fit ( prims, secs, *theRector,
        rave::Point3D(), false, use_bs, true );
     return ret;
@@ -165,11 +169,8 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & prims,
 					  const Track & ghost_track, bool use_bs ) const
 {
     cout << "rave::VertexFactory using methode create with prims, trks, ghost_track, use_bs" << endl;
-    if ( !theRector )
-    {
-      edm::LogError("rave::VertexFactory") << "trying to use uninitialised factory!";
-      return vector < Vertex > ();
-    }
+    if ( !theRector ) errorInitFactory();
+
     vector < Vertex > ret = fit ( prims, secs, *theRector, 
         rave::Point3D(), false, use_bs, true, ghost_track );
     return ret;
@@ -182,11 +183,7 @@ vector < Vertex > VertexFactory::create (
   if ( !tmp )
   {
     tmp = getRector ( method );
-    if (!tmp)
-    {
-      edm::LogError("rave::VertexFactory") << "cannot initialse \"" << method << "\"";
-      return vector < Vertex > ();
-    }
+    if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
   vector < Vertex > ret = fit ( vector < Track >(), trks, *(tmp),
@@ -202,11 +199,7 @@ vector < Vertex > VertexFactory::create (
   if ( !tmp )
   {
     tmp = getRector ( method );
-    if (!tmp)
-    {
-      edm::LogError("rave::VertexFactory") << "cannot initialse \"" << method << "\"";
-      return vector < Vertex > ();
-    }
+    if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
   vector < Vertex > ret = fit ( vector < Track >(), trks, *(tmp),
@@ -223,11 +216,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & trks, const s
   if ( !tmp )
   {
     tmp = getRector ( method );
-    if (!tmp)
-    {
-      edm::LogError("rave::VertexFactory") << "cannot initialse \"" << method << "\"";
-      return vector < Vertex > ();
-    }
+    if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
   vector < Vertex > ret = fit ( vector < Track >(), trks, *(tmp), 
@@ -243,11 +232,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & prims, const 
   if ( !tmp )
   {
     tmp = getRector ( method );
-    if (!tmp)
-    {
-      edm::LogError("rave::VertexFactory") << "cannot initialse \"" << method << "\"";
-      return vector < Vertex > ();
-    }
+    if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
   vector < Vertex > ret = fit ( prims, secs, *(tmp), 
@@ -269,11 +254,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & prims, const 
   if ( !tmp )
   {
     tmp = getRector ( method );
-    if (!tmp)
-    {
-      edm::LogError("rave::VertexFactory") << "cannot initialse \"" << method << "\"";
-      return vector < Vertex > ();
-    }
+    if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
   vector < Vertex > ret = fit ( prims, secs, *(tmp), 
