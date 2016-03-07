@@ -3,8 +3,8 @@
 
 #include <rave/Point3D.h>
 #include <rave/Vector3D.h>
-#include <rave/Vector4D.h>
-#include <rave/Vector7D.h>
+
+
 #include <rave/Covariance7D.h>
 #include <rave/PerigeeParameters6D.h>
 #include <rave/PerigeeCovariance6D.h>
@@ -29,7 +29,9 @@
  std::ostream& operator<< (std::ostream& os, const rave::Track & );
  std::ostream& operator<< (std::ostream& os, const rave::Vertex & );
 
-// #ifdef WITH_KINEMATICS
+ #ifdef WITH_KINEMATICS
+#include <rave/Vector4D.h>
+#include <rave/Vector7D.h>
  std::ostream& operator<< (std::ostream& os, const rave::Vector7D & );
  std::ostream& operator<< (std::ostream& os, const rave::Covariance7D & );
  std::ostream& operator<< (std::ostream& os, const rave::Vector4D & );
@@ -38,6 +40,6 @@
  std::ostream& operator<< (std::ostream& os, const rave::KinematicTree & );
  std::ostream& operator<< (std::ostream& os, const rave::PerigeeParameters6D & p );
  std::ostream& operator<< (std::ostream& os, const rave::PerigeeCovariance6D & p );
-// #endif
+ #endif
 
 #endif

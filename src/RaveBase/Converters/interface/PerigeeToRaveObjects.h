@@ -32,7 +32,7 @@ class PerigeeToRaveObjects
 {
   public:
     Vector3D convert(const PerigeeParameters3D &) const;
-    Vector6D convert(const PerigeeParameters5D &, const Charge, const Point3D & referencePoint) const;
+    //Vector6D convert(const PerigeeParameters5D &, const Charge, const Point3D & referencePoint) const;
     Covariance6D convert(const PerigeeCovariance5D & error, const GlobalTrajectoryParameters & gtp) const;
 
   #ifdef WITH_KINEMATICS

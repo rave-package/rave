@@ -10,6 +10,12 @@
 #include "DataFormats/GeometrySurface/interface/Plane.h"
 #include "DataFormats/GeometrySurface/interface/Cylinder.h"
 #include <rave/Charge.h>
+#include <rave/Vector3D.h>
+#include <rave/Vector6D.h>
+#include <rave/Covariance3D.h>
+#include <rave/Covariance6D.h>
+#include <rave/PerigeeParameters5D.h>
+#include <rave/PerigeeCovariance5D.h>
 
 #ifdef WITH_KINEMATICS
 

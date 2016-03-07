@@ -34,8 +34,8 @@ namespace {
 
 GlobalTrajectoryParameters RaveToCmsObjects::convert(const rave::Vector6D & state, const rave::Charge & charge) const
 {
-  GlobalPoint  position ( state.x(),  state.y(),  state.z() );
-  GlobalVector momentum ( state.px(), state.py(), state.pz() );
+  GlobalPoint  position ( state.position().x(),  state.position().y(),  state.position().z() );
+  GlobalVector momentum ( state.momentum().x(), state.momentum().y(), state.momentum().z() );
   return GlobalTrajectoryParameters ( position , momentum, charge, rave::MagneticFieldSingleton::Instance() );
 }
 
@@ -219,12 +219,12 @@ AlgebraicVector RaveToCmsObjects::toAlgebraicVector(const rave::Vector4D & v) co
 {
   // AlgebraicVector av ( 7 );
   AlgebraicVector7 av;
-  av[0] = v.x();
-  av[1] = v.y();
-  av[2] = v.z();
-  av[3] = v.px();
-  av[4] = v.py();
-  av[5] = v.pz();
+  av[0] = v.position().x();
+  av[1] = v.position().y();
+  av[2] = v.position().z();
+  av[3] = v.momentum().x();
+  av[4] = v.momentum().y();
+  av[5] = v.momentum().z();
   av[6] = v.m();
   return ::KinematicParameters(av);
 }

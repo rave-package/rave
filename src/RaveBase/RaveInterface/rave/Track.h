@@ -18,12 +18,11 @@ namespace rave
  * RaveTrack defines the input to the rave library.
  *
  */
-
-typedef GlobalPoint Point3D;
+/*
 typedef GlobalVector Vector3D;
 typedef GlobalTrajectoryParameters Vector6D;
 typedef CartesianTrajectoryError Covariance6D;
-
+*/
 class Track:  public ::FreeTrajectoryState
 {
   public:

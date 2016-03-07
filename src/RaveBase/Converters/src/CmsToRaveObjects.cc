@@ -107,10 +107,10 @@ rave::Track CmsToRaveObjects::convert ( int id, const FreeTrajectoryState & s, f
   return rave::Track ( id, gtp, cte, chi2, ndf, p, tag );
 }
 
-
+/*
 rave::Vector6D CmsToRaveObjects::convert ( const GlobalTrajectoryParameters & p ) const
 {
-  try {
+try {
     return rave::Vector6D ( p.position().x(), p.position().y(), p.position().z(),
                             p.momentum().x(), p.momentum().y(), p.momentum().z() );
   } catch ( rave::CheckedFloatException & e ) {
@@ -118,6 +118,7 @@ rave::Vector6D CmsToRaveObjects::convert ( const GlobalTrajectoryParameters & p 
   };
 
 }
+*/
 
 rave::Covariance3D CmsToRaveObjects::convert ( const GlobalError & e ) const
 {

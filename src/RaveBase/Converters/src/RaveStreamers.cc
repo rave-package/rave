@@ -108,14 +108,16 @@ ostream& operator<< ( ostream& os, const rave::Ellipsoid3D & p )
 
 ostream& operator<< ( ostream& os, const rave::Vector6D & p )
 {
-  os << "(" << setprecision(6) << fixed << p.x() << ", " << p.y() << ", " << p.z() << " , "
-  << p.px() << ", " << p.py() << ", " << p.pz();
+  os << "(" << setprecision(6) << fixed << p.position().x() << ", " << p.position().y() << ", " << p.position().z() << " , "
+  << p.momentum().x() << ", " << p.momentum().y() << ", " << p.momentum().z();
+ /*
   if ( dynamic_cast < const rave::Vector7D * > ( &p ) != 0 )
   {
     // os << setw(6) << setprecision(1) << p.m()  << ")";
     os << ", " << dynamic_cast < const rave::Vector7D & > (p).m();
   };
   os << " )";
+  */
   return os;
 }
 
@@ -132,7 +134,7 @@ ostream& operator<< ( ostream& os, const rave::Vertex & v )
   return os;
 }
 
-// #ifdef WITH_KINEMATICS
+#ifdef WITH_KINEMATICS
 ostream& operator<< ( ostream& os, const rave::Vector4D & p )
 {
   os << "(" << setprecision(4) << fixed << p.x() << ", " << p.y() << ", " << p.z()
@@ -142,8 +144,8 @@ ostream& operator<< ( ostream& os, const rave::Vector4D & p )
 
 ostream& operator<< ( ostream& os, const rave::Vector7D & p )
 {
-  os << "(" << setprecision(6) << fixed << p.x() << ", " << p.y() << ", "
-     << p.z() << " , " << p.px() << ", " << p.py() << ", " << p.pz();
+  os << "(" << setprecision(6) << fixed << p.position().x() << ", " << p.position().y() << ", "
+     << p.position().z() << " , " << p.momentum().x() << ", " << p.momentum().y() << ", " << p.momentum().z();
   os << ", " << dynamic_cast < const rave::Vector7D & > (p).m();
   os << " )";
   return os;
@@ -227,4 +229,4 @@ std::ostream & operator << ( std::ostream & os, const rave::PerigeeParameters6D 
   return os;                                                                                                                                  
 }                                                                                                                                             
 
-// #endif // def WITH_KINEMATICS
+ #endif // def WITH_KINEMATICS

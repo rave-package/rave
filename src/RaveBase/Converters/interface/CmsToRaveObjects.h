@@ -47,7 +47,7 @@ class CmsToRaveObjects
     rave::Track convert ( const reco::TransientTrack & t, int id=0 ) const;
     rave::Vector3D convert ( const GlobalPoint & ) const;
     rave::Vector3D convert ( const GlobalVector & ) const;
-    rave::Vector6D convert ( const GlobalTrajectoryParameters & ) const;
+   // rave::Vector6D convert ( const GlobalTrajectoryParameters & ) const;
     rave::Covariance3D convert ( const GlobalError & ) const;
     rave::Covariance6D convert ( const CartesianTrajectoryError & ) const;
     ravesurf::Plane convert ( const Plane & ) const;

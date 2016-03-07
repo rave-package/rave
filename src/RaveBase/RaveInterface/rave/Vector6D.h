@@ -1,18 +1,22 @@
 #ifndef _RAVEVECTOR6D_H_
 #define _RAVEVECTOR6D_H_
 
-#include <rave/Vector3D.h>
-#include <rave/Point3D.h>
+//#include <rave/Vector3D.h>
+//#include <rave/Point3D.h>
 
-#include "boost/operators.hpp"
+//#include "boost/operators.hpp"
+
+#include "TrackingTools/TrajectoryParametrization/interface/GlobalTrajectoryParameters.h"
 
 namespace rave
 {
-
+typedef GlobalTrajectoryParameters Vector6D;
+}
 /** \class RaveVector6D a 6-dimensional state
  *  Lengths are given in cm, momenta in GeV/c.
  */
 
+/**
 class  Vector6D :
     boost::equality_comparable<Vector6D>
 {
@@ -55,6 +59,6 @@ class  Vector6D :
  bool operator==(const Vector6D & lhs, const Vector6D & rhs);
 
 } // namespace rave
-
+**/
 #endif
 

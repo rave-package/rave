@@ -21,7 +21,7 @@ Vector3D PerigeeToRaveObjects::convert(const PerigeeParameters3D &) const
   edm::LogError("PerigeeToRaveObjects") << "Missing implementation!";
   exit(0);
 }
-
+/*
 Vector6D PerigeeToRaveObjects::convert(
   const PerigeeParameters5D & state, const Charge charge,
   const Point3D & referencePoint) const
@@ -52,6 +52,7 @@ Vector6D PerigeeToRaveObjects::convert(
   return Vector6D(frameworkOutputConverter.convert(position),
                   frameworkOutputConverter.convert(momentum));
 }
+*/
 
 Covariance6D PerigeeToRaveObjects::convert(
   const PerigeeCovariance5D & error, const GlobalTrajectoryParameters & gtp) const

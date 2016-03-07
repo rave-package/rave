@@ -1,12 +1,16 @@
 #ifndef _RavePoint3D_H_
 #define _RavePoint3D_H_
 
-#include "rave/CheckedFloat.h"
-#include "boost/operators.hpp"
-#include <cmath>
+//#include "rave/CheckedFloat.h"
+//#include "boost/operators.hpp"
+//#include <cmath>
+#include "DataFormats/GeometryVector/interface/GlobalPoint.h"
+
 
 namespace rave
 {
+typedef GlobalPoint Point3D;
+}
 
 /**
  * @class Point3D a point in 3d space.
@@ -14,7 +18,7 @@ namespace rave
  * Lengths are given in cm in rave, momenta in GeV/c.
  * Masses and energies in GeV.
  */
-
+/*
 class  Point3D :
     boost::equality_comparable< Point3D >,
     boost::additive< Point3D >,
@@ -57,7 +61,7 @@ class  Point3D :
  rave::Point3D & operator-=( rave::Point3D & lhs, const rave::Point3D & rhs);
 
 } // namespace rave
-
+*/
 
 #endif
 

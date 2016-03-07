@@ -10,12 +10,13 @@
 namespace rave
 {
 
+/*
 PerigeeParameters3D RaveToPerigeeObjects::convert(
   const Vector3D & momentum, const Charge charge) const
 {
-  /* This is done quite nasty by using the momentum information to build a
-   * state at the origin, which only works for homogenous magnetic fields.
-   */
+  //* This is done quite nasty by using the momentum information to build a
+  // * state at the origin, which only works for homogenous magnetic fields.
+
 
   Vector6D euclidianState(0., 0., 0., momentum.x(), momentum.y(), momentum.z());
   PerigeeParameters5D perigeeParameters = convert(euclidianState, charge);
@@ -23,6 +24,7 @@ PerigeeParameters3D RaveToPerigeeObjects::convert(
   return PerigeeParameters3D(perigeeParameters.rho(), perigeeParameters.theta(),
                              perigeeParameters.phip());
 }
+*/
 
 PerigeeParameters5D RaveToPerigeeObjects::convert(
   const Vector6D & state, const Charge charge,
