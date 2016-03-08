@@ -54,9 +54,11 @@ ostream& operator<< ( ostream& os, const rave::Covariance33D & p )
   return os;
 }
 
+
 ostream& operator<< ( ostream& os, const rave::Covariance6D & p )
 {
   string s="   ";
+  /*
   os << "(" << setprecision(6) << scientific
      << p.dxx() << s << p.dxy() << s << p.dxz()
      << s << p.dxpx() << s << p.dxpy() << s << p.dxpz() << endl
@@ -75,6 +77,7 @@ ostream& operator<< ( ostream& os, const rave::Covariance6D & p )
      << p.dxpz() << s << p.dypz() << s << p.dzpz() << s << p.dpxpz()
      << s << p.dpypz() << s << p.dpzpz()
      << ")" << endl;
+     */
 
   return os;
 }
@@ -192,6 +195,7 @@ ostream& operator<< ( ostream& os, const rave::KinematicTree & t )
 
   return os;
 }
+
 
 std::ostream & operator << ( std::ostream & os, const rave::Covariance7D & p )
 {
