@@ -1,4 +1,5 @@
 #include "RaveBase/RaveInterface/rave/Charge.h"
+#include "RaveBase/RaveInterface/rave/Point3D.h"
 #include "RaveBase/RaveInterface/rave/Vector3D.h"
 #include "RaveBase/RaveInterface/rave/Vector6D.h"
 #include "RaveBase/RaveInterface/rave/Covariance6D.h"

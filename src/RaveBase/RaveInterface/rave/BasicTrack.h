@@ -1,6 +1,8 @@
 #ifndef _RaveBasicTrack_H_
 #define _RaveBasicTrack_H_
 
+#include <rave/Vector3D.h>
+#include <rave/Point3D.h>
 #include <rave/Vector6D.h>
 #include <rave/Covariance6D.h>
 #include <rave/Charge.h>
