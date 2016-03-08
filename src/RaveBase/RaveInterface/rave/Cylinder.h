@@ -3,7 +3,7 @@
 
 #include <rave/Point3D.h>
 #include <rave/Vector3D.h>
-#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
+//#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "DataFormats/GeometrySurface/interface/Surface.h"
 
 namespace ravesurf {
