@@ -66,6 +66,20 @@ double z() const {
  return position().z();
 }
 
+double px() const {
+return momentum().x();
+}
+
+
+ double py() const {
+ return momentum().y();
+ }
+
+double pz() const {
+ return momentum().z();
+}
+
+
 
   /** Global momentum.
    */
