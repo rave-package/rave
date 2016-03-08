@@ -39,9 +39,11 @@ GlobalTrajectoryParameters RaveToCmsObjects::convert(const rave::Vector6D & stat
   return GlobalTrajectoryParameters ( position , momentum, charge, rave::MagneticFieldSingleton::Instance() );
 }
 
+
 CartesianTrajectoryError RaveToCmsObjects::convert ( const rave::Covariance6D & c ) const
 {
   AlgebraicSymMatrix66 s;// ( 6, 0 );
+/*
   s(0,0) = c.dxx();
   s(0,1) = c.dxy();
   s(0,2) = c.dxz();
@@ -63,6 +65,7 @@ CartesianTrajectoryError RaveToCmsObjects::convert ( const rave::Covariance6D & 
   s(4,4) = c.dpypy();
   s(4,5) = c.dpypz();
   s(5,5) = c.dpzpz();
+  */
   return CartesianTrajectoryError ( s );
 }
 
