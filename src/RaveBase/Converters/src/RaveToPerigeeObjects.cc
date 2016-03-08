@@ -32,7 +32,7 @@ PerigeeParameters5D RaveToPerigeeObjects::convert(
 {
   RaveToCmsObjects frameworkInputConverter;
   FreeTrajectoryState fts(frameworkInputConverter.convert(state, charge));
-  GlobalPoint ref = frameworkInputConverter.convert(referencePoint);
+  GlobalPoint ref;// = frameworkInputConverter.convert(referencePoint);
 
   PerigeeConversions parameterConverter;
   double transverseMomentum;
