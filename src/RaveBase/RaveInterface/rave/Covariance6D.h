@@ -1,25 +1,27 @@
 #ifndef _RaveCovariance6D_H_
 #define _RaveCovariance6D_H_
 
-#include "rave/CheckedFloat.h"
-#include "boost/operators.hpp"
+//#include "rave/CheckedFloat.h"
+//#include "boost/operators.hpp"
+#include "TrackingTools/TrajectoryParametrization/interface/CartesianTrajectoryError.h"
 
 namespace rave
 {
+typedef CartesianTrajectoryError Covariance6D;
 
 /**
  * @class RaveCovariance6D a covariance matrix class for the track error
  */
 
+/*
 class  Covariance6D :
       boost::equality_comparable<Covariance6D>
 {
   public:
 
-    /**
-     *  create a track error object from euclidean errors
-     */
-    Covariance6D ( float dxx, float dxy, float dxz,
+    //  create a track error object from euclidean errors
+
+         Covariance6D ( float dxx, float dxy, float dxz,
                    float dyy, float dyz, float dzz,
                    float dxpx, float dxpy, float dxpz,
                    float dypx, float dypy, float dypz,
@@ -27,9 +29,9 @@ class  Covariance6D :
                    float dpxpx, float dpxpy, float dpxpz,
                    float dpypy, float dpypz, float dpzpz );
 
-    /**
-     *  empty error matrix
-     */
+
+   //    empty error matrix
+
     Covariance6D();
 
     virtual ~Covariance6D() {};
@@ -88,6 +90,7 @@ class  Covariance6D :
 
  bool operator== ( const rave::Covariance6D & lhs, const rave::Covariance6D & rhs );
 
+*/
 } // namespace rave
 
 #endif

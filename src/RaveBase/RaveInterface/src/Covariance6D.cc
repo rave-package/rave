@@ -1,3 +1,4 @@
+/*
 #include "RaveBase/RaveInterface/rave/Covariance6D.h"
 
 namespace rave
@@ -164,3 +165,4 @@ bool operator== ( const rave::Covariance6D & lhs, const rave::Covariance6D & rhs
 }
 
 } // namespace rave
+*/
