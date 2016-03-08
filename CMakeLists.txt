@@ -26,12 +26,18 @@ endif()
 include(FindROOT)
 include_directories(${ROOT_INCLUDE_DIR})
 
+# fix me - works with v01-01-01 if you remove /Linux_x86_64/opt/include/rave
+#include_directories(/local/scratch/ssd/gelb/externals/v00-07-01/include/)
+#link_directories(/local/scratch/ssd/gelb/externals/v00-07-01/lib/Linux_x86_64/opt/)
+#include_directories(/local/scratch/ssd/gelb/externals/v01-01-01/Linux_x86_64/opt/include/)
+#link_directories(/local/scratch/ssd/gelb/externals/v01-01-01/Linux_x86_64/opt/lib)
+
 # no dll export statement for Linux compile
 set (COMMON_COMPILE_FLAGS "${COMMON_COMPILE_FLAGS} -DRaveDllExport=''")
-add_definitions(-DPACKAGE_VERSION="0.6.25")
+add_definitions(-DPACKAGE_VERSION="Refactored")
 
 # important so some conversion code gets compiled for the kinematic fits
-add_definitions(-DWITH_KINEMATICS=1)
+# add_definitions(-DWITH_KINEMATICS=1)
 
 include_directories(${rave_SOURCE_DIR}/src
 					${rave_SOURCE_DIR}/src/RaveBase/RaveInterface )
@@ -40,6 +46,18 @@ include_directories(${rave_SOURCE_DIR}/src
 set (GENERAL_COMPILE_FLAGS " ${GENERAL_COMPILE_FLAGS} ${COMMON_COMPILE_FLAGS}")
 
 set(CMAKE_CXX_FLAGS "-O3 -g -ggdb ${GENERAL_COMPILE_FLAGS}" )
+
+
+# CLHEP
+find_package(CLHEP REQUIRED)
+message(${CLHEP_INCLUDE_DIR})
+include_directories (${CLHEP_INCLUDE_DIR})
+link_directories(${CLHEP_LIBRARY_DIR})
+
+# folders for make install 
+install(DIRECTORY DESTINATION bin)
+install(DIRECTORY DESTINATION lib)                                                                                 
+install(DIRECTORY DESTINATION include/rave)
 
 # options
 

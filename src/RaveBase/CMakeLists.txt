@@ -29,15 +29,77 @@ set(RAVEBASE_CPP
 	RaveInterface/src/PerigeeParameters5D.cc 
 	RaveInterface/src/PerigeeCovariance3D.cc 
 	RaveInterface/src/PerigeeCovariance5D.cc 
-	RaveInterface/src/Point3D.cc 
+	#	RaveInterface/src/Point3D.cc 
 	RaveInterface/src/Track.cc 
 	RaveInterface/src/VacuumPropagator.cc 
-	RaveInterface/src/Vector6D.cc 
+	#	RaveInterface/src/Vector6D.cc 
 	RaveInterface/src/Version.cc 
 	RaveInterface/src/Vertex.cc 
 	RaveInterface/src/VertexFactory.cc 
 	Utilities/src/StringTools.cc
 )
+
+set(RAVEBASE_HEADERS
+         RaveInterface/rave/AbstractPerigeeAccess.h
+         RaveInterface/rave/AbstractTrack.h
+         RaveInterface/rave/AbstractVertex.h
+         RaveInterface/rave/BasicKinematicConstraint.h
+         RaveInterface/rave/BasicKinematicParticle.h
+         RaveInterface/rave/BasicKinematicTree.h
+         RaveInterface/rave/BasicKinematicVertex.h
+         RaveInterface/rave/BasicMultipleKinematicConstraint.h
+         RaveInterface/rave/BasicTrack.h
+         RaveInterface/rave/BasicTransientTrackKinematicParticle.h
+         RaveInterface/rave/BasicVertex.h
+         RaveInterface/rave/BasicVirtualKinematicParticle.h
+         RaveInterface/rave/Charge.h
+         RaveInterface/rave/CheckedFloat.h
+         RaveInterface/rave/ConstantMagneticField.h
+         RaveInterface/rave/CopyUsingNew.h
+         RaveInterface/rave/Covariance33D.h
+         RaveInterface/rave/Covariance3D.h
+         RaveInterface/rave/Covariance4D.h
+         RaveInterface/rave/Covariance6D.h
+         RaveInterface/rave/Covariance7D.h
+         RaveInterface/rave/Cylinder.h
+         RaveInterface/rave/Ellipsoid3D.h
+         RaveInterface/rave/Exception.h
+         RaveInterface/rave/FlavorTagFactory.h
+         RaveInterface/rave/KinematicConstraintBuilder.h
+         RaveInterface/rave/KinematicConstraint.h
+         RaveInterface/rave/KinematicParticle.h
+         RaveInterface/rave/KinematicTreeFactory.h
+         RaveInterface/rave/KinematicTree.h
+         RaveInterface/rave/KinematicVertex.h
+         RaveInterface/rave/Logger.h
+         RaveInterface/rave/MagneticField.h
+         RaveInterface/rave/MultipleKinematicConstraint.h
+         RaveInterface/rave/PerigeeCovariance3D.h
+         RaveInterface/rave/PerigeeCovariance5D.h
+         RaveInterface/rave/PerigeeCovariance6D.h
+         RaveInterface/rave/PerigeeParameters3D.h
+         RaveInterface/rave/PerigeeParameters5D.h
+         RaveInterface/rave/PerigeeParameters6D.h
+         RaveInterface/rave/Plane.h
+         RaveInterface/rave/Point3D.h
+         RaveInterface/rave/Propagator.h
+         RaveInterface/rave/ProxyBase.h
+         RaveInterface/rave/ReferenceCounted.h
+         RaveInterface/rave/Track.h
+         RaveInterface/rave/TransientTrackKinematicParticle.h
+         RaveInterface/rave/Units.h
+         RaveInterface/rave/VacuumPropagator.h
+         RaveInterface/rave/Vector3D.h
+         RaveInterface/rave/Vector4D.h
+         RaveInterface/rave/Vector6D.h
+         RaveInterface/rave/Vector7D.h
+         RaveInterface/rave/Version.h
+         RaveInterface/rave/VertexFactory.h
+         RaveInterface/rave/Vertex.h
+         RaveInterface/rave/VirtualKinematicParticle.h
+)
+
+
 
 if(HAS_KINEMATICS)
   	set(RAVEBASE_CPP
@@ -83,3 +145,6 @@ target_link_libraries(RaveBase
 	#RaveVertexKinematics
 	CLHEP
 )
+
+install(TARGETS RaveBase LIBRARY DESTINATION lib)
+install(FILES ${RAVEBASE_HEADERS} DESTINATION include/rave)

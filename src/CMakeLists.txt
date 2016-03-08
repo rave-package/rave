@@ -116,3 +116,4 @@ target_link_libraries(RaveCore
 	CLHEP
 )
 
+install(TARGETS RaveCore LIBRARY DESTINATION lib ) 
