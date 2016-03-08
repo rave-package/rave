@@ -11,7 +11,7 @@
 class RaveToAlgebraicObjects 
 {
   public:
-    AlgebraicSymMatrix66 convert ( const rave::Covariance6D & ) const;
+    //AlgebraicSymMatrix66 convert ( const rave::Covariance6D & ) const;
     AlgebraicSymMatrix33 convert ( const rave::Covariance3D & ) const;
     AlgebraicVector3 convert ( const rave::Vector3D & ) const;
 };

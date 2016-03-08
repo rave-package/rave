@@ -5,6 +5,7 @@
 
 // using namespace std;
 
+/*
 AlgebraicSymMatrix66 RaveToAlgebraicObjects::convert ( const rave::Covariance6D & err ) const
 {
     AlgebraicSymMatrix66 cov6D; // ( 6, 0 );
@@ -31,6 +32,7 @@ AlgebraicSymMatrix66 RaveToAlgebraicObjects::convert ( const rave::Covariance6D 
     cov6D(5,5) = err.dpzpz();
     return cov6D;
 }
+*/
 
 AlgebraicSymMatrix33 RaveToAlgebraicObjects::convert ( const rave::Covariance3D & err ) const
 {
