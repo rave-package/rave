@@ -5,7 +5,7 @@
 #include <rave/Vector3D.h>
 
 
-#include <rave/Covariance7D.h>
+
 #include <rave/PerigeeParameters6D.h>
 #include <rave/PerigeeCovariance6D.h>
 #include <rave/KinematicParticle.h>
@@ -32,6 +32,7 @@
  #ifdef WITH_KINEMATICS
 #include <rave/Vector4D.h>
 #include <rave/Vector7D.h>
+#include <rave/Covariance7D.h>
  std::ostream& operator<< (std::ostream& os, const rave::Vector7D & );
  std::ostream& operator<< (std::ostream& os, const rave::Covariance7D & );
  std::ostream& operator<< (std::ostream& os, const rave::Vector4D & );
