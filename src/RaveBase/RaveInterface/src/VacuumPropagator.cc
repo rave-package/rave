@@ -68,7 +68,7 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   return to;
 }
 
-
+/*
 rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
     const rave::Point3D & pt, bool transverse ) const
 {
@@ -94,5 +94,5 @@ rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
   return ret;
 }
 
-
+*/
 rave::VacuumPropagator::VacuumPropagator() {}
