@@ -39,12 +39,33 @@ public:
                              double transverseCurvature, int, 
 			     const rave::MagneticField* fieldProvider);
 
+GlobalTrajectoryParameters(double x, double y, double z, double px, double py, double pz):
+	theX(x,y,z),
+	theP(px,py,pz)
+	{}
+
+
+
   /** Global position.
    */
   
   GlobalPoint position() const {
     return theX;
   }
+
+double x() const {
+return position().x();
+}
+
+
+ double y() const {
+ return position().y();
+ }
+
+double z() const {
+ return position().z();
+}
+
 
   /** Global momentum.
    */
