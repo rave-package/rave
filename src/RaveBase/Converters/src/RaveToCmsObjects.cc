@@ -72,6 +72,12 @@ GlobalPoint RaveToCmsObjects::convert ( const rave::Vector3D & v ) const
   return GlobalPoint ( v.x(), v.y(), v.z() );
 }
 
+GlobalPoint RaveToCmsObjects::convert ( const rave::Point3D & v ) const
+{
+  return GlobalPoint ( v.x(), v.y(), v.z() );
+}
+
+
 GlobalVector RaveToCmsObjects::toVector ( const rave::Vector3D & v ) const
 {
   return GlobalVector ( v.x(), v.y(), v.z() );
@@ -100,7 +106,7 @@ GlobalError RaveToCmsObjects::convert ( const rave::Covariance3D & c ) const
 {
   return GlobalError ( c.dxx(), c.dxy(), c.dyy(), c.dxz(), c.dyz(), c.dzz() );
 }
-
+/*
 TransientVertex RaveToCmsObjects::convert ( const rave::Vertex & v ) const
 {
   GlobalPoint pos = convert ( v.position() );
@@ -113,6 +119,7 @@ TransientVertex RaveToCmsObjects::convert ( const rave::Vertex & v ) const
   }
   return TransientVertex ( pos, err, trks, v.chiSquared() );
 }
+*/
 
 reco::TransientTrack RaveToCmsObjects::tTrack ( const rave::Track & rt ) const
 {

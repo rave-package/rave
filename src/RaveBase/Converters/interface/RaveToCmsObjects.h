@@ -10,6 +10,7 @@
 #include "DataFormats/GeometrySurface/interface/Plane.h"
 #include "DataFormats/GeometrySurface/interface/Cylinder.h"
 #include <rave/Charge.h>
+#include <rave/Point3D.h>
 #include <rave/Vector3D.h>
 #include <rave/Vector6D.h>
 #include <rave/Covariance3D.h>
@@ -55,8 +56,9 @@ class RaveToCmsObjects
 {
   public:
     GlobalTrajectoryParameters convert ( const rave::Vector6D &, const rave::Charge & ) const;
-    TransientVertex convert ( const rave::Vertex & ) const;
+    //TransientVertex convert ( const rave::Vertex & ) const;
     CartesianTrajectoryError convert ( const rave::Covariance6D & ) const;
+    GlobalPoint convert ( const rave::Point3D & ) const;
     GlobalPoint convert ( const rave::Vector3D & ) const;
     GlobalVector toVector ( const rave::Vector3D & ) const;
     AlgebraicVector toAlgebraicVector ( const rave::Vector3D & ) const;
