@@ -1,12 +1,14 @@
 #ifndef _RAVEVECTOR3D_H_
 #define _RAVEVECTOR3D_H_
 
-#include <rave/Point3D.h>
+//#include <rave/Point3D.h>
+
+#include "DataFormats/GeometryVector/interface/GlobalVector.h"
 
 namespace rave
 {
 
-typedef Point3D Vector3D;
+typedef GlobalVector Vector3D;
 
 }
 
