@@ -107,6 +107,10 @@ const CartesianTrajectoryError & Track::CartesianError() const
     return theCartesianError;
 }
 
+const CartesianTrajectoryError & Track::error() const
+{
+    return theCartesianError;
+}
 
 const CurvilinearTrajectoryError & Track::CurvilinearError() const
 {

@@ -55,6 +55,7 @@ class Track:  public ::FreeTrajectoryState
 
     const GlobalTrajectoryParameters & state() const;
     const CartesianTrajectoryError & CartesianError() const;
+    const CartesianTrajectoryError & error() const;
     const CurvilinearTrajectoryError & CurvilinearError() const;
 
     int id() const;
