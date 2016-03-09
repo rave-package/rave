@@ -49,8 +49,10 @@ set(CMAKE_CXX_FLAGS "-O3 -g -ggdb ${GENERAL_COMPILE_FLAGS}" )
 
 
 # CLHEP
-find_package(CLHEP REQUIRED)
-message(${CLHEP_INCLUDE_DIR})
+# test 
+# find_package(CLHEP REQUIRED)
+# message(${CLHEP_INCLUDE_DIR})
+include(FindCLHEP)
 include_directories (${CLHEP_INCLUDE_DIR})
 link_directories(${CLHEP_LIBRARY_DIR})
 
