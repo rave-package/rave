@@ -143,6 +143,7 @@ target_link_libraries(RaveBase
 	# only if has_kinematics, but it is weird this has to be
 	# linked into the RaveBase library
 	#RaveVertexKinematics
+	RaveVertex
 	CLHEP
 )
 
