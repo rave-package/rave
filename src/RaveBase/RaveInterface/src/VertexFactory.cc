@@ -33,7 +33,7 @@ namespace {
 VertexFactory::VertexFactory ( const rave::MagneticField & field,
                                //const rave::Propagator & prop,
                                //const ::AnalyticalPropagator & prop,
-                               const rave::VacuumPropagator & prop,
+                               const rave::Propagator & prop,
                                const std::string & method,
                                int verbosity ) :
   theRector ( getRector ( method ) ), theMethod ( method ),
@@ -49,7 +49,7 @@ VertexFactory::VertexFactory ( const rave::MagneticField & field,
 VertexFactory::VertexFactory ( const rave::MagneticField & field,
                                //const rave::Propagator & prop,
                                //const ::AnalyticalPropagator & prop,
-			       const rave::VacuumPropagator & prop,
+			       const rave::Propagator & prop,
                                const rave::Ellipsoid3D & beamspot,
                                const std::string & method,
                                int verbosity ) :
@@ -503,7 +503,7 @@ const rave::Ellipsoid3D & VertexFactory::getBeamspot() const
   return rave::BeamSpotSingleton::get();
 }
 
-const rave::VacuumPropagator & VertexFactory::getPropagator() const
+const rave::Propagator & VertexFactory::getPropagator() const
 {
     return *theProp;
 }

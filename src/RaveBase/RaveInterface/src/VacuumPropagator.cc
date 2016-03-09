@@ -33,9 +33,11 @@ namespace {
 }
 
 
-shared_ptr< rave::VacuumPropagator > rave::VacuumPropagator::copy() const
+shared_ptr< rave::Propagator > rave::VacuumPropagator::copy() const
 {
-  return make_shared < rave::VacuumPropagator > ( * this );
+
+
+	return make_shared < rave::VacuumPropagator > ( * this ); /* TODO actually copy object here */
 }
 
 
@@ -68,13 +70,14 @@ pair < rave::Track, double > rave::VacuumPropagator::to ( const rave::Track & or
   return to;
 }
 
-/*
+
 rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
     const rave::Point3D & pt, bool transverse ) const
 {
-  RaveToCmsObjects forward;
+  /*RaveToCmsObjects forward;
 
-  GlobalPoint pos = forward.convert ( pt );
+  GlobalPoint pos =  forward.convert ( pt );*/
+  GlobalPoint pos = pt;
 
   if ( transverse )
   {
@@ -94,5 +97,5 @@ rave::Track rave::VacuumPropagator::closestTo ( const rave::Track & orig,
   return ret;
 }
 
-*/
+
 rave::VacuumPropagator::VacuumPropagator() {}

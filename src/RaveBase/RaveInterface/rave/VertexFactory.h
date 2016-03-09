@@ -8,6 +8,7 @@
 #include <rave/Ellipsoid3D.h>
 #include <rave/Vector3D.h>
 #include <rave/Point3D.h>
+#include <rave/Propagator.h>
 #include <rave/VacuumPropagator.h>
 #include <rave/ConstantMagneticField.h>
 #include <vector>
@@ -37,12 +38,12 @@ class  VertexFactory
     VertexFactory ( const rave::MagneticField & m = rave::ConstantMagneticField(),
                     //const rave::Propagator & p = rave::VacuumPropagator(),
                     //const ::AnalyticalPropagator & p = rave::VacuumPropagator(),
-                    const rave::VacuumPropagator & p = rave::VacuumPropagator(), const std::string & method = "default", int verbosity=1 );
+                    const rave::Propagator & p = rave::VacuumPropagator(), const std::string & method = "default", int verbosity=1 );
     
     VertexFactory ( const rave::MagneticField &,
                     //const rave::Propagator &,
                     //const ::AnalyticalPropagator &,
-                    const rave::VacuumPropagator &,
+                    const rave::Propagator &,
                     const rave::Ellipsoid3D & beamspot,
                     const std::string & method = "default",
                     int verbosity=1 );
@@ -167,7 +168,7 @@ class  VertexFactory
 				    const rave::Track & ghost_track, bool use_beamspot=false ) const;
 
     /// Returns the propagator that is used
-    const rave::VacuumPropagator & getPropagator() const;
+    const rave::Propagator & getPropagator() const;
 
     /// Returns the magnetic field
     const rave::MagneticField & getMagneticField() const;
@@ -214,7 +215,7 @@ class  VertexFactory
 
     std::string theMethod;
     rave::MagneticField * theField;
-    std::shared_ptr < rave::VacuumPropagator > theProp;
+    std::shared_ptr < rave::Propagator > theProp;
     int theVerbosity;
 };
 

@@ -1,7 +1,8 @@
 #ifndef _VacuumPropagator_H_
 #define _VacuumPropagator_H_
 
-#include "TrackingTools/GeomPropagators/interface/AnalyticalPropagator.h"
+#include <rave/Propagator.h>
+
 #include <memory>
 
 namespace rave
@@ -11,12 +12,12 @@ namespace rave
  * @brief A simple VacuumPropagator class
  */
 
-class  VacuumPropagator : public AnalyticalPropagator
+class  VacuumPropagator : public Propagator
 {
   public:
     VacuumPropagator();
-    std::shared_ptr < VacuumPropagator > copy() const;
-    //virtual rave::Track closestTo ( const rave::Track &, const rave::Point3D &, bool transverse ) const;
+    virtual std::shared_ptr < Propagator > copy() const override;
+    virtual rave::Track closestTo ( const rave::Track &, const rave::Point3D &, bool transverse ) const;
     virtual std::pair < rave::Track, double > to ( const rave::Track & orig, const ravesurf::Plane & ) const;
     virtual std::pair < rave::Track, double > to ( const rave::Track & orig, const ravesurf::Cylinder & ) const;
 
