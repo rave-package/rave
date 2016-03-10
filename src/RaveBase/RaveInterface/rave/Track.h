@@ -58,6 +58,8 @@ class Track:  public ::FreeTrajectoryState
     const CartesianTrajectoryError & error() const;
     const CurvilinearTrajectoryError & CurvilinearError() const;
 
+    const MagneticField * getMagneticField() const;
+
     int id() const;
     void * originalObject() const;
 

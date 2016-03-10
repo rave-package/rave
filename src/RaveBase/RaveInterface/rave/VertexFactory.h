@@ -194,6 +194,11 @@ class  VertexFactory
 
     void wipe() const; //< wipe InEvent ref counted objects
     
+    /// Due to refactoring the magentic field has (as a hack) to be set in the vertex factory.
+    /// Works only if tracks have an error!
+    std::vector < Track >  setMagneticFieldForTracks ( const std::vector < Track > &) const;
+
+
   private:
     void setup();
     std::vector < rave::Vertex > fit ( const std::vector < rave::Track > & prims,

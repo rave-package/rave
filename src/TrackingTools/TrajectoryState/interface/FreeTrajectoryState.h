@@ -158,11 +158,25 @@ public:
   }
 // properties
   bool canReach(double radius) const;
+
+  bool isCartesianErrorValid() const{
+	  return theCartesianErrorValid;
+  }
+
+  bool isCurvilinearErrorValid() const{
+  	  return theCurvilinearErrorValid;
+    }
+
+
+
 private:
 // convert curvilinear errors to cartesian
   void createCartesianError() const;
 // convert cartesian errors to curvilinear
   void createCurvilinearError() const;
+
+
+
 
 protected:
   GlobalTrajectoryParameters  theGlobalParameters;
