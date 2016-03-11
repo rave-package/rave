@@ -12,6 +12,7 @@
 #ifndef RAVEKINEMATICCONSTRAINTBUILDER_H
 #define RAVEKINEMATICCONSTRAINTBUILDER_H
 
+#include <rave/Point3D.h>
 #include <rave/Vector3D.h>
 #include <rave/Vector4D.h>
 #include <rave/KinematicConstraint.h>
