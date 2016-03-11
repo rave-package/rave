@@ -58,8 +58,10 @@ namespace {
 class MyPropagator : public rave::Propagator
 {
   public:
-  virtual MyPropagator * copy() const {
-    return new MyPropagator ( *this );
+//	virtual std::shared_ptr < Propagator > copy() const override;
+  virtual std::shared_ptr < Propagator > copy() const override {
+  //return new MyPropagator ( *this );
+  return make_shared < MyPropagator > ( * this );
   }
   rave::Track closestTo ( const rave::Track & orig,
                           const rave::Point3D &, bool transverse ) const 
@@ -138,7 +140,7 @@ int main(void)
 
   cout << "Test the new plane: " << endl;
   const rave::Point3D pos(0.0, 1.0, 0.0);
-  const rave::Point3D nor(42.0, 42.0, 42.0);
+  const rave::Vector3D nor(42.0, 42.0, 42.0);
   const ravesurf::Plane plane (pos, nor); 
   cout << " ** Checkpoint 1 **" << endl;
   cout << " function postionRave       " << plane.positionRave() << endl;
