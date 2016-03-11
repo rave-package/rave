@@ -25,14 +25,18 @@ BOOST_AUTO_TEST_CASE(RaveCylinder)
    std::cout << "[ravesurftest] ravesurf::Cylinder test"<<std::endl;
 
 	const rave::Point3D pos(0., 0., 0.);
-	const rave::Point3D axis(1., 0., 0.);
+	const rave::Vector3D axis(1., 0., 0.);
 	float radius(2.0);
 	ravesurf::Cylinder Cyl(pos, axis, radius); 
 
 	
 	std::cout << "...Checking initialization" << std::endl;
-	BOOST_CHECK(Cyl.positionRave() == pos);
-	BOOST_CHECK(Cyl.axisRave() == axis);
+	BOOST_CHECK( Cyl.positionRave().x() == pos.x() );
+	BOOST_CHECK( Cyl.positionRave().y() == pos.y() );
+	BOOST_CHECK( Cyl.positionRave().z() == pos.z() );
+	BOOST_CHECK( Cyl.axisRave().x()  == axis.x() );
+	BOOST_CHECK( Cyl.axisRave().y()  == axis.y() );
+	BOOST_CHECK( Cyl.axisRave().z()  == axis.z() );
 
 	std::cout << "Radius is: " << Cyl.radiusRave() << std::endl;
 

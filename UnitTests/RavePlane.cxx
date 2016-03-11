@@ -17,13 +17,17 @@ BOOST_AUTO_TEST_CASE(RavePlane)
    std::cout << "[ravesurftest] ravesurf::Plane test"<<std::endl;
 
 	const rave::Point3D pos(0., 0., 0.);
-	const rave::Point3D normal(1., 0., 0.);
+	const rave::Vector3D normal(1., 0., 0.);
 	ravesurf::Plane Plane(pos, normal); 
 
 	
 	std::cout << "...Checking initialization" << std::endl;
-	BOOST_CHECK(Plane.positionRave() == pos);
-	BOOST_CHECK(Plane.normalVectorRave() == normal);
+	BOOST_CHECK(Plane.positionRave().x() == pos.x());
+	BOOST_CHECK(Plane.positionRave().y() == pos.y());
+	BOOST_CHECK(Plane.positionRave().z() == pos.z());
+	BOOST_CHECK(Plane.normalVectorRave().x() == normal.x());
+	BOOST_CHECK(Plane.normalVectorRave().y() == normal.y());
+	BOOST_CHECK(Plane.normalVectorRave().z() == normal.z());
 
 
 }

@@ -31,55 +31,76 @@ BOOST_AUTO_TEST_CASE(HelperFunctionsTest)
    HelperFunctions helper;
 
    rave::Covariance6D cov1 (
-        1.5e-7,    3.6e-7,    4.0e-14,
-                   8.5e-7,    9.6e-14,
-                              1.7e-6,
-                                       -1.4e-16,  -3.4e-16,   1.8e-24,
-                                       -3.3e-16,  -8.1e-16,   4.3e-24,
-                                       -3.9e-9,   -9.4e-9,    5.0e-17,
-                                        4.9e-3,   -2.0e-3,   -4.4e-3,
-                                                   9.2e-4,    1.8e-3,
-                                                              4.1e-3 );
+		   1.0, 2.0, 3.0,
+           4.0, 5.0, 6.0,
+           7.0,  8.0, 9.0,
+           10.0,  11.0, 12.0,
+           13.0,  14.0, 15.0,
+           16.0,  17.0, 18.0,
+           19.0,  20.0, 21.0);
 
    CartesianTrajectoryError cte1 = forward.convert(cov1);
 
 
 
    CartesianTrajectoryError cte2 = helper.convertFloatToCartesianTrajcetoryError(
-			1.5e-7,    3.6e-7,    4.0e-14,
-                      8.5e-7,    9.6e-14,
-                                  1.7e-6,
-                                       -1.4e-16,  -3.4e-16,   1.8e-24,
-                                       -3.3e-16,  -8.1e-16,   4.3e-24,
-                                       -3.9e-9,   -9.4e-9,    5.0e-17,
-                                        4.9e-3,   -2.0e-3,   -4.4e-3,
-                                                   9.2e-4,    1.8e-3,
-                                                              4.1e-3 );
+			1.0, 2.0, 3.0,
+            4.0, 5.0, 6.0,
+            7.0,  8.0, 9.0,
+            10.0,  11.0, 12.0,
+            13.0,  14.0, 15.0,
+            16.0,  17.0, 18.0,
+            19.0,  20.0, 21.0);
 
    rave::Covariance6D cov2 = backward.convert ( cte2 );
 
-   BOOST_CHECK( cte1.matrix() == cte2.matrix() );
-   BOOST_CHECK( cov1 == cov2 );
+   BOOST_CHECK( cte1.dxx() == cte2.dxx() );
+   std::cout << "FIRST: " << cte1.dxx() << " SECOND: " << cte2.dxx() << std::endl;
+   BOOST_CHECK( cte1.dxy() == cte2.dxy() );
+   BOOST_CHECK( cte1.dxz() == cte2.dxz() );
+   BOOST_CHECK( cte1.dxpx() == cte2.dxpx() );
+   BOOST_CHECK( cte1.dxpy() == cte2.dxpy() );
+   BOOST_CHECK( cte1.dxpz() == cte2.dxpz() );
+   BOOST_CHECK( cte1.dyy() == cte2.dyy() );
+   BOOST_CHECK( cte1.dyz() == cte2.dyz() );
+   BOOST_CHECK( cte1.dypx() == cte2.dypx() );
+   BOOST_CHECK( cte1.dypy() == cte2.dypy() );
+   BOOST_CHECK( cte1.dypz() == cte2.dypz() );
+   BOOST_CHECK( cte1.dzz() == cte2.dzz() );
+   BOOST_CHECK( cte1.dzpx() == cte2.dzpx() );
+   BOOST_CHECK( cte1.dzpy() == cte2.dzpy() );
+   BOOST_CHECK( cte1.dzpz() == cte2.dzpz() );
+   BOOST_CHECK( cte1.dpxpx() == cte2.dpxpx() );
+   BOOST_CHECK( cte1.dpxpy() == cte2.dpxpy() );
+   BOOST_CHECK( cte1.dpxpz() == cte2.dpxpz() );
+   BOOST_CHECK( cte1.dpypy() == cte2.dpypy() );
+   BOOST_CHECK( cte1.dpypz() == cte2.dpypz() );
+   BOOST_CHECK( cte1.dpzpz() == cte2.dpzpz() );
 
-   std::cout << "[helperfunctionstest] Testing HelperFunctions::convertToGlobalTrajcetoryState"<<std::endl;
 
-   GlobalTrajectoryParameters gtp1 = helper.convertToGlobalTrajecetoryState( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524, 1.0 );
+   BOOST_CHECK( cov1.dxx() == cov2.dxx() );
+   BOOST_CHECK( cov1.dxy() == cov2.dxy() );
+   BOOST_CHECK( cov1.dxz() == cov2.dxz() );
+   BOOST_CHECK( cov1.dxpx() == cov2.dxpx() );
+   BOOST_CHECK( cov1.dxpy() == cov2.dxpy() );
+   BOOST_CHECK( cov1.dxpz() == cov2.dxpz() );
+   BOOST_CHECK( cov1.dyy() == cov2.dyy() );
+   BOOST_CHECK( cov1.dyz() == cov2.dyz() );
+   BOOST_CHECK( cov1.dypx() == cov2.dypx() );
+   BOOST_CHECK( cov1.dypy() == cov2.dypy() );
+   BOOST_CHECK( cov1.dypz() == cov2.dypz() );
+   BOOST_CHECK( cov1.dzz() == cov2.dzz() );
+   BOOST_CHECK( cov1.dzpx() == cov2.dzpx() );
+   BOOST_CHECK( cov1.dzpy() == cov2.dzpy() );
+   BOOST_CHECK( cov1.dzpz() == cov2.dzpz() );
+   BOOST_CHECK( cov1.dpxpx() == cov2.dpxpx() );
+   BOOST_CHECK( cov1.dpxpy() == cov2.dpxpy() );
+   BOOST_CHECK( cov1.dpxpz() == cov2.dpxpz() );
+   BOOST_CHECK( cov1.dpypy() == cov2.dpypy() );
+   BOOST_CHECK( cov1.dpypz() == cov2.dpypz() );
+   BOOST_CHECK( cov1.dpzpz() == cov2.dpzpz() );
 
-   GlobalPoint pos2(0.0001, 0.0001, 0.0001);
-   GlobalVector mom2(-31.2685, 13.0785, 28.7524);
-   TrackCharge charge2(1.0);
-   GlobalTrajectoryParameters gtp2 (pos2, mom2, charge2, rave::MagneticFieldSingleton::Instance());
 
-   rave::Vector6D state3( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
-
-
-   // use back-conversion for checking
-   // fixme use gtp == instead
-   rave::Vector6D state1 = backward.convert(gtp1);
-   rave::Vector6D state2 = backward.convert(gtp2);
-
-   BOOST_CHECK( state1 == state3 );
-   BOOST_CHECK( state2 == state3 );
 
  }
 
