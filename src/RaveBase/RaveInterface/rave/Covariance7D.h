@@ -13,6 +13,7 @@
 #define RAVECOVARIANCE7D_H
 
 #include <rave/Covariance6D.h>
+#include "rave/CheckedFloat.h"
 
 #include <ostream>
 
@@ -28,8 +29,8 @@ namespace rave
  */
 
 class  Covariance7D :
-      public Covariance6D,
-      boost::equality_comparable<Covariance7D>
+      public Covariance6D
+
 {
 
   public:
@@ -61,7 +62,6 @@ class  Covariance7D :
     float dpzm() const;
     float dmm() const;
 
-    bool equal ( const Covariance7D & other ) const;
 
   private:
     CheckedFloat thedxm;
@@ -73,7 +73,6 @@ class  Covariance7D :
     CheckedFloat thedmm;
 };
 
- bool operator== ( const rave::Covariance7D & lhs, const rave::Covariance7D & rhs );
 
 } // namespace rave
 
