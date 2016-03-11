@@ -55,18 +55,17 @@ class  Vector7D :
     float energy() const; //!< Calculates the full energy of this particle
     Vector4D p4() const;
 
-    	/// add a momentum 4-vector to our momentum four-vector
+   	/// add a momentum 4-vector to our momentum four-vector
+
     //void add ( const Vector4D & p4 );
 
 
-  // bool equal(const Vector7D & other) const;
 
   private:
     CheckedFloat them;
 
 };
 
- //bool operator==(const rave::Vector7D & lhs, const rave::Vector7D & rhs);
 
 } // namespace rave
 

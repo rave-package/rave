@@ -38,22 +38,14 @@ rave::Vector4D Vector7D::p4() const
   return rave::Vector4D ( momentum(), them );
 }
 
+
+/*
 void Vector7D::add ( const Vector4D & other )
 {
   addMomentum ( other.p3() );
   them=them+other.m();
 }
+*/
 
-bool Vector7D::equal ( const Vector7D & other ) const
-{
-  return ( momentum() == other.momentum() ) &&
-         ( position() == other.position() ) &&
-         ( m() == other.m() );
-}
-
-bool operator== ( const rave::Vector7D & lhs, const rave::Vector7D & rhs )
-{
-  return lhs.equal ( rhs );
-}
 
 } // namespace rave
