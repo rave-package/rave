@@ -22,7 +22,7 @@ set(RAVEBASE_CPP
 	RaveInterface/src/ConstantMagneticField.cc 
 	RaveInterface/src/Covariance3D.cc 
 	RaveInterface/src/Covariance33D.cc 
-	RaveInterface/src/Covariance6D.cc 
+	# 	RaveInterface/src/Covariance6D.cc 
 	RaveInterface/src/Ellipsoid3D.cc 
 	RaveInterface/src/Exception.cc 
 	RaveInterface/src/PerigeeParameters3D.cc 
@@ -59,7 +59,7 @@ set(RAVEBASE_HEADERS
          RaveInterface/rave/Covariance33D.h
          RaveInterface/rave/Covariance3D.h
          RaveInterface/rave/Covariance4D.h
-         RaveInterface/rave/Covariance6D.h
+	 #	 RaveInterface/rave/Covariance6D.h
          RaveInterface/rave/Covariance7D.h
          RaveInterface/rave/Cylinder.h
          RaveInterface/rave/Ellipsoid3D.h
