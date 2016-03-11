@@ -78,22 +78,4 @@ float Covariance7D::dmm() const
   return thedmm;
 }
 
-bool Covariance7D::equal ( const Covariance7D & other ) const
-
-{
-  return Covariance6D::equal ( other ) &&
-         ( dxm() == other.dxm() ) &&
-         ( dym() == other.dym() ) &&
-         ( dzm() == other.dzm() ) &&
-         ( dpxm() == other.dpxm() ) &&
-         ( dpym() == other.dpym() ) &&
-         ( dpzm() == other.dpzm() ) &&
-         ( dmm() == other.dmm() );
-}
-
-bool operator== ( const rave::Covariance7D & lhs, const rave::Covariance7D & rhs )
-{
-  return lhs.equal ( rhs );
-}
-
 } // namespace rave
