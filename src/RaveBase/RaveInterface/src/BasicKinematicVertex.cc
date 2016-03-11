@@ -17,21 +17,11 @@ BasicKinematicVertex::~ BasicKinematicVertex()
 
 const rave::Point3D & BasicKinematicVertex::position() const
 {
-  BOOST_ASSERT (
-    CmsToRaveObjects().convert (
-      boost::any_cast< ::RefCountedKinematicVertex > ( theVertex )->position()
-    ) ==
-    thePosition );
   return thePosition;
 }
 
 const rave::Covariance3D & BasicKinematicVertex::error() const
 {
-  BOOST_ASSERT (
-    CmsToRaveObjects().convert (
-      boost::any_cast< ::RefCountedKinematicVertex > ( theVertex )->error()
-    ) ==
-    theError );
   return theError;
 }
 
@@ -42,21 +32,11 @@ boost::weak_ptr< rave::BasicKinematicTree > BasicKinematicVertex::correspondingT
 
 float BasicKinematicVertex::ndf() const
 {
-  BOOST_ASSERT (
-    boost::numeric_cast<float> (
-      boost::any_cast< ::RefCountedKinematicVertex > ( theVertex )->degreesOfFreedom()
-    ) ==
-    theNdof );
   return theNdof;
 }
 
 float BasicKinematicVertex::chiSquared() const
 {
-  BOOST_ASSERT (
-    boost::numeric_cast<float> (
-      boost::any_cast< ::RefCountedKinematicVertex > ( theVertex )->chiSquared()
-    ) ==
-    theChi2 );
   return theChi2;
 }
 

@@ -19,21 +19,11 @@ namespace rave
 
 const Vector7D & BasicKinematicParticle::fullstate() const
 {
-  BOOST_ASSERT (
-    CmsToRaveObjects().convert (
-      boost::any_cast< ::RefCountedKinematicParticle > ( theParticle )->currentState().kinematicParameters()
-    ) ==
-    theState );
   return theState;
 }
 
 const Covariance7D & BasicKinematicParticle::fullerror() const
 {
-  BOOST_ASSERT (
-    CmsToRaveObjects().convert (
-      boost::any_cast< ::RefCountedKinematicParticle > ( theParticle )->currentState().kinematicParametersError()
-    ) ==
-    theError );
   return theError;
 }
 
@@ -49,11 +39,6 @@ const Covariance6D & BasicKinematicParticle::error() const
 
 Charge BasicKinematicParticle::chargeRave() const
 {
-  BOOST_ASSERT (
-    boost::numeric_cast<Charge> (
-      boost::any_cast< ::RefCountedKinematicParticle > ( theParticle )->currentState().particleCharge()
-    ) ==
-    theCharge );
   return theCharge;
 }
 
@@ -134,21 +119,11 @@ const PerigeeCovariance6D & BasicKinematicParticle::fullPerigeeCovariance() cons
 
 float BasicKinematicParticle::chi2() const
 {
-  BOOST_ASSERT (
-    boost::numeric_cast<float> (
-      boost::any_cast< ::RefCountedKinematicParticle > ( theParticle )->chiSquared()
-    ) ==
-    theChi2 );
   return theChi2;
 }
 
 float BasicKinematicParticle::ndof() const
 {
-  BOOST_ASSERT (
-    boost::numeric_cast<float> (
-      boost::any_cast< ::RefCountedKinematicParticle > ( theParticle )->degreesOfFreedom()
-    ) ==
-    theNdof );
   return theNdof;
 }
 
