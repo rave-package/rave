@@ -38,11 +38,11 @@ class  KinematicTreeFactory
 {
   public:
     KinematicTreeFactory ( const rave::MagneticField & f = ConstantMagneticField(),
-			   const rave::VacuumPropagator & p = VacuumPropagator(),
+			   const rave::Propagator & p = VacuumPropagator(),
                            int verbosity = 1 );
 
     KinematicTreeFactory ( const rave::MagneticField & f,
-                           const rave::VacuumPropagator & p,
+                           const rave::Propagator & p,
                            const rave::Ellipsoid3D & beamspot,
                            int verbosity = 1 );
 
@@ -101,7 +101,7 @@ class  KinematicTreeFactory
       std::string parameters = "ppf:lppf", bool beamspot=false ) const;
     
     /// returns the propagator that is used
-    const rave::VacuumPropagator & getPropagator() const;
+    const rave::Propagator & getPropagator() const;
 
     /// returns the magnetic field
     const rave::MagneticField & getMagneticField() const;
@@ -125,7 +125,7 @@ class  KinematicTreeFactory
     void wipe() const;
 
     rave::MagneticField * theField;
-    std::shared_ptr < rave::VacuumPropagator > thePropagator;
+    std::shared_ptr < rave::Propagator > thePropagator;
     int theVerbosity;
     mutable std::vector< rave::KinematicTree > toBeUnlinkedTrees;
     mutable std::vector< rave::KinematicParticle > toBeUnlinkedParticles;

@@ -31,7 +31,7 @@ void KinematicTreeFactory::wipe() const
 }
 
 KinematicTreeFactory::KinematicTreeFactory (
-  const rave::MagneticField & f, const rave::VacuumPropagator & p, int verbosity ) :
+  const rave::MagneticField & f, const rave::Propagator & p, int verbosity ) :
     theField ( f.copy() ), thePropagator ( p.copy() ),
     theVerbosity ( verbosity )
 {
@@ -39,7 +39,7 @@ KinematicTreeFactory::KinematicTreeFactory (
 }
 
 rave::KinematicTreeFactory::KinematicTreeFactory (
-  const rave::MagneticField & f, const rave::VacuumPropagator & p,
+  const rave::MagneticField & f, const rave::Propagator & p,
   const rave::Ellipsoid3D & beamspot, int verbosity ) :
     theField ( f.copy() ), thePropagator ( p.copy() ),
     theVerbosity ( verbosity )
@@ -323,7 +323,7 @@ std::vector< rave::KinematicParticle > KinematicTreeFactory::useParticleFitter (
   return particles_cs;
 }
 
-const rave::VacuumPropagator & KinematicTreeFactory::getPropagator() const
+const rave::Propagator & KinematicTreeFactory::getPropagator() const
 {
   return *thePropagator;
 }
