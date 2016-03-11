@@ -7,7 +7,7 @@ namespace ravesurf {
 
 
 
-Plane::Plane ( const rave::Point3D & pos, const rave::Point3D & normal )
+Plane::Plane ( const rave::Point3D & pos, const rave::Vector3D & normal )
   :
 		  pos_ ( pos ),
 		  norm_ ( normal ),

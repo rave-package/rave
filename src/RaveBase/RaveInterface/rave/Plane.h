@@ -21,7 +21,7 @@ namespace ravesurf {
 class Plane: public Surface
 {
   public:
-    Plane ( const rave::Point3D & pos, const rave::Point3D & normal );
+    Plane ( const rave::Point3D & pos, const rave::Vector3D & normal );
 
     rave::Point3D positionRave() const;
     rave::Vector3D normalVectorRave() const;

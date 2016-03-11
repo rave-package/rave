@@ -17,7 +17,7 @@ namespace ravesurf {
 class Cylinder: public Surface
 {
   public:
-    Cylinder ( const rave::Point3D & pos, const rave::Point3D & axis, float radius );
+    Cylinder ( const rave::Point3D & pos, const rave::Vector3D & axis, float radius );
 
     rave::Point3D positionRave() const;
     rave::Vector3D axisRave() const;
