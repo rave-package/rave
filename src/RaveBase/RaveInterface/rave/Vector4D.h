@@ -12,6 +12,8 @@
 #ifndef RAVEVECTOR4D_H
 #define RAVEVECTOR4D_H
 
+#include "rave/CheckedFloat.h"
+#include "boost/operators.hpp"
 #include <rave/Vector3D.h>
 
 namespace rave
@@ -35,10 +37,10 @@ class  Vector4D :
 
     bool equal( const rave::Vector4D & ) const;
     /// add other to this
-    void add(const rave::Vector4D & other);
+  //  void add(const rave::Vector4D & other);
 
     /// subtract other from this
-    void subtract(const rave::Vector4D & other);
+   // void subtract(const rave::Vector4D & other);
 
     /// explicitly ask for momentum 3-vector 
     Vector3D p3() const;
@@ -48,9 +50,9 @@ class  Vector4D :
 
 };
 
- bool operator==(const rave::Vector4D & lhs, const rave::Vector4D & rhs);
- rave::Vector4D & operator+=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
- rave::Vector4D & operator-=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
+//bool operator==(const rave::Vector4D & lhs, const rave::Vector4D & rhs);
+// rave::Vector4D & operator+=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
+// rave::Vector4D & operator-=( rave::Vector4D & lhs, const rave::Vector4D & rhs);
 
 } // namespace rave
 
