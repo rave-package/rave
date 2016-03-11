@@ -6,6 +6,7 @@
 #include "DataFormats/CLHEP/interface/AlgebraicObjects.h"
 #include "DataFormats/TrajectoryState/interface/TrackCharge.h"
 #include <rave/MagneticField.h>
+#include <rave/Vector3D.h>
 //class MagneticField;
 
 /** Class providing access to a set of relevant parameters of a trajectory
@@ -44,7 +45,10 @@ GlobalTrajectoryParameters(double x, double y, double z, double px, double py, d
 	theP(px,py,pz)
 	{}
 
-
+GlobalTrajectoryParameters(const GlobalPoint& aX, const GlobalVector& aP) :
+	theX(aX),
+	theP(aP)
+	{}
 
   /** Global position.
    */
