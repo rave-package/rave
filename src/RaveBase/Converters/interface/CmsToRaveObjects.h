@@ -45,7 +45,7 @@ class CmsToRaveObjects
     rave::Track convert ( const FreeTrajectoryState &, float chi2, float ndf, void * id, const std::string & tag ) const;
     rave::Track convert ( int id, const FreeTrajectoryState &, float chi2, float ndf, void * orig, const std::string & tag ) const;
     rave::Track convert ( const reco::TransientTrack & t, int id=0 ) const;
-    rave::Vector3D convert ( const GlobalPoint & ) const;
+    rave::Point3D convert ( const GlobalPoint & ) const;
     rave::Vector3D convert ( const GlobalVector & ) const;
    // rave::Vector6D convert ( const GlobalTrajectoryParameters & ) const;
     rave::Covariance3D convert ( const GlobalError & ) const;

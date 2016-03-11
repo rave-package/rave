@@ -303,9 +303,9 @@ rave::Vertex CmsToRaveObjects::convertCV ( const CachingVertex<5> & cv,
   return ret;
 }*/
 
-rave::Vector3D CmsToRaveObjects::convert ( const GlobalPoint & p ) const
+rave::Point3D CmsToRaveObjects::convert ( const GlobalPoint & p ) const
 {
-  return rave::Vector3D ( boost::numeric_cast<float> ( p.x() ),
+  return rave::Point3D ( boost::numeric_cast<float> ( p.x() ),
                           boost::numeric_cast<float> ( p.y() ),
                           boost::numeric_cast<float> ( p.z() ) );
 }
