@@ -37,7 +37,7 @@ set (COMMON_COMPILE_FLAGS "${COMMON_COMPILE_FLAGS} -DRaveDllExport=''")
 add_definitions(-DPACKAGE_VERSION="Refactored")
 
 # important so some conversion code gets compiled for the kinematic fits
-# add_definitions(-DWITH_KINEMATICS=1)
+add_definitions(-DWITH_KINEMATICS=1)
 
 include_directories(${rave_SOURCE_DIR}/src
 					${rave_SOURCE_DIR}/src/RaveBase/RaveInterface )
