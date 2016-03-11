@@ -14,8 +14,10 @@
 #ifndef RAVEVECTOR7D_H
 #define RAVEVECTOR7D_H
 
-#include <rave/Vector6D.h>
+#include <rave/Vector3D.h>
+#include <rave/Point3D.h>
 #include <rave/Vector4D.h>
+#include <rave/Vector6D.h>
 
 #include <ostream>
 
