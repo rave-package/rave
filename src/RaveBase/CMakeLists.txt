@@ -59,7 +59,7 @@ set(RAVEBASE_HEADERS
          RaveInterface/rave/Covariance33D.h
          RaveInterface/rave/Covariance3D.h
          RaveInterface/rave/Covariance4D.h
-	 #	 RaveInterface/rave/Covariance6D.h
+	 RaveInterface/rave/Covariance6D.h
          RaveInterface/rave/Covariance7D.h
          RaveInterface/rave/Cylinder.h
          RaveInterface/rave/Ellipsoid3D.h
@@ -142,7 +142,7 @@ target_link_libraries(RaveBase
 	RaveCore
 	# only if has_kinematics, but it is weird this has to be
 	# linked into the RaveBase library
-	#RaveVertexKinematics
+	RaveVertexKinematics
 	RaveVertex
 	CLHEP
 )
