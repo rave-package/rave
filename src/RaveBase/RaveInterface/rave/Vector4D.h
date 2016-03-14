@@ -35,7 +35,7 @@ class  Vector4D :
     float m() const;
     float energy() const;
 
-    bool equal( const rave::Vector4D & ) const;
+//    bool equal( const rave::Vector4D & ) const;
     /// add other to this
   //  void add(const rave::Vector4D & other);
 
@@ -43,7 +43,7 @@ class  Vector4D :
    // void subtract(const rave::Vector4D & other);
 
     /// explicitly ask for momentum 3-vector 
-    Vector3D p3() const;
+   Vector3D p3() const;
 
   private:
     CheckedFloat them;

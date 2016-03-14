@@ -60,7 +60,7 @@ void Vector4D::add(const Vector4D & other)
     them = 0.;
   }
 }
-/*
+*/
 
 rave::Vector3D Vector4D::p3() const
 {
