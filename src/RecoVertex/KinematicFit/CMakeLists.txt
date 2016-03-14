@@ -55,3 +55,4 @@ target_link_libraries(RaveVertexKinematics
 	RaveVertex
 	)
 
+install(TARGETS RaveVertexKinematics LIBRARY DESTINATION lib)
