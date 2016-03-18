@@ -4,7 +4,6 @@
 #include "RaveBase/Converters/interface/CmsToRaveObjects.h"
 #include "RaveBase/Converters/interface/RaveToPerigeeObjects.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 
 #ifdef WITH_KINEMATICS
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicPerigeeConversions.h"
@@ -73,15 +72,17 @@ Covariance6D PerigeeToRaveObjects::convert(
            FreeTrajectoryState(gtp, cte).cartesianError());
 }
 
+
 #ifdef WITH_KINEMATICS
+/*
 Vector7D PerigeeToRaveObjects::convert(
   const PerigeeParameters6D & parameters, const Charge charge,
   const Point3D & referencePoint) const
 {
-  /*
-  Vector6D sixD = convert(parameters, charge, referencePoint);
-  return Vector7D(sixD, parameters.mass());
-  */
+
+  //Vector6D sixD = convert(parameters, charge, referencePoint);
+  //return Vector7D(sixD, parameters.mass());
+
 
   RaveToCmsObjects frameworkInputConverter;
   ExtendedPerigeeTrajectoryParameters eptp =
@@ -96,6 +97,7 @@ Vector7D PerigeeToRaveObjects::convert(
   CmsToRaveObjects frameworkOutputConverter;
   return frameworkOutputConverter.convert(internalResult);
 }
+*/
 
 Covariance7D PerigeeToRaveObjects::convert(
   const PerigeeCovariance6D & covariance, const Vector7D & parameters,
@@ -114,11 +116,12 @@ Covariance7D PerigeeToRaveObjects::convert(
   KinematicPerigeeConversions parameterConverter;
   KinematicParametersError internalResult =
       parameterConverter.kinematicParametersErrorFromExPerigee(
-      epte, eptp, ref, rave::MagneticFieldSingleton::Instance());
+      epte, eptp, ref, parameters.getMagneticField() );
 
   CmsToRaveObjects frameworkOutputConverter;
   return frameworkOutputConverter.convert(internalResult);
 }
 #endif
+
 
 } // namespace rave

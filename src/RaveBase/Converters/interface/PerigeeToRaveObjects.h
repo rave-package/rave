@@ -35,14 +35,17 @@ class PerigeeToRaveObjects
     //Vector6D convert(const PerigeeParameters5D &, const Charge, const Point3D & referencePoint) const;
     Covariance6D convert(const PerigeeCovariance5D & error, const GlobalTrajectoryParameters & gtp) const;
 
+
   #ifdef WITH_KINEMATICS
   public:
-    Vector7D convert(
-        const PerigeeParameters6D &, const Charge, const Point3D & referencePoint) const;
+//    Vector7D convert(
+//        const PerigeeParameters6D &, const Charge, const Point3D & referencePoint) const;
     Covariance7D convert(
         const PerigeeCovariance6D &, const Vector7D & parameters, 
         const Charge charge, const Point3D & referencePoint) const;
   #endif
+
+
 };
 
 } // namespace rave
