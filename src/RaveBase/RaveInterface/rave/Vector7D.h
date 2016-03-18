@@ -18,6 +18,7 @@
 #include <rave/Point3D.h>
 #include <rave/Vector4D.h>
 #include <rave/Vector6D.h>
+#include <rave/MagneticField.h>
 
 #include <ostream>
 
@@ -44,6 +45,10 @@ class  Vector7D :
     Vector7D ( float x, float y, float z,
                float px, float py, float pz,
                float m );
+
+    Vector7D ( float x, float y, float z,
+               float px, float py, float pz,
+               float m, rave::MagneticField * field );
 
     Vector7D ( const Point3D & position,
                const Vector3D & momentum,

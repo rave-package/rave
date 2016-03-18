@@ -18,6 +18,13 @@ Vector7D::Vector7D ( float x, float y, float z,
     Vector6D ( x, y, z, px, py, pz ), them ( m )
 {}
 
+Vector7D::Vector7D ( float x, float y, float z,
+                     float px, float py, float pz,
+                     float m, rave::MagneticField * field ) :
+    Vector6D ( x, y, z, px, py, pz, field ), them ( m )
+{}
+
+
 Vector7D::Vector7D ( const Point3D & position, const Vector3D & momentum,
                      float m ) :
     Vector6D ( position, momentum ), them ( m )
