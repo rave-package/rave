@@ -1,5 +1,4 @@
 #include "RaveBase/Converters/interface/PropagatorWrapper.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/CmsToRaveObjects.h"
 #include "TrackingTools/TrajectoryState/interface/TrajectoryStateOnSurface.h"
@@ -11,10 +10,6 @@ PropagatorWrapper::PropagatorWrapper ( const rave::Propagator & r ) :
   theRavePropagator ( r.copy() )
 {}
 
-const rave::MagneticField * PropagatorWrapper::magneticField() const
-{
-  return rave::MagneticFieldSingleton::Instance();
-}
 
 pair < TrajectoryStateOnSurface, double > 
    PropagatorWrapper::propagateWithPath ( const FreeTrajectoryState & fts,
