@@ -55,11 +55,16 @@ rave::Covariance33D CmsToRaveObjects::convert ( const AlgebraicMatrix3M & m ) co
 {
   //cout << endl;
   //cout << "m=" << m << endl;
+ try {
   rave::Covariance33D ret ( m(0,0), m(0,1), m(2,0), m(1,0), m(1,1), m(1,2), 
                              m(2,0), m(2,1), m(2,2) );
+ } catch ( rave::CheckedFloatException & e ) {
+	 return rave::Covariance33D();
+  }
   //cout << "ret=" << ret << endl;
-  return ret;
 }
+
+
 
 rave::Track CmsToRaveObjects::convert ( const reco::TransientTrack & t, int id ) const
 {
@@ -133,7 +138,7 @@ rave::Covariance3D CmsToRaveObjects::convert ( const GlobalError & e ) const
 rave::Covariance6D CmsToRaveObjects::convert ( const CartesianTrajectoryError & e ) const
 {
   try {
-    return rave::Covariance6D ( e.matrix_old() [0][0], e.matrix_old() [0][1], e.matrix_old() [0][2],
+	return rave::Covariance6D ( e.matrix_old() [0][0], e.matrix_old() [0][1], e.matrix_old() [0][2],
                                 e.matrix_old() [1][1], e.matrix_old() [1][2], e.matrix_old() [2][2],
                                 e.matrix_old() [0][3], e.matrix_old() [0][4], e.matrix_old() [0][5],
                                 e.matrix_old() [1][3], e.matrix_old() [1][4], e.matrix_old() [1][5],
@@ -160,10 +165,10 @@ rave::Vertex CmsToRaveObjects::convert ( const TransientVertex & tv,
           i!=orig_comps.end() ; ++i )
     {
       rave::Vertex tmp ( rave::Point3D ( i->position().x(), i->position().y(), i->position().z() ),
-          CmsToRaveObjects().convert ( tv.positionError() ), vector < pair < float, rave::Track > > (),
+    	  CmsToRaveObjects().convert ( tv.positionError() ), vector < pair < float, rave::Track > > (),
           0., 0., vector < pair < float, rave::Vertex > > () );
       scomponents.insert ( pair < float, rave::Vertex > ( i->weightInMixture(), tmp ) );
-    }
+     }
     //cout << "[CmsToRaveObjects] we have " << components.size() << " components" << endl;
     copy ( scomponents.begin(), scomponents.end(), components.begin() );
   }
