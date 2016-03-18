@@ -3,7 +3,6 @@
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
 #include "DataFormats/GeometryCommonDetAlgo/interface/PerpendicularBoundPlaneBuilder.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RaveBase/Converters/interface/RaveToAlgebraicObjects.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrackFromFTSFactory.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
@@ -31,15 +30,6 @@ using namespace std;
 namespace {
   // 
 }
-
-GlobalTrajectoryParameters RaveToCmsObjects::convert(const rave::Vector6D & state, const rave::Charge & charge) const
-{
-  GlobalPoint  position ( state.position().x(),  state.position().y(),  state.position().z() );
-  GlobalVector momentum ( state.momentum().x(), state.momentum().y(), state.momentum().z() );
-  return GlobalTrajectoryParameters ( position , momentum, charge, rave::MagneticFieldSingleton::Instance() );
-}
-
-
 
 CartesianTrajectoryError RaveToCmsObjects::convert ( const rave::Covariance6D & c ) const
 {

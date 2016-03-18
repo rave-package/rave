@@ -55,8 +55,6 @@ class Cylinder;
 class RaveToCmsObjects
 {
   public:
-    GlobalTrajectoryParameters convert ( const rave::Vector6D &, const rave::Charge & ) const;
-    //TransientVertex convert ( const rave::Vertex & ) const;
     CartesianTrajectoryError convert ( const rave::Covariance6D & ) const;
     GlobalPoint convert ( const rave::Point3D & ) const;
     GlobalPoint convert ( const rave::Vector3D & ) const;
