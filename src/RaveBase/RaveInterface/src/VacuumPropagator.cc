@@ -1,6 +1,5 @@
 #include "RaveBase/RaveInterface/rave/VacuumPropagator.h"
 #include "TrackingTools/PatternTools/interface/TransverseImpactPointExtrapolator.h"
-// #include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "TrackingTools/TrajectoryState/interface/PerigeeConversions.h"
 #include "TrackingTools/GeomPropagators/interface/AnalyticalPropagator.h"
 #include "DataFormats/GeometrySurface/interface/Plane.h"

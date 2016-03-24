@@ -11,11 +11,9 @@
 #include "DataFormats/GeometrySurface/interface/BlockWipedAllocator.h"
 #include "RaveTools/Converters/interface/PropagatorSingleton.h"
 #include "RaveBase/Converters/interface/PropagatorWrapper.h"
-
-//#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
 #include "RaveBase/RaveEngine/interface/RaveBeamSpotSingleton.h"
 #include "RaveBase/RaveEngine/interface/RaveParameterSetBuilder.h"
-//#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
+
 
 #include "boost/bind.hpp"
 

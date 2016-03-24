@@ -100,7 +100,7 @@ set(RAVECORE_CPP
     TrackingTools/TransientTrack/src/TransientTrackFromFTS.cc 
     TrackingTools/TransientTrack/src/TransientTrack.cc 
     TrackingTools/TransientTrack/src/TrackTransientTrack.cc 
-    RaveTools/Converters/src/MagneticFieldSingleton.cc 
+    #    RaveTools/Converters/src/MagneticFieldSingleton.cc 
     RaveTools/Converters/src/PropagatorSingleton.cc 
     FWCore/MessageLogger/src/Colors.cc 
     FWCore/MessageLogger/src/MessageLogger.cc 

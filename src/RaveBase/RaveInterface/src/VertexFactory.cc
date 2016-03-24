@@ -8,10 +8,8 @@
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 #include "RaveBase/RaveEngine/interface/RaveVertexReconstructor.h"
-// #include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RaveTools/Converters/interface/PropagatorSingleton.h"
 #include "RaveBase/Converters/interface/PropagatorWrapper.h"
-//#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include <iostream>
 #include <iomanip>
