@@ -61,6 +61,7 @@ class  BasicTransientTrackKinematicParticle :
       const rave::Point3D & referencePoint = rave::Point3D(0.,0.,0.),
       boost::any origin = boost::any(), std::string tag = "" );
 
+    /*
     BasicTransientTrackKinematicParticle (
       const rave::PerigeeParameters6D & state,
       const rave::PerigeeCovariance6D & error,
@@ -68,6 +69,7 @@ class  BasicTransientTrackKinematicParticle :
       const double & chiSquared, const double & degreesOfFr,
       const rave::Point3D & referencePoint = rave::Point3D(0.,0.,0.),
       boost::any origin = boost::any(), std::string tag = "" );
+	*/
 
     BasicTransientTrackKinematicParticle();
     virtual ~BasicTransientTrackKinematicParticle();

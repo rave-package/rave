@@ -75,6 +75,7 @@ rave::TransientTrackKinematicParticle::TransientTrackKinematicParticle (
        << endl; */
 }
 
+/*
 rave::TransientTrackKinematicParticle::TransientTrackKinematicParticle ( 
   const rave::PerigeeParameters6D & state,
   const rave::PerigeeCovariance6D & error,
@@ -90,10 +91,10 @@ rave::TransientTrackKinematicParticle::TransientTrackKinematicParticle (
   static_cast< ::TaggedTransientTrackKinematicParticle* > (
       boost::any_cast< ::RefCountedKinematicParticle > (
       data().getInternal() ).get() )->setTag ( *this );
-  /* cout << "[TransientTrackKinematicParticle] constructing from perigee"
-       << endl; */
+  // cout << "[TransientTrackKinematicParticle] constructing from perigee"
+       << endl;
 }
-
+*/
 
 TransientTrackKinematicParticle::TransientTrackKinematicParticle (
   const BasicTransientTrackKinematicParticle & o ) :

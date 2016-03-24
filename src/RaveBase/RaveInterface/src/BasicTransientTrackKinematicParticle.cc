@@ -3,7 +3,6 @@
 #include "RaveBase/Converters/interface/PerigeeToRaveObjects.h"
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/RaveEngine/interface/TaggedTransientTrackKinematicParticle.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicPerigeeConversions.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/TransientTrackKinematicParticle.h"
 
@@ -89,7 +88,7 @@ boost::shared_ptr< ::KinematicStatePropagator > propagator ( new ::TrackKinemati
   ::KinematicParametersError internalError = RaveToCmsObjects().convert ( error );
   ::KinematicState initState = builder ( internalState, internalError,
                                          boost::numeric_cast< int > ( charge ),
-                                         rave::MagneticFieldSingleton::Instance() );
+                                         &state.magneticField() );
 
   float chi2 = boost::numeric_cast< float > ( chiSquared );
   float ndof = boost::numeric_cast< float > ( degreesOfFr );
@@ -118,6 +117,7 @@ boost::shared_ptr< ::KinematicStatePropagator > propagator ( new ::TrackKinemati
   return createInternalParticle(state, cartesianError, charge, chiSquared, degreesOfFr);
 }
 
+/*
 ::RefCountedKinematicParticle createInternalParticle (
   const rave::PerigeeParameters6D & state,
   const rave::PerigeeCovariance6D & error,
@@ -134,6 +134,7 @@ boost::shared_ptr< ::KinematicStatePropagator > propagator ( new ::TrackKinemati
   return createInternalParticle(cartesianParameters, cartesianError, charge,
                                 chiSquared, degreesOfFr);
 }
+*/
 
 }
 
@@ -176,6 +177,7 @@ BasicTransientTrackKinematicParticle::BasicTransientTrackKinematicParticle (
       origin, tag )
 {}
 
+/*
 BasicTransientTrackKinematicParticle::BasicTransientTrackKinematicParticle (
   const rave::PerigeeParameters6D & state,
   const rave::PerigeeCovariance6D & error, const rave::Charge & charge,
@@ -187,6 +189,7 @@ BasicTransientTrackKinematicParticle::BasicTransientTrackKinematicParticle (
                                referencePoint ),
       origin, tag )
 {}
+*/
 
 BasicTransientTrackKinematicParticle::BasicTransientTrackKinematicParticle() :
     BasicKinematicParticle()
@@ -203,8 +206,7 @@ BasicTransientTrackKinematicParticle::closestToTransversePoint(
 
   GlobalPoint ref(x, y, 0.);
 
-  ::FreeTrajectoryState fts(frameworkInputConverter.convert(state(), chargeRave()),
-                            frameworkInputConverter.convert(error()));
+  ::FreeTrajectoryState fts(state() , error() );
   ParticleMass mass = boost::numeric_cast< ParticleMass > ( fullstate().m() );
   float m_sigma = boost::numeric_cast< float > ( sqrt(fullerror().dmm()) );
 
