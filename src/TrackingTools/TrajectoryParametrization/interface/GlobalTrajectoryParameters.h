@@ -40,6 +40,13 @@ public:
                              double transverseCurvature, int, 
 			     const rave::MagneticField* fieldProvider);
 
+  GlobalTrajectoryParameters(double x, double y, double z, double px, double py, double pz,
+                             const rave::MagneticField* fieldProvider):
+    theX(x,y,z),
+    theP(px,py,pz),
+	theField(fieldProvider)
+  {}
+
 GlobalTrajectoryParameters(double x, double y, double z, double px, double py, double pz):
 	theX(x,y,z),
 	theP(px,py,pz)
@@ -140,6 +147,7 @@ double pz() const {
 
   GlobalVector magneticFieldInInverseGeV( const GlobalPoint& x) const; 
   const rave::MagneticField& magneticField() const {return *theField;}
+
 
 private:
   GlobalPoint theX;
