@@ -37,6 +37,7 @@ GsfTransientTrack::GsfTransientTrack( const GsfTrackRef & tk , const MagneticFie
   initialFTS = theTransform.initialFreeState(*tk, field);
 }
 
+/*
 GsfTransientTrack::GsfTransientTrack ( const TrajectoryStateOnSurface & s ) :
   theField ( MagneticFieldSingleton::Instance() ), initialTSOSAvailable(true),
   initialTSCPAvailable(false), blStateAvailable(false)
@@ -45,6 +46,7 @@ GsfTransientTrack::GsfTransientTrack ( const TrajectoryStateOnSurface & s ) :
   initialTSOS = s;
   initialFTS = *(s.freeState() );
 }
+*/
 
 /*
 GsfTransientTrack::GsfTransientTrack( const GsfTrack & tk , const MagneticField* field, const edm::ESHandle<GlobalTrackingGeometry>& tg) :
