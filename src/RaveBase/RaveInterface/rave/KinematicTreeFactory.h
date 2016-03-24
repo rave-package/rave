@@ -114,8 +114,12 @@ class  KinematicTreeFactory
 
     int verbosity() const;
 
+    MagneticField * magneticField() const;
+
+
+
   private:
-    void setup();
+    void setup(rave::MagneticField * field);
     /** unlink all objects in the to-be-unlinked containers
      */
     void unlink() const;

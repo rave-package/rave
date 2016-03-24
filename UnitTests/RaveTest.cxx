@@ -1,5 +1,6 @@
 #include "RaveTest.h"
 #include <rave/Version.h>
+#include <rave/Vector6D.h>
 
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 
@@ -100,10 +101,9 @@ void RaveTest::CreateTrackList()
             pos[j]=fTruthVtx[ivtx][j]+RndmGaus()*fSigmax;
             dir[j]=fMomentumScale*RndmGaus();
          }
-         fTrackList.push_back(rave::Track(forward.convert(rave::Vector6D(pos[0],pos[1],pos[2],
-                                                         dir[0],dir[1],dir[2]),q),
-                                          forward.convert(*(fStdCovMatrix[i%fNCov])),
-                                          chi2, ndof)); 
+
+         rave::Vector6D ravestate(rave::Point3D(pos[0],pos[1],pos[2]), rave::Vector3D(dir[0],dir[1],dir[2]), q, fBObj) ;
+         fTrackList.push_back( rave::Track(ravestate, *(fStdCovMatrix[i%fNCov]), chi2, ndof)  );
       }         
    }
 }

@@ -8,7 +8,7 @@
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 #include "RaveBase/RaveEngine/interface/RaveVertexReconstructor.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
+// #include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RaveTools/Converters/interface/PropagatorSingleton.h"
 #include "RaveBase/Converters/interface/PropagatorWrapper.h"
 //#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
@@ -43,8 +43,8 @@ VertexFactory::VertexFactory ( const rave::MagneticField & field,
 {
   edm::LogInfo ( "VertexFactory" ) << " factory called w/o beamspot!";
   // createRecoBeamSpot();
-  setup();
-}
+  setup(theField);
+  }
 
 VertexFactory::VertexFactory ( const rave::MagneticField & field,
                                //const rave::Propagator & prop,
@@ -57,37 +57,20 @@ VertexFactory::VertexFactory ( const rave::MagneticField & field,
   theField ( field.copy() ) , theProp ( prop.copy() ),
   theVerbosity ( verbosity )
 {
-  rave::BeamSpotSingleton::set ( beamspot );
-  // cout << "[rave::VertexFactory] before setup 2" << endl;
-  setup();
+	std::cout << "DEBUG VertexFacotry Constr 2" << std::endl;
+    rave::BeamSpotSingleton::set ( beamspot );
+    setup(theField);
 }
 
-void VertexFactory::setup()
+
+void VertexFactory::setup(rave::MagneticField * field )
 {
-  //MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( *theField ) );
-  rave::MagneticFieldSingleton::Instance()->registry (  theField  );
-  PropagatorSingleton::Instance()->initialise(); // init the analytical propagator
-  /*
-  if ( dynamic_cast < rave::VacuumPropagator * > ( theProp ) == 0 )
-  {
-    // not a vacuum propagator, so we register in the singleton
-    PropagatorWrapper w ( *theProp );
-    PropagatorSingleton::Instance()->registry ( w );
-
-  }
-  */
-
+  PropagatorSingleton::Instance()->initialise(field); // init the analytical propagator
   BlockWipedPoolAllocated::usePool();
 }
 
 VertexFactory::~VertexFactory()
 {
-    // Should we let the OS do the cleaning? Itd be more efficient.
-    // cout << "[VertexFactory] destor!" << endl;
-
-	// comment out....
-	//if ( theField ) delete theField;
-    MagneticFieldSingleton::Instance()->release();
     PropagatorSingleton::Instance()->release();
     if ( theRector ) delete theRector;
     for ( map < string, rave::VertexReconstructor * >::const_iterator i=theRectors.begin(); 
@@ -133,13 +116,13 @@ vector < Vertex > VertexFactory::errorInitFactory() const
   return vector < Vertex > ();
 }
 
-
+// this one!
 vector < Vertex > VertexFactory::create ( const vector < Track > & trks, bool use_bs ) const
 {
   if ( !theRector ) errorInitFactory();
   //setMagneticField (trks);
   vector < Track > empty;
-  vector < Vertex > ret= fit ( empty, setMagneticFieldForTracks(trks), *theRector, rave::Point3D(),
+  vector < Vertex > ret= fit ( empty, trks, *theRector, rave::Point3D(),
                                false, use_bs, false );
   return ret;
 }
@@ -150,7 +133,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & trks, const T
     if ( !theRector ) errorInitFactory();
 
     vector < Track > empty;
-    vector < Vertex > ret = fit ( empty, setMagneticFieldForTracks(trks), *theRector,
+    vector < Vertex > ret = fit ( empty, trks, *theRector,
         rave::Point3D(), false, use_bs, false, ghost_track ); 
     return ret;
 }
@@ -160,7 +143,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & prims,
 {
     if ( !theRector ) errorInitFactory();
 
-    vector < Vertex > ret = fit ( setMagneticFieldForTracks(prims), setMagneticFieldForTracks(secs), *theRector,
+    vector < Vertex > ret = fit ( prims, secs, *theRector,
        rave::Point3D(), false, use_bs, true );
     return ret;
 }
@@ -172,7 +155,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & prims,
     cout << "rave::VertexFactory using methode create with prims, trks, ghost_track, use_bs" << endl;
     if ( !theRector ) errorInitFactory();
 
-    vector < Vertex > ret = fit ( setMagneticFieldForTracks(prims), setMagneticFieldForTracks(secs), *theRector,
+    vector < Vertex > ret = fit ( prims, secs, *theRector,
         rave::Point3D(), false, use_bs, true, ghost_track );
     return ret;
 }
@@ -187,7 +170,7 @@ vector < Vertex > VertexFactory::create (
     if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
-  vector < Vertex > ret = fit ( vector < Track >(), setMagneticFieldForTracks(trks), *(tmp),
+  vector < Vertex > ret = fit ( vector < Track >(), trks, *(tmp),
      rave::Point3D(), false, use_bs, false );
   return ret;
 }
@@ -203,7 +186,7 @@ vector < Vertex > VertexFactory::create (
     if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
-  vector < Vertex > ret = fit ( vector < Track >(), setMagneticFieldForTracks(trks), *(tmp),
+  vector < Vertex > ret = fit ( vector < Track >(), trks, *(tmp),
      seed, true, use_bs, false );
   return ret;
 }
@@ -220,7 +203,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & trks, const s
     if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
-  vector < Vertex > ret = fit ( vector < Track >(), setMagneticFieldForTracks(trks), *(tmp),
+  vector < Vertex > ret = fit ( vector < Track >(), trks, *(tmp),
       rave::Point3D(), false, use_bs, false, ghost_track );
   return ret;
 }
@@ -236,7 +219,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & prims, const 
     if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
-  vector < Vertex > ret = fit ( setMagneticFieldForTracks(prims), setMagneticFieldForTracks(secs), *(tmp),
+  vector < Vertex > ret = fit ( prims, secs, *(tmp),
       rave::Point3D(), false, use_bs, true );
   return ret;
 }
@@ -258,7 +241,7 @@ vector < Vertex > VertexFactory::create ( const vector < Track > & prims, const 
     if (!tmp) errorInitMethod(method);
     theRectors[method] = tmp;
   }
-  vector < Vertex > ret = fit ( setMagneticFieldForTracks(prims), setMagneticFieldForTracks(secs), *(tmp),
+  vector < Vertex > ret = fit ( prims, secs, *(tmp),
       rave::Point3D(), false, use_bs, true, ghost_track ); 
   return ret;
 }
@@ -279,7 +262,8 @@ VertexFactory::VertexFactory ( const VertexFactory & o ) :
    theRector ( 0 ), theMethod ( o.theMethod ), theField ( 0 ),
    theProp ( 0 ), theVerbosity ( o.theVerbosity )
 {
-  LogDebug("rave::VertexFactory") << "copy constructor.";
+	std::cout << "DEBUG VertexFacotry Constr 3" << std::endl;
+	LogDebug("rave::VertexFactory") << "copy constructor.";
   if ( o.theRector ) theRector = o.theRector->clone();
   if ( o.theField ) theField = o.theField->copy();
   if ( o.theProp ) theProp = o.theProp->copy();
@@ -301,6 +285,7 @@ vector < Vertex > VertexFactory::fit ( const vector < Track > & prims,
     vector < reco::TransientTrack > ttrks;
     vector < reco::TransientTrack > prim_trks;
     RaveToCmsObjects fconverter;
+
     for ( vector< Track >::const_iterator i=secs.begin(); i!=secs.end() ; ++i )
     {
         ttrks.push_back ( fconverter.tTrack ( *i ) );
@@ -526,15 +511,21 @@ void VertexFactory::setDefaultMethod ( const string & method )
   theMethod=method;
 }
 
+rave::MagneticField * VertexFactory::magneticField() const
+	{ return theField; }
 
+
+/*
 vector < Track >  VertexFactory::setMagneticFieldForTracks ( const vector < Track > & tracks) const
 {
+	std::cout << "RAVE: VertexFactory::setMagneticFieldForTracks()" << std::endl;
 	vector < rave::Track > correctTracks;
 	for ( vector< Track >::const_iterator i=tracks.begin(); i!=tracks.end() ; ++i )
 	{
-			if ( !(*i).getMagneticField() )
+			if ( !(*i).getMagneticFieldPtr() )
 			{
 				// build a new track with the correctly set magnetic field
+
 				rave::Vector6D ravestate((*i).position(), (*i).momentum(), (*i).charge(), theField );
 
 				if( (*i).isCartesianErrorValid() )
@@ -554,6 +545,7 @@ vector < Track >  VertexFactory::setMagneticFieldForTracks ( const vector < Trac
 	}
 	return correctTracks;
 }
+*/
 
 
 

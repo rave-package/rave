@@ -95,7 +95,7 @@ void * Track::originalObject() const
 	return thePointer;
 }
 
-const rave::MagneticField * Track::getMagneticField() const
+const rave::MagneticField * Track::getMagneticFieldPtr() const
 {
 	return & theGlobalParameters.magneticField();
 }

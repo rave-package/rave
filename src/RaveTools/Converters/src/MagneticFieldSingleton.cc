@@ -62,8 +62,16 @@ void rave::MagneticFieldSingleton::registry ( MagneticField * field )
   cout << field->inTesla ( GlobalPoint ( 0.,0.,0. ) ).z() << flush;
   cout << " field=" << (void *) field << ", singleton=" << (void *) this << endl;
   */
+//	std::cout << "&&& rave::MagneticFieldSingleton::::registry inputMagnetic field" << field << std::endl;
+//	std::cout << "&&& rave::MagneticFieldSingleton::::registry before setting theField" << theField << std::endl;
+
 	release();
+
+//	std::cout << "&&& rave::MagneticFieldSingleton::::registry after setting NULLPTR" << theField << std::endl;
+
 	theField = field;
+
+//	std::cout << "&&& rave::MagneticFieldSingleton::::registry after setting theField" << theField << std::endl;
 }
 
 // dummy function

@@ -31,7 +31,7 @@ public:
 
 	GlobalTrajectoryParameters   convertToGlobalTrajecetoryState( float x, float y, float z,
 								                                  float px, float py, float pz,
-																  TrackCharge charge);
+																  TrackCharge charge, rave::MagneticField *);
 
 
 };

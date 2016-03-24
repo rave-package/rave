@@ -1,5 +1,4 @@
 #include "RaveTools/Converters/interface/PropagatorSingleton.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "TrackingTools/GeomPropagators/interface/AnalyticalPropagator.h"
 
 using namespace std;
@@ -13,14 +12,14 @@ PropagatorSingleton::PropagatorSingleton() :
   thePropagator( 0 )
 {}
 
-void PropagatorSingleton::initialise()
+void PropagatorSingleton::initialise(rave::MagneticField * field )
 {
   static bool init=true; // make sure we dont init twice
   if (init)
   {
     NewProp=false;
     release();
-    thePropagator = new AnalyticalPropagator( rave::MagneticFieldSingleton::Instance() );
+    thePropagator = new AnalyticalPropagator( field );
     if (debug)
     {
       cout << "[PropagatorSingleton] default vacuum propagator registered at " << (void *) thePropagator << endl;

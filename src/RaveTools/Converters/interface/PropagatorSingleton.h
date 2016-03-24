@@ -3,12 +3,13 @@
 
 #include "TrackingTools/GeomPropagators/interface/Propagator.h"
 
+
 class PropagatorSingleton
 {
   /** singleton that provides the centralised propagator
    */
   public:
-    void initialise();
+    void initialise(rave::MagneticField * );
     static PropagatorSingleton * Instance();
     void registry ( const Propagator & prop );
     void release ();

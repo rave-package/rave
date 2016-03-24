@@ -15,7 +15,7 @@
 //#include "RaveBase/Converters/interface/MagneticFieldWrapper.h"
 #include "RaveBase/RaveEngine/interface/RaveBeamSpotSingleton.h"
 #include "RaveBase/RaveEngine/interface/RaveParameterSetBuilder.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
+//#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 
 #include "boost/bind.hpp"
 
@@ -35,7 +35,7 @@ KinematicTreeFactory::KinematicTreeFactory (
     theField ( f.copy() ), thePropagator ( p.copy() ),
     theVerbosity ( verbosity )
 {
-  setup();
+  setup(theField);
 }
 
 rave::KinematicTreeFactory::KinematicTreeFactory (
@@ -45,39 +45,21 @@ rave::KinematicTreeFactory::KinematicTreeFactory (
     theVerbosity ( verbosity )
 {
   rave::BeamSpotSingleton::set ( beamspot );
-  setup();
+  setup(theField);
 }
 
 KinematicTreeFactory::~KinematicTreeFactory()
 {
 }
 
-void KinematicTreeFactory::setup()
+void KinematicTreeFactory::setup(rave::MagneticField * field)
 {
   int rave_verbosity = theVerbosity;
   if (rave_verbosity < 0) rave_verbosity = 0;
   if (rave_verbosity > 4) rave_verbosity = 4;
   edm::setLogLevel(edm::Level(rave_verbosity));
-  
-  //MagneticFieldSingleton::Instance()->registry ( new MagneticFieldWrapper ( *theField ) );
-  rave::MagneticFieldSingleton::Instance()->registry ( theField );
-  edm::LogInfo ( "rave::KinematicTreeFactory" )
-  << " magnetic field at (0,0,0) is "
-  << MagneticFieldSingleton::Instance()->inTesla ( GlobalPoint ( 0., 0., 0. ) )
-  << endl;
 
-  PropagatorSingleton::Instance()->initialise(); // init the analytical propagator
-
-  // not necessary
-  /*
-  if ( dynamic_cast < rave::VacuumPropagator * > ( thePropagator ) == 0 )
-  {
-    // not a vacuum propagator, so we register in the singleton
-    PropagatorWrapper w ( *thePropagator );
-    PropagatorSingleton::Instance()->registry ( w );
-  }
-  */
-  
+  PropagatorSingleton::Instance()->initialise(field); // init the analytical propagator
   BlockWipedPoolAllocated::usePool();
 }
 
@@ -347,5 +329,9 @@ int rave::KinematicTreeFactory::verbosity() const
 {
   return theVerbosity;
 }
+
+rave::MagneticField * KinematicTreeFactory::magneticField() const
+    	{return theField;	}
+
 
 }

@@ -116,7 +116,7 @@ Covariance7D PerigeeToRaveObjects::convert(
   KinematicPerigeeConversions parameterConverter;
   KinematicParametersError internalResult =
       parameterConverter.kinematicParametersErrorFromExPerigee(
-      epte, eptp, ref, parameters.getMagneticField() );
+      epte, eptp, ref, &parameters.magneticField() );
 
   CmsToRaveObjects frameworkOutputConverter;
   return frameworkOutputConverter.convert(internalResult);

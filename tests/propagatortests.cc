@@ -5,7 +5,7 @@
 #include <rave/ConstantMagneticField.h>
 #include "RaveBase/Converters/interface/RaveStreamers.h"
 
-#include "RaveBase/Converters/interface/RaveToCmsObjects.h"
+// #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ namespace {
 	RaveToCmsObjects forward;
 
     rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
-    GlobalTrajectoryParameters gtp1 = forward.convert(state1, 1.0);
+    //GlobalTrajectoryParameters gtp1 = forward.convert(state1, 1.0);
     rave::Covariance6D cov1 (
         1.5e-7,    3.6e-7,    4.0e-14,
                    8.5e-7,    9.6e-14,
@@ -26,10 +26,10 @@ namespace {
                                        4.9e-3,   -2.0e-3,   -4.4e-3,
                                                   9.2e-4,    1.8e-3,
                                                              4.1e-3 );
-    CartesianTrajectoryError cte1 = forward.convert(cov1);
+    //CartesianTrajectoryError cte1 = forward.convert(cov1);
 
     //return rave::Track ( state1, cov1, 1, 0., 0. ) ;
-    return rave::Track ( gtp1, cte1, 0., 0. );
+    return rave::Track ( state1, cov1, 0., 0. );
   }
   
   rave::Track track2()
@@ -37,7 +37,7 @@ namespace {
 	RaveToCmsObjects forward;
 
     rave::Vector6D state1 ( 0.0001, 0.0001, 0.0001, -31.2685, 13.0785, 28.7524 );
-    GlobalTrajectoryParameters gtp1 = forward.convert(state1, -1.0);
+   // GlobalTrajectoryParameters gtp1 = forward.convert(state1, -1.0);
     rave::Covariance6D cov1 (
         1.5e-7,    3.6e-7,    4.0e-14,
                    8.5e-7,    9.6e-14,
@@ -48,10 +48,10 @@ namespace {
                                        4.9e-3,   -2.0e-3,   -4.4e-3,
                                                   9.2e-4,    1.8e-3,
                                                              4.1e-3 );
-    CartesianTrajectoryError cte1 = forward.convert(cov1);
+    //CartesianTrajectoryError cte1 = forward.convert(cov1);
 
-    //return rave::Track ( state1, cov1, -1, 0., 0. ) ;
-    return rave::Track ( gtp1, cte1, 0., 0. );
+    return rave::Track ( state1, cov1, 0., 0. ) ;
+    // return rave::Track ( gtp1, cte1, 0., 0. );
   }
 }
 

@@ -3,7 +3,6 @@
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/CmsToRaveObjects.h"
 
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicPerigeeConversions.h"
 #include "TrackingTools/PatternTools/interface/TSCPBuilderNoMaterial.h"
 
@@ -31,7 +30,8 @@ PerigeeParameters5D RaveToPerigeeObjects::convert(
   const Point3D & referencePoint) const
 {
   RaveToCmsObjects frameworkInputConverter;
-  FreeTrajectoryState fts(frameworkInputConverter.convert(state, charge));
+  //FreeTrajectoryState fts(frameworkInputConverter.convert(state, charge));
+  FreeTrajectoryState fts(state);
   GlobalPoint ref;// = frameworkInputConverter.convert(referencePoint);
 
   PerigeeConversions parameterConverter;
@@ -48,8 +48,7 @@ PerigeeCovariance5D RaveToPerigeeObjects::convert(
   const Point3D & referencePoint) const
 {
   RaveToCmsObjects frameworkInputConverter;
-  FreeTrajectoryState fts(frameworkInputConverter.convert(state, charge),
-                          frameworkInputConverter.convert(error));
+  FreeTrajectoryState fts(state, error);
   //GlobalPoint ref = frameworkInputConverter.convert(referencePoint);
 
   PerigeeConversions parameterConverter;
@@ -101,7 +100,7 @@ PerigeeParameters6D RaveToPerigeeObjects::convert(
   KinematicPerigeeConversions parameterConverter;
   ExtendedPerigeeTrajectoryParameters eptp =
     parameterConverter.extendedPerigeeFromKinematicParameters(
-      input, charge, ref, MagneticFieldSingleton::Instance());
+      input, charge, ref, &parameters.magneticField() );
 
   CmsToRaveObjects frameworkOutputConverter;
 
@@ -156,7 +155,7 @@ PerigeeCovariance6D RaveToPerigeeObjects::convert(
   KinematicPerigeeConversions parameterConverter;
   ExtendedPerigeeTrajectoryError epte =
     parameterConverter.extendedPerigeeErrorFromKinematicParametersError(
-      input, internalParams, charge, ref, MagneticFieldSingleton::Instance());
+      input, internalParams, charge, ref, &parameters.magneticField() );
 
   CmsToRaveObjects frameworkOutputConverter;
   // It would be cheap to use the PerigeeTrajectoryParameters twice and return the
