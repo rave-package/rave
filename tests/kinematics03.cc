@@ -11,9 +11,9 @@
 using namespace std;
 
 namespace {
-  std::vector< rave::KinematicParticle > createParticles1()
+  std::vector< rave::KinematicParticle > createParticles1(rave::MagneticField * mfield)
   {   
-    rave::Vector7D state9(-0.002, -0.005,  0.001,  -31.4103,   13.1460,   28.9006,   0.1);
+    rave::Vector7D state9(-0.002, -0.005,  0.001,  -31.4103,   13.1460,   28.9006,   0.1, mfield);
     rave::Covariance7D cov9(    5.962e-07, 1.425e-06, -1.150e-13,
                                 3.404e-06, -2.747e-13, 6.882e-06,
                                 2.626e-16, 6.274e-16, 0.000e+00,
@@ -27,7 +27,7 @@ namespace {
     
     rave::TransientTrackKinematicParticle particle9 (state9, cov9, -1, 100, 100);
     
-    rave::Vector7D state11(-0.001, -0.000,  0.002,  -57.4305,  -57.8928,  -40.1632,   0.1);
+    rave::Vector7D state11(-0.001, -0.000,  0.002,  -57.4305,  -57.8928,  -40.1632,   0.1, mfield);
     rave::Covariance7D cov11(    2.016e-06, -2.000e-06, -1.040e-13,
                                  1.984e-06, 1.032e-13, 4.970e-06,
                                  2.104e-16, -2.087e-16, 3.961e-24,
@@ -49,9 +49,9 @@ namespace {
     
   }
   
-  std::vector< rave::KinematicParticle > createParticles2()
+  std::vector< rave::KinematicParticle > createParticles2(rave::MagneticField * mfield)
   {
-    rave::Vector7D state9(0.002, 0.005,  -0.001,  31.4103,   -13.1460,   -28.9006,   0.1);
+    rave::Vector7D state9(0.002, 0.005,  -0.001,  31.4103,   -13.1460,   -28.9006,   0.1, mfield);
     rave::Covariance7D cov9(    5.962e-07, 1.425e-06, -1.150e-13,
                                 3.404e-06, -2.747e-13, 6.882e-06,
                                 2.626e-16, 6.274e-16, 0.000e+00,
@@ -65,7 +65,7 @@ namespace {
     
     rave::TransientTrackKinematicParticle particle9 (state9, cov9, -1, 100, 100);
     
-    rave::Vector7D state11(0.001, 0.000,  -0.002,  57.4305,  57.8928,  40.1632,   0.1);
+    rave::Vector7D state11(0.001, 0.000,  -0.002,  57.4305,  57.8928,  40.1632,   0.1, mfield);
     rave::Covariance7D cov11(    2.016e-06, -2.000e-06, -1.040e-13,
                                  1.984e-06, 1.032e-13, 4.970e-06,
                                  2.104e-16, -2.087e-16, 3.961e-24,
@@ -110,8 +110,8 @@ namespace {
     // rave::Ellipsoid3D BS(rave::Point3D(0., 0., 0.), bsCovRave);
     // factorynonkin.setBeamSpot(BS);
 
-    std::vector < rave::KinematicParticle > input_particles1 = createParticles1();
-    std::vector < rave::KinematicParticle > input_particles2 = createParticles2();
+    std::vector < rave::KinematicParticle > input_particles1 = createParticles1(& mfield);
+    std::vector < rave::KinematicParticle > input_particles2 = createParticles2(& mfield);
 
 
     rave::KinematicTree tree1;
