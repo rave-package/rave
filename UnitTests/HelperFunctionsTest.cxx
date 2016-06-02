@@ -16,7 +16,6 @@
 #include "RaveBase/Converters/interface/RaveToCmsObjects.h"
 #include "RaveBase/Converters/interface/CmsToRaveObjects.h"
 #include "RaveBase/Converters/interface/HelperFunctions.h"
-#include "RaveTools/Converters/interface/MagneticFieldSingleton.h"
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
 #include "DataFormats/GeometryVector/interface/GlobalVector.h"
 
